@@ -1,0 +1,26 @@
+.align-left-container {
+    display: flex;
+}
+
+.title-div {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.dcg-config-name {
+    margin-right: 5px;
+}
+
+.save-btn-container>.dcg-action-save,
+.open-btn-container>.dcg-action-open {
+    margin-right: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.dcg-calculator-api-container .dcg-header .align-left-container .title-div .dcg-config-name {
+    margin-left: 10px;
+    color: #ddd;
+}

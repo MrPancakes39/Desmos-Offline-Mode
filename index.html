@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <link rel="stylesheet" href="assets/styles/main.css" />
+    <script src="assets/scripts/main.js"></script>
+
     <div id="root"></div>
     <div class="dcg-loading-div-container">
         <div class="dcg-loading-background-div"></div>
@@ -40,6 +43,9 @@
         require(['testbridge', 'jquery', 'toplevel/calculator_practice'], function(TestBridge, $, __toplevel) {
             $('.dcg-loading-div-container').fadeOut();
             TestBridge.ready();
+
+            setupDOM();
+            eventHandlers();
         });
     </script>
 </body>
