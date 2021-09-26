@@ -42138,6 +42138,7 @@
                                                 })
                                             })
                                         }), b.publicConfigOptions.forEach(function(n) {
+                                            window.Calc= e; // Added the line here
                                             e._calc.grapher.settings.config.observeAndSync(n, function() {
                                                 e.controller.runAfterDispatch(function() {
                                                     t.setProperty(n, e._calc.grapher.settings.config[n])
