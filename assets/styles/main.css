@@ -1,11 +1,13 @@
-.align-left-container {
+.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-left-container {
     display: flex;
+    width: auto;
 }
 
-.title-div {
+.dcg-calculator-api-container .dcg-header .align-left-container .title-div {
     margin-left: 5px;
     margin-right: 5px;
     max-width: 210px;
+    padding-right: 0px;
 }
 
 .dcg-calculator-api-container .dcg-header .align-left-container .title-div .dcg-config-name {
@@ -55,6 +57,27 @@
     color: #ddd;
     font-size: 663.28%;
     line-height: 21.95px;
+}
+
+.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-right-container {
+    display: flex;
+    align-content: center;
+    font-size: 19px;
+}
+
+.align-right-container>* {
+    margin: 10px 5px;
+}
+
+.dcg-icon-screenshot {
+    width: 24px;
+    height: auto;
+    fill: #ffffffe5;
+    cursor: pointer;
+}
+
+.dcg-icon-screenshot:hover {
+    fill: #fff;
 }
 
 @keyframes dcg-fadeIn-background {
