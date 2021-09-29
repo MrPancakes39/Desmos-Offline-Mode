@@ -6094,7 +6094,7 @@
                                 DEFAULT: o.LabelOrientation.DEFAULT,
                                 LEFT: o.LabelOrientation.LEFT,
                                 RIGHT: o.LabelOrientation.RIGHT
-                            }, t.sanitizeItem = w, t.validateItem = _
+                            }, t.sanitizeItem = w, t.validateItem = _, window._santizer = t
                         }), define("graphing-calc/json/graph-settings", ["require", "exports", "tslib"], function(e, t, n) {
                             "use strict";
 
@@ -42138,7 +42138,10 @@
                                                 })
                                             })
                                         }), b.publicConfigOptions.forEach(function(n) {
-                                            window.Calc= e; // Added the line here
+                                            window.Calc = e; // Added the line here
+                                            window.Calc._santizer = {...window._santizer};
+                                            setTimeout(()=> delete window._santizer, 1000);
+                                            
                                             e._calc.grapher.settings.config.observeAndSync(n, function() {
                                                 e.controller.runAfterDispatch(function() {
                                                     t.setProperty(n, e._calc.grapher.settings.config[n])

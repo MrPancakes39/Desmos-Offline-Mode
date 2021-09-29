@@ -77,7 +77,79 @@ function fixCalc() {
         forceLogModeRegressions: false,
         actions: 'auto'
     };
-    Calc.updateSettings(default_settings);
+
+    // Fix Calc Settings
     Calc.default_settings = default_settings;
+    Calc.updateSettings(default_settings);
+    Calc.setDefaultState(default_settings);
     Calc.newRandomSeed();
+
+    Calc._getExpressions = () => {
+        return Calc.getState({
+            stripDefaults: !1
+        }).expressions.list.map(Calc._santizer.sanitizeItem);
+    }
+
+    Calc.getExpressions = () => {
+        return Calc.getState({
+            stripDefaults: !1
+        }).expressions.list.map((e) => {
+            let t = (e.type === "expression" || e.type === "table") ? Calc._santizer.sanitizeItem(e) : e;
+            t.folderId = e.folderId;
+            return t;
+        });
+    }
+
+    Calc._setExpression = (e) => {
+        let self = Calc._calc;
+        let d = Calc._santizer;
+        let t = self.controller,
+            n = t.getItemModel(e.id),
+            r = n && n.type,
+            i = d.validateItem(e, r, self.controller);
+        if (i)
+            if (r) self.controller.dispatch({
+                type: "set-expression-properties-from-api",
+                id: i.id,
+                properties: i
+            });
+            else {
+                if ("image" === i.type) return;
+                self.controller.dispatch({
+                    type: "add-item-to-end-from-api",
+                    state: i
+                })
+            }
+    }
+
+    Calc.setExpression = (e) => {
+        let self = Calc._calc;
+        if (e.type === "text" || e.type === "image" || e.type === "folder") {
+            self.controller.dispatch({
+                type: "add-item-to-end-from-api",
+                state: e
+            });
+        } else Calc._setExpression(e);
+    }
+
+    Calc._setExpressions = (e) => e.forEach(exp => Calc._setExpression(exp));
+    Calc.setExpressions = (e) => e.forEach(exp => Calc.setExpression(exp));
+
+    Calc.setStateExpression = (e) => {
+        let state = Calc.getState();
+        let l = state.expressions.list;
+        for (let i = 0; i < l.length; i++)
+            if (l[i].id === e.id) {
+                l[i] = { ...e };
+                break;
+            }
+        state.expressions.list = l;
+        Calc.setState(state);
+    }
+
+    Calc.setStateExpressions = (e) => {
+        let state = Calc.getState();
+        state.expressions.list = e;
+        Calc.setState(state);
+    }
 }
