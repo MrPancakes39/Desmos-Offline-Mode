@@ -1,0 +1,26 @@
+{
+  "name": "offline-desmos",
+  "version": "1.0.0",
+  "description": "Desmos Calc that works offline",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrPancakes39/Desmos-Offline-Mode.git"
+  },
+  "keywords": [
+    "desmos",
+    "calculator"
+  ],
+  "author": "Salman Hasan",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/MrPancakes39/Desmos-Offline-Mode/issues"
+  },
+  "homepage": "https://github.com/MrPancakes39/Desmos-Offline-Mode#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
