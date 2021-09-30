@@ -1,5 +1,5 @@
 {
-  "name": "offline-desmos",
+  "name": "desmos-offline-mode",
   "version": "1.0.0",
   "description": "Desmos Calc that works offline",
   "main": "index.js",

@@ -13,8 +13,8 @@ RUN git clone https://github.com/MrPancakes39/Desmos-Offline-Mode.git app \
     && git pull --all --force \
     && cd ..
 
-ENV PORT=3000
+ENV PORT=5000
 
-EXPOSE 3000
+EXPOSE 5000
 
 CMD ["npm", "start"]
