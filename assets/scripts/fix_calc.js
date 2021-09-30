@@ -152,4 +152,6 @@ function fixCalc() {
         state.expressions.list = e;
         Calc.setState(state);
     }
+
+    console.log("[fix_calc] calc api fixed!");
 }

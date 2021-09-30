@@ -1,17 +1,29 @@
 .dcg-calculator-api-container .dcg-header.dcg-secure-header .align-left-container {
     display: flex;
     width: auto;
+    align-items: center;
+}
+
+.align-left-container>.dcg-icon.dcg-icon-plus {
+    font-size: 18px;
+    margin-left: 5px;
+    color: #ddd;
+    cursor: pointer;
+}
+
+.align-left-container>.dcg-icon.dcg-icon-plus:hover {
+    color: #fff;
 }
 
 .dcg-calculator-api-container .dcg-header .align-left-container .title-div {
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 10px;
+    margin-right: 12px;
     max-width: 210px;
     padding-right: 0px;
 }
 
 .dcg-calculator-api-container .dcg-header .align-left-container .title-div .dcg-config-name {
-    margin-left: 10px;
+    margin-left: 0;
     color: #ddd;
 }
 
@@ -246,4 +258,30 @@
 
 .title-save:hover {
     background-color: #179d4f;
+}
+
+.alert-buttons {
+    display: flex;
+    justify-content: end;
+    margin-top: 32px;
+}
+
+.alert-buttons button {
+    margin-right: 10px;
+}
+
+.dcg-dark-gray-link {
+    color: #666;
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+}
+
+.dcg-btn-red.dcg-action-delete {
+    padding: 0 20px;
+    border-radius: 3px;
+    line-height: 34px;
 }
