@@ -6,7 +6,7 @@
 
 .align-left-container>.dcg-icon.dcg-icon-plus {
     font-size: 18px;
-    margin-left: 5px;
+    margin-left: 10px;
     color: #ddd;
     cursor: pointer;
 }
@@ -17,7 +17,7 @@
 
 .dcg-calculator-api-container .dcg-header .align-left-container .title-div {
     margin-left: 10px;
-    margin-right: 12px;
+    margin-right: 10px;
     max-width: 210px;
     padding-right: 0px;
 }
@@ -47,6 +47,10 @@
     padding-right: 15px;
     font-size: 14px;
     line-height: 32px;
+}
+
+.open-btn-container>input {
+    display: none;
 }
 
 .dcg-action-save.dcg-disabled:not(.dcg-btn-green) {
