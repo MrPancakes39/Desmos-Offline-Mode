@@ -1,0 +1,28 @@
+{
+  "name": "desmos-offline-mode",
+  "version": "1.0.0",
+  "description": "Desmos Calc that works offline",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron .",
+    "package-win": "electron-packager . desmos-offline-mode --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=SH --version-string.FileDescription=SH --version-string.ProductName=\"Desmos | Offline Mode\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrPancakes39/Desmos-Offline-Mode.git"
+  },
+  "keywords": [
+    "desmos",
+    "calculator"
+  ],
+  "author": "Salman Hasan <salmannhassan39@gmail.com>",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/MrPancakes39/Desmos-Offline-Mode/issues"
+  },
+  "homepage": "https://github.com/MrPancakes39/Desmos-Offline-Mode#readme",
+  "devDependencies": {
+    "electron": "^15.0.0",
+    "electron-packager": "^15.4.0"
+  }
+}
