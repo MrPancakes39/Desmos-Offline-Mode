@@ -78,6 +78,11 @@ function eventHandlers() {
         }
     });
 
+    $(window).resize(() => {
+        let pos = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
+        pos[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
+    });
+
     console.log("[main] event handlers setup done!");
 }
 
