@@ -7,7 +7,6 @@ function setupDOM() {
     $(".dcg-header.dcg-secure-header.dcg-header-desktop").css("background-color", "#2a2a2a");
     $(".align-left-container")
         .prepend(`<i class="dcg-icon dcg-icon-plus"></i>`)
-        .append(`<span class="dcg-if-user open-btn-container"><span role="button" tooltip="Open File    (ctrl+o)" class="dcg-action-open tooltip-offset dcg-btn-red  " ontap="" original-title="">Open</span></span>`)
         .append(`<span class="dcg-if-user save-btn-container"><span role="button" tooltip="Save Changes (ctrl+s)" class="dcg-action-save tooltip-offset dcg-btn-green" ontap="" original-title="">Save</span></span>`);
     $(".align-right-container")
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-screenshot" aria-label="Take a Screenshot" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>`);
@@ -46,6 +45,12 @@ function eventHandlers() {
     $(".dcg-tooltip-mount-pt-screenshot").mouseleave(() => $(".dcg-tooltip-mount-pt-screenshot").hide());
     $(".align-left-container>.dcg-icon.dcg-icon-plus").click(() => {
         addAlert(confirmAlert(), "new");
+    });
+
+    nodeAPI.receive("open-file", (json) => {
+        const config = JSON.parse(json);
+        $(".dcg-config-name").text(config["title"]);
+        Calc.setState(config["state"]);
     });
 
     $(window).resize(() => {

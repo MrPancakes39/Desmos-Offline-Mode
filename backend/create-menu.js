@@ -1,4 +1,5 @@
 const { Menu, shell } = require("electron");
+const { openDesmosFile } = require("./desmos-files");
 
 const isMac = process.platform === "darwin";
 const isLinux = process.platform === "linux";
@@ -8,6 +9,7 @@ module.exports = Menu.buildFromTemplate([{
         submenu: [{
                 label: "Open File",
                 accelerator: "CmdOrCtrl+O",
+                click: () => openDesmosFile()
             },
             { label: "Save", accelerator: "CmdOrCtrl+S" },
             { label: "Save as", accelerator: "CmdOrCtrl+Shift+S" },
