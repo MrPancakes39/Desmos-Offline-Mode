@@ -2,6 +2,7 @@ const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 
 const menu = require("./backend/create-menu");
+require("./backend/setup-ipc").setup();
 
 function createWindow() {
     const win = new BrowserWindow({

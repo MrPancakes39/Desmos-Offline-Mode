@@ -13,11 +13,6 @@ function setupDOM() {
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-screenshot" aria-label="Take a Screenshot" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>`);
     addScreenshotTooltip();
 
-    $(window).resize(() => {
-        let pos = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
-        pos[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
-    });
-
     console.log("[main] dom setup done!");
 }
 
@@ -35,7 +30,7 @@ function eventHandlers() {
     });
     $(".dcg-icon-screenshot")
         .click(() => {
-            fDown.saveImage(Calc.screenshot());
+            nodeAPI.send("saveImage", Calc.screenshot());
             $(".dcg-tooltip-mount-pt-screenshot").hide();
         })
         .hover(
@@ -51,6 +46,11 @@ function eventHandlers() {
     $(".dcg-tooltip-mount-pt-screenshot").mouseleave(() => $(".dcg-tooltip-mount-pt-screenshot").hide());
     $(".align-left-container>.dcg-icon.dcg-icon-plus").click(() => {
         addAlert(confirmAlert(), "new");
+    });
+
+    $(window).resize(() => {
+        let pos = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
+        pos[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
     });
 
     console.log("[main] event handlers setup done!");
