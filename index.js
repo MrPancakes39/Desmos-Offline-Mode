@@ -9,7 +9,9 @@ function createWindow() {
         height: 720,
         icon: path.join(__dirname, "app", "favicon.ico"),
         webPreferences: {
-            sandbox: true
+            sandbox: true,
+            contextIsolation: true,
+            preload: path.join(__dirname, "backend", "preload.js")
         }
     });
 
