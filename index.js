@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Menu } = require("electron");
 const path = require("path");
 
-const menu_template = require("./menu-template");
+const menu = require("./backend/create-menu");
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -13,7 +13,6 @@ function createWindow() {
         }
     });
 
-    const menu = Menu.buildFromTemplate(menu_template);
     Menu.setApplicationMenu(menu);
 
     win.maximize();

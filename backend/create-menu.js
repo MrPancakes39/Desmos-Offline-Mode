@@ -1,12 +1,14 @@
-const { shell } = require("electron");
+const { Menu, shell } = require("electron");
 
 const isMac = process.platform === "darwin";
 const isLinux = process.platform === "linux";
 
-module.exports = [{
+module.exports = Menu.buildFromTemplate([{
         label: "File",
-        submenu: [
-            { label: "Open File", accelerator: "CmdOrCtrl+O" },
+        submenu: [{
+                label: "Open File",
+                accelerator: "CmdOrCtrl+O",
+            },
             { label: "Save", accelerator: "CmdOrCtrl+S" },
             { label: "Save as", accelerator: "CmdOrCtrl+Shift+S" },
             { type: "separator" },
@@ -36,4 +38,4 @@ module.exports = [{
             { label: "About Desmos Offline Mode", role: "about" }
         ]
     }
-]
+]);
