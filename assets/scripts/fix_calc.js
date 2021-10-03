@@ -81,7 +81,7 @@ function fixCalc() {
     // Fix Calc Settings
     Calc.default_settings = default_settings;
     Calc.updateSettings(default_settings);
-    Calc.setDefaultState(default_settings);
+    Calc.setDefaultState(Calc.getState());
     Calc.newRandomSeed();
 
     Calc._getExpressions = () => {
