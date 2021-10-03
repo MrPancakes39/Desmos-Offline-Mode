@@ -27,3 +27,20 @@ module.exports.openDesmosFile = (path) => {
         win.webContents.send("open-file", content);
     }
 }
+
+module.exports.saveDesmosDialog = (json) => {
+    let filePath = dialog.showSaveDialogSync({
+        title: "Save Desmos File",
+        filters: [{ name: "Desmos Files", extensions: ["desmos"] }]
+    });
+    if (filePath) {
+        filePath = filePath.trim();
+        filePath = /\.desmos$/g.test(filePath) ? filePath : `${filePath}.desmos`;
+        fs.writeFileSync(filePath, json, "utf-8");
+    }
+}
+
+module.exports.saveAsDesmosFile = () => {
+    const win = BrowserWindow.getFocusedWindow();
+    win.webContents.send("save-file-as", "[ipcMain] send state"); // Gets handled by saveFileAs IPC.
+}

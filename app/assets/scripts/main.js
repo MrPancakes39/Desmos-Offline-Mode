@@ -1,7 +1,3 @@
-// const saveBtn = $(".dcg-action-save");
-// saveBtn.enable = (e) => e.removeClass("dcg-btn-green").addClass("dcg-disabled");
-// saveBtn.disable = (e) => e.removeClass("dcg-disabled").addClass("dcg-btn-green");
-
 function setupDOM() {
     $(".dcg-config-name")[0].innerText = "Untitled Graph";
     $(".dcg-header.dcg-secure-header.dcg-header-desktop").css("background-color", "#2a2a2a");
@@ -11,6 +7,7 @@ function setupDOM() {
     $(".align-right-container")
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-screenshot" aria-label="Take a Screenshot" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>`);
     addScreenshotTooltip();
+    setupSaveBtn();
 
     console.log("[main] dom setup done!");
 }
@@ -47,18 +44,42 @@ function eventHandlers() {
         addAlert(confirmAlert(), "new");
     });
 
-    nodeAPI.receive("open-file", (json) => {
-        const config = JSON.parse(json);
-        $(".dcg-config-name").text(config["title"]);
-        Calc.setState(config["state"]);
-    });
-
     $(window).resize(() => {
         let pos = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
         pos[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
     });
 
+    setInterval(() => {
+        let t = Calc._calc.controller;
+        (t._hasUnsavedChanges) ? saveBtn.enable(): saveBtn.disable();
+    }, 100);
+
+    nodeAPI.receive("open-file", (json) => {
+        const config = JSON.parse(json);
+        $(".dcg-config-name").text(config["title"]);
+        Calc.setState(config["state"]);
+        Calc._calc.controller._hasUnsavedChanges = false;
+    });
+
+    nodeAPI.receive("save-file-as", (msg) => {
+        console.log(msg);
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFileAs", json);
+    })
+
+    nodeAPI.receive("save-done", (msg) => {
+        console.log(msg);
+        Calc._calc.controller._hasUnsavedChanges = false;
+    })
+
     console.log("[main] event handlers setup done!");
+}
+
+function makeConfig() {
+    let config = {};
+    config["title"] = $(".dcg-config-name").text();
+    config["state"] = Calc.getState();
+    return config;
 }
 
 function customAlert(title, msg) {
@@ -140,6 +161,7 @@ function addAlert(alert, type) {
                 let title = (txt != "") ? txt : "Untitled Graph";
                 $(".dcg-config-name").text(title);
                 $(".dcg-icon-remove-custom").click();
+                Calc._calc.controller._hasUnsavedChanges = true;
             });
             break;
 
@@ -150,6 +172,7 @@ function addAlert(alert, type) {
                 $(".dcg-config-name").text("Untitled Graph");
                 Calc.setBlank();
                 Calc.newRandomSeed();
+                Calc._calc.controller._hasUnsavedChanges = true;
             })
             break;
 
@@ -173,4 +196,16 @@ function addScreenshotTooltip() {
     let temp = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
     temp[0].style["top"] = "-2.9px";
     temp[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
+}
+
+function setupSaveBtn() {
+    saveBtn = $(".dcg-action-save");
+    saveBtn.enable = () => {
+        saveBtn.removeClass("dcg-disabled").addClass("dcg-btn-green");
+        saveBtn.attr("disabled", false);
+    }
+    saveBtn.disable = () => {
+        saveBtn.removeClass("dcg-btn-green").addClass("dcg-disabled");
+        saveBtn.attr("disabled", true);
+    }
 }
