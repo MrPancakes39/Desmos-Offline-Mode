@@ -20,6 +20,8 @@ function createWindow() {
 
     win.maximize();
     win.loadFile(path.join(__dirname, "app", "index.html"));
+
+    win["openedFile"] = null;
     win.on("ready-to-show", () => win.show());
 }
 

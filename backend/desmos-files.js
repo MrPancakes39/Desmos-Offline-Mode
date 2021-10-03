@@ -25,10 +25,12 @@ module.exports.openDesmosFile = (path) => {
     if (filePath && win) {
         const content = fs.readFileSync(filePath, "utf-8");
         win.webContents.send("open-file", content);
+        win["openedFile"] = filePath;
     }
 }
 
 module.exports.saveDesmosDialog = (json) => {
+    const win = BrowserWindow.getFocusedWindow();
     let filePath = dialog.showSaveDialogSync({
         title: "Save Desmos File",
         filters: [{ name: "Desmos Files", extensions: ["desmos"] }]
@@ -37,10 +39,26 @@ module.exports.saveDesmosDialog = (json) => {
         filePath = filePath.trim();
         filePath = /\.desmos$/g.test(filePath) ? filePath : `${filePath}.desmos`;
         fs.writeFileSync(filePath, json, "utf-8");
+        win["openedFile"] = filePath;
+        win.webContents.send("save-done", "[ipcMain] saving file done");
     }
+}
+
+module.exports.saveDesmosFile = (json) => {
+    const win = BrowserWindow.getFocusedWindow();
+    if (win["openedFile"]) {
+        fs.writeFileSync(win["openedFile"], json, "utf-8");
+        win.webContents.send("save-done", "[ipcMain] saving file done");
+    } else
+        this.saveDesmosDialog(json);
 }
 
 module.exports.saveAsDesmosFile = () => {
     const win = BrowserWindow.getFocusedWindow();
     win.webContents.send("save-file-as", "[ipcMain] send state"); // Gets handled by saveFileAs IPC.
+}
+
+module.exports.saveFileFromMain = () => {
+    const win = BrowserWindow.getFocusedWindow();
+    win.webContents.send("save-file", "[ipcMain] send state"); // Gets handled by saveFile IPC.
 }

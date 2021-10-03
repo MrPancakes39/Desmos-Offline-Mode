@@ -61,16 +61,24 @@ function eventHandlers() {
         Calc._calc.controller._hasUnsavedChanges = false;
     });
 
+    saveBtn.click(() => {
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFile", json);
+    });
+
+    nodeAPI.receive("save-file", (msg) => {
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFile", json);
+    });
+
     nodeAPI.receive("save-file-as", (msg) => {
-        console.log(msg);
         let json = JSON.stringify(makeConfig());
         nodeAPI.send("saveFileAs", json);
-    })
+    });
 
     nodeAPI.receive("save-done", (msg) => {
-        console.log(msg);
         Calc._calc.controller._hasUnsavedChanges = false;
-    })
+    });
 
     console.log("[main] event handlers setup done!");
 }
@@ -159,9 +167,12 @@ function addAlert(alert, type) {
             $(".title-save").click(() => {
                 let txt = $(".title-input").val();
                 let title = (txt != "") ? txt : "Untitled Graph";
-                $(".dcg-config-name").text(title);
+                let old_title = $(".dcg-config-name").text();
+                if (old_title !== title) {
+                    $(".dcg-config-name").text(title);
+                    Calc._calc.controller._hasUnsavedChanges = true;
+                }
                 $(".dcg-icon-remove-custom").click();
-                Calc._calc.controller._hasUnsavedChanges = true;
             });
             break;
 
