@@ -1,5 +1,5 @@
 const { Menu, shell } = require("electron");
-const { openDesmosFile, saveFileFromMain, saveAsDesmosFile } = require("./desmos-files");
+const { openDesmosFile, saveFileFromMain, saveAsDesmosFile, aboutDesmos } = require("./desmos-files");
 
 const isMac = process.platform === "darwin";
 const isLinux = process.platform === "linux";
@@ -33,7 +33,7 @@ module.exports = Menu.buildFromTemplate([{
             { label: "Documentation" },
             { label: "Report Issue", click: async () => await shell.openExternal("https://github.com/MrPancakes39/Desmos-Offline-Mode/issues") },
             { type: "separator" },
-            { label: "About Desmos Offline Mode", role: "about" }
+            { label: "About Desmos Offline Mode", role: "about", click: () => aboutDesmos() }
         ]
     }
 ]);

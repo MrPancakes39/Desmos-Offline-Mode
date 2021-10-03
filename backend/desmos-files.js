@@ -62,3 +62,16 @@ module.exports.saveFileFromMain = () => {
     const win = BrowserWindow.getFocusedWindow();
     win.webContents.send("save-file", "[ipcMain] send state"); // Gets handled by saveFile IPC.
 }
+
+module.exports.aboutDesmos = () => {
+    const win = BrowserWindow.getFocusedWindow();
+    const os = require("os");
+    const info = {
+        ver: require("../package.json").version,
+        elec: process.versions["electron"],
+        node: process.versions["node"],
+        os: `${os.type()} ${process.arch} ${os.release()}`
+    }
+    const stringify = JSON.stringify(info);
+    win.webContents.send("open-about", stringify);
+}
