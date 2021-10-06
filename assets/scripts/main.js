@@ -53,7 +53,8 @@ function eventHandlers() {
     $(".dcg-if-user.save-btn-container").click(() => {
         let title = $(".dcg-config-name").text();
         let state = Calc.getState();
-        let stringify = JSON.stringify({ title, state });
+        let colorIdx = Calc._calc.controller.listModel.colorIdx;
+        let stringify = JSON.stringify({ title, state, colorIdx });
         fDown.saveStrings(stringify.split("\n"), title, "desmos");
     });
 
@@ -73,6 +74,11 @@ function eventHandlers() {
                 let data = JSON.parse(fr.result);
                 $(".dcg-config-name").text(data["title"]);
                 Calc.setState(data["state"]);
+
+                let id = data["colorIdx"];
+                let nextColor = Calc.colorRotation[id] || Desmos.Colors.RED;
+                Calc.setNextColor(nextColor);
+
             };
             fr.readAsText(file);
         }

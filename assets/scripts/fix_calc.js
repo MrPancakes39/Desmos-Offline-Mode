@@ -153,5 +153,40 @@ function fixCalc() {
         Calc.setState(state);
     }
 
+    Calc.lastSelectedId = () => Calc._calc.controller.__lastSelectedId;
+
+    Calc.getSelectedItem = () => {
+        let e = Calc._calc.controller.getSelectedItem();
+        if (typeof e === "undefined")
+            return;
+        let t = (e.type === "expression" || e.type === "table") ? Calc._santizer.sanitizeItem(e) : e;
+        t.folderId = e.folderId;
+        return t;
+    }
+
+    Calc.colorRotation = [Desmos.Colors.RED, Desmos.Colors.BLUE, Desmos.Colors.GREEN, Desmos.Colors.PURPLE, Desmos.Colors.BLACK];
+
+    Calc.setNextColor = (color) => {
+        let validColors = Calc.colorRotation;
+        if (!validColors.includes(color)) {
+            console.error(`${color} is not a valid color.`);
+            return;
+        }
+        let t = Calc._calc.controller;
+        let id = validColors.indexOf(color);
+        t.listModel.colorIdx = id;
+    }
+
+    Calc.getSelectedItemColor = () => Calc.getSelectedItem().color;
+
+    Calc.setSelectedItemColor = (color) => {
+        let e = Calc.getSelectedItem();
+        if (typeof e === "undefined")
+            return;
+        e.color = color;
+        if (e.type === "expression" || e.type === "table")
+            Calc.setExpression(e);
+    }
+
     console.log("[fix_calc] calc api fixed!");
 }
