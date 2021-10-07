@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "package-win": "electron-packager . desmos-offline-mode --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=SH --version-string.FileDescription=SH --version-string.ProductName=\"Desmos | Offline Mode\""
+    "package-win": "electron-packager . desmos-offline-mode --overwrite --asar=true --platform=win32 --arch=ia32 --icon=app/favicon.ico --prune=true --out=release-builds --version-string.CompanyName=SH --version-string.FileDescription=SH --version-string.ProductName=\"Desmos | Offline Mode\"",
+    "package-linux": "electron-packager . desmos-offline-mode --overwrite --asar=true --platform=linux --arch=x64 --icon=app/favicon.ico --prune=true --out=release-builds"
   },
   "repository": {
     "type": "git",
