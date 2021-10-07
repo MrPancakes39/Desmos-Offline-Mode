@@ -75,3 +75,8 @@ module.exports.aboutDesmos = () => {
     const stringify = JSON.stringify(info);
     win.webContents.send("open-about", stringify);
 }
+
+module.exports.newFile = () => {
+    const win = BrowserWindow.getFocusedWindow();
+    win["openedFile"] = null;
+}

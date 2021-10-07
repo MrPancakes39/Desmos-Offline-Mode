@@ -3,7 +3,7 @@ const { contextBridge, ipcRenderer } = require("electron");
 window.addEventListener("DOMContentLoaded", () => {
     contextBridge.exposeInMainWorld("nodeAPI", {
         send: (channel, data) => {
-            let validChannels = ["saveImage", "saveFile", "saveFileAs", "open-link"];
+            let validChannels = ["saveImage", "saveFile", "saveFileAs", "newFile", "open-link"];
             if (validChannels.includes(channel))
                 ipcRenderer.send(channel, data);
         },
