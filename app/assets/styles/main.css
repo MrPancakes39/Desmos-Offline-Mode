@@ -49,6 +49,10 @@
     line-height: 32px;
 }
 
+.save-btn-container>.dcg-action-save {
+    transition: color .18s;
+}
+
 .open-btn-container>input {
     display: none;
 }
