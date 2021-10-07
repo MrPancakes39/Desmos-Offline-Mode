@@ -90,13 +90,16 @@
     margin: 10px 5px;
 }
 
+.dcg-icon-web,
 .dcg-icon-screenshot {
     width: 24px;
     height: auto;
     fill: #ffffffe5;
     cursor: pointer;
+    margin-left: 10px;
 }
 
+.dcg-icon-web:hover,
 .dcg-icon-screenshot:hover {
     fill: #fff;
 }

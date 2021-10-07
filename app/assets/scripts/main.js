@@ -5,9 +5,12 @@ function setupDOM() {
         .prepend(`<i class="dcg-icon dcg-icon-plus"></i>`)
         .append(`<span class="dcg-if-user save-btn-container"><span role="button" tooltip="Save Changes (ctrl+s)" class="dcg-action-save tooltip-offset dcg-btn-green" ontap="" original-title="">Save</span></span>`);
     $(".align-right-container")
+        .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-web" aria-label="Open in Web Version" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>`)
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-screenshot" aria-label="Take a Screenshot" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>`);
-    addScreenshotTooltip();
     setupSaveBtn();
+
+    addTooltip("dcg-icon-screenshot");
+    addTooltip("dcg-icon-web");
 
     console.log("[main] dom setup done!");
 }
@@ -24,29 +27,22 @@ function eventHandlers() {
         addAlert(renameAlert(title), "rename");
         $(".title-input").select();
     });
-    $(".dcg-icon-screenshot")
-        .click(() => {
-            nodeAPI.send("saveImage", Calc.screenshot());
-            $(".dcg-tooltip-mount-pt-screenshot").hide();
-        })
-        .hover(
-            () => setTimeout(() => {
-                if ($(".dcg-icon-screenshot").is(":hover"))
-                    $(".dcg-tooltip-mount-pt-screenshot").show()
-            }, 500),
-            () => setTimeout(() => {
-                if (!($(".dcg-tooltip-mount-pt-screenshot").is(":hover")))
-                    $(".dcg-tooltip-mount-pt-screenshot").hide();
-            }, 200)
-        );
+
+    $(".dcg-icon-web").click(() => {
+        openOnWeb().then(url => nodeAPI.send("open-link", url));
+        $(".dcg-tooltip-mount-pt-dcg-icon-web").hide();
+    });
+    $(".dcg-icon-screenshot").click(() => {
+        nodeAPI.send("saveImage", Calc.screenshot());
+        $(".dcg-tooltip-mount-pt-dcg-icon-screenshot").hide();
+    });
+
+    makeEventsTooltip("dcg-icon-screenshot");
+    makeEventsTooltip("dcg-icon-web");
+
     $(".dcg-tooltip-mount-pt-screenshot").mouseleave(() => $(".dcg-tooltip-mount-pt-screenshot").hide());
     $(".align-left-container>.dcg-icon.dcg-icon-plus").click(() => {
         addAlert(confirmAlert(), "new");
-    });
-
-    $(window).resize(() => {
-        let pos = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
-        pos[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
     });
 
     setInterval(() => {
@@ -142,20 +138,41 @@ function addAlert(alert, type) {
     }
 }
 
-function addScreenshotTooltip() {
+function addTooltip(elt) {
     $("body").append(
-        `<div class="dcg-tooltip-mount-pt-screenshot" style="display: none;">
+        `<div class="dcg-tooltip-mount-pt-${elt}" style="display: none;">
             <div class="dcg-tooltip-positioning-container" style="top:5px;left:369px;width:36px;height:36px">
                 <div class="dcg-tooltip-message-container" style="top:100%;right:0px;margin-top:5px;text-align:right">
-                    <div class="dcg-tooltip-message" style="background:#000;cursor:default">Take a Screenshot</div>
+                    <div class="dcg-tooltip-message" style="background:#000;cursor:default">${$(`.${elt}`).attr("aria-label")}</div>
                 </div>
                 <div class="dcg-tooltip-arrow" style="top:100%;left:50%;border:5px solid transparent;border-color:transparent transparent #000 transparent;margin-top:-5px;margin-left:-5px"></div>
             </div>
         </div>`
     );
-    let temp = $(".dcg-tooltip-mount-pt-screenshot .dcg-tooltip-positioning-container");
+    let temp = $(`.dcg-tooltip-mount-pt-${elt} .dcg-tooltip-positioning-container`);
     temp[0].style["top"] = "-2.9px";
-    temp[0].style["left"] = `${$(".dcg-icon-screenshot").offset()["left"] - 5}px`;
+    temp[0].style["left"] = `${$(`.${elt}`).offset()["left"] - 5}px`;
+}
+
+function updateTooltip(elt) {
+    let pos = $(`.dcg-tooltip-mount-pt-${elt} .dcg-tooltip-positioning-container`);
+    pos[0].style["left"] = `${$(`.${elt}`).offset()["left"] - 5}px`;
+}
+
+function makeEventsTooltip(elt) {
+    $(`.${elt}`)
+        .hover(
+            () => setTimeout(() => {
+                if ($(`.${elt}`).is(":hover"))
+                    $(`.dcg-tooltip-mount-pt-${elt}`).show()
+            }, 500),
+            () => setTimeout(() => {
+                if (!($(`.dcg-tooltip-mount-pt-${elt}`).is(":hover")))
+                    $(`.dcg-tooltip-mount-pt-${elt}`).hide();
+            }, 200)
+        );
+    $(`.dcg-tooltip-mount-pt-${elt}`).mouseleave(() => $(`.dcg-tooltip-mount-pt-${elt}`).hide());
+    $(window).resize(() => updateTooltip(elt));
 }
 
 function setupSaveBtn() {
@@ -168,4 +185,32 @@ function setupSaveBtn() {
         saveBtn.removeClass("dcg-btn-green").addClass("dcg-disabled");
         saveBtn.attr("disabled", true);
     }
+}
+
+async function openOnWeb() {
+    const e = Calc._calc;
+    const F = jQuery;
+    let t = JSON.stringify(e.getState()),
+        n = e.grapher.screenshot({ width: 100, height: 100 }),
+        r = e.graphSettings.config.crossOriginSaveTest,
+        i = r ? "/" : "https://www.desmos.com/",
+        o = i + "api/v1/calculator/cross_origin_save";
+
+    a = F('<input type="text" name="calc_state" />').val(t);
+    s = F('<input type="text" name="thumb_data" />').val(n);
+    c = F('<form method="POST" style="display:none;"></form>').attr("action", o).append(F('<input type="text" name="is_open_on_web" value="true" />')).append(F('<input type="text" name="my_graphs" value="false" />')).append(F('<input type="text" name="is_update" value="false" />')).append(a).append(s);
+
+    const url = o;
+    const data = new URLSearchParams(new FormData(c[0]));
+
+    const res = await fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
+    });
+
+    if (res.status === 200)
+        return res.url
 }
