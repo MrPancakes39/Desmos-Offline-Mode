@@ -29,7 +29,19 @@ function eventHandlers() {
     });
 
     $(".dcg-icon-web").click(() => {
-        openOnWeb().then(url => nodeAPI.send("open-link", url));
+        addLoader();
+        openOnWeb()
+            .then(url => {
+                nodeAPI.send("open-link", url);
+                $(".dcg-loading-container").remove();
+            })
+            .catch(err => {
+                console.error(err);
+                setTimeout(() => {
+                    $(".dcg-loading-container").remove();
+                    addAlert(customAlert("Error", "Unable to open on web."), "custom");
+                }, 500);
+            });
         $(".dcg-tooltip-mount-pt-dcg-icon-web").hide();
     });
     $(".dcg-icon-screenshot").click(() => {
@@ -136,6 +148,20 @@ function addAlert(alert, type) {
             $(".dcg-alert-container").remove();
             throw new Error("This type is unknown");
     }
+}
+
+function addLoader() {
+    $("body").append(`
+        <div class="dcg-loading-container" style="display: none;">
+            <div class="dcg-loading-modal">
+                <h2 class="title">Loading on Web</h2>
+                <div class="loader">
+                    <div class="dot-floating"></div>
+                </div>
+            </div>
+        </div>
+    `);
+    $(".dcg-loading-container").fadeIn(300);
 }
 
 function addTooltip(elt) {
