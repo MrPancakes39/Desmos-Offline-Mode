@@ -83,13 +83,10 @@ function fixCalc() {
     Calc.updateSettings(default_settings);
     Calc.newRandomSeed();
 
-    Calc.lastSelectedId = () => Calc._calc.controller.__lastSelectedId;
-
     Calc.getSelectedItem = () => {
         let e = Calc._calc.controller.getSelectedItem();
-        if (typeof e === "undefined")
-            return;
-        return Calc._santizer.sanitizeItem(e);
+        if (e)
+            return Calc._santizer.sanitizeItem(e);
     }
 
     Calc.colorRotation = [Desmos.Colors.RED, Desmos.Colors.BLUE, Desmos.Colors.GREEN, Desmos.Colors.PURPLE, Desmos.Colors.BLACK];
@@ -105,7 +102,7 @@ function fixCalc() {
         t.listModel.colorIdx = id;
     }
 
-    Calc.setSelectedItemColor = (color) => {
+    Calc.setItemColor = (color) => {
         let e = Calc.getSelectedItem();
         if (typeof e === "undefined")
             return;
