@@ -1,15 +1,13 @@
-const fDown = new FileDownloader();
-
 function setupDOM() {
     $(".dcg-config-name")[0].innerText = "Untitled Graph";
     $(".dcg-header.dcg-secure-header.dcg-header-desktop").css("background-color", "#2a2a2a");
     $(".align-left-container")
         .prepend(`<i class="dcg-icon dcg-icon-plus"></i>`)
-        .append(`<span class="dcg-if-user open-btn-container"><input type="file" accept="application/desmos"><span role="button" tooltip="Open File    (ctrl+o)" class="dcg-action-open tooltip-offset dcg-btn-red  " ontap="" original-title="">Open</span></span>`)
         .append(`<span class="dcg-if-user save-btn-container"><span role="button" tooltip="Save Changes (ctrl+s)" class="dcg-action-save tooltip-offset dcg-btn-green" ontap="" original-title="">Save</span></span>`);
     $(".align-right-container")
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-web" aria-label="Open in Web Version" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg></div>`)
         .prepend(`<div class="dcg-tooltip-hit-area-container" handleevent="true" ontap=""><svg class="dcg-icon-screenshot" aria-label="Take a Screenshot" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg></div>`);
+    setupSaveBtn();
 
     addTooltip("dcg-icon-screenshot");
     addTooltip("dcg-icon-web");
@@ -29,119 +27,80 @@ function eventHandlers() {
         addAlert(renameAlert(title), "rename");
         $(".title-input").select();
     });
-    $(".dcg-icon-screenshot")
-        .click(() => {
-            fDown.saveImage(Calc.screenshot());
-            $(".dcg-tooltip-mount-pt-screenshot").hide();
-        });
-    $(".align-left-container>.dcg-icon.dcg-icon-plus").click(() => {
-        addAlert(confirmAlert(), "new");
+
+    $(".dcg-icon-web").click(() => {
+        addLoader();
+        openOnWeb()
+            .then(url => {
+                nodeAPI.send("open-link", url);
+                $(".dcg-loading-container").remove();
+            })
+            .catch(err => {
+                console.error(err);
+                setTimeout(() => {
+                    $(".dcg-loading-container").remove();
+                    addAlert(customAlert("Error", "Unable to open on web."), "custom");
+                }, 500);
+            });
+        $(".dcg-tooltip-mount-pt-dcg-icon-web").hide();
     });
-
-    $(".dcg-icon-web").click(() => Calc._calc.controller._openOnWeb());
-
-    $(".dcg-if-user.save-btn-container").click(() => {
-        let title = $(".dcg-config-name").text();
-        let state = Calc.getState();
-        let colorIdx = Calc._calc.controller.listModel.colorIdx;
-        let stringify = JSON.stringify({ title, state, colorIdx });
-        fDown.saveStrings(stringify.split("\n"), title, "desmos");
-    });
-
-    $(".dcg-action-open.tooltip-offset.dcg-btn-red").click(() => $(".open-btn-container>input").click());
-
-    $(".open-btn-container>input").change(() => {
-        let input = $(".open-btn-container>input")[0];
-        let file = input.files[0];
-        let fr = new FileReader();
-
-        if (!file)
-            addAlert(customAlert("Error", "Please select a file"), "custom");
-        else if (!(/\.desmos$/g).test(file.name))
-            addAlert(customAlert("Error", "Please select a .desmos file"), "custom");
-        else {
-            fr.onload = () => {
-                let data = JSON.parse(fr.result);
-                $(".dcg-config-name").text(data["title"]);
-                Calc.setState(data["state"]);
-
-                let id = data["colorIdx"];
-                let nextColor = Calc.colorRotation[id] || Desmos.Colors.RED;
-                Calc.setNextColor(nextColor);
-
-            };
-            fr.readAsText(file);
-        }
+    $(".dcg-icon-screenshot").click(() => {
+        nodeAPI.send("saveImage", Calc.screenshot());
+        $(".dcg-tooltip-mount-pt-dcg-icon-screenshot").hide();
     });
 
     makeEventsTooltip("dcg-icon-screenshot");
     makeEventsTooltip("dcg-icon-web");
 
+    $(".dcg-tooltip-mount-pt-screenshot").mouseleave(() => $(".dcg-tooltip-mount-pt-screenshot").hide());
+    $(".align-left-container>.dcg-icon.dcg-icon-plus").click(() => {
+        addAlert(confirmAlert(), "new");
+    });
+
+    setInterval(() => {
+        let t = Calc._calc.controller;
+        (t._hasUnsavedChanges) ? saveBtn.enable(): saveBtn.disable();
+    }, 100);
+
+    nodeAPI.receive("open-file", (json) => {
+        const config = JSON.parse(json);
+        $(".dcg-config-name").text(config["title"]);
+        Calc.setState(config["state"]);
+        Calc._calc.controller._hasUnsavedChanges = false;
+    });
+
+    saveBtn.click(() => {
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFile", json);
+    });
+
+    nodeAPI.receive("save-file", (msg) => {
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFile", json);
+    });
+
+    nodeAPI.receive("save-file-as", (msg) => {
+        let json = JSON.stringify(makeConfig());
+        nodeAPI.send("saveFileAs", json);
+    });
+
+    nodeAPI.receive("save-done", (msg) => {
+        Calc._calc.controller._hasUnsavedChanges = false;
+    });
+
+    nodeAPI.receive("open-about", (json) => {
+        let info = JSON.parse(json);
+        addAlert(aboutAlert(info["ver"], info["elec"], info["node"], info["os"]), "about");
+    })
+
     console.log("[main] event handlers setup done!");
 }
 
-function customAlert(title, msg) {
-    return `
-    <div class="dcg-alert-container">
-        <div class="dcg-modal-background"></div>
-        <div class="dcg-box-modal">
-            <span role="link" tabindex="0" aria-label="Close Dialog" class="dcg-close-modal" ontap="">
-                <i class="dcg-icon-remove-custom"></i>
-            </span>
-            <div class="alert-dialog">
-                <h1>${title}</h1>
-                <div class="alert-content">
-                    <p>${msg}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-function renameAlert(title) {
-    return `
-    <div class="dcg-alert-container">
-        <div class="dcg-modal-background"></div>
-        <div class="dcg-box-modal">
-            <span role="link" tabindex="0" aria-label="Close Dialog" class="dcg-close-modal" ontap="">
-                <i class="dcg-icon-remove-custom"></i>
-            </span>
-            <div class="alert-dialog">
-                <h1>Rename This Graph</h1>
-                <div class="alert-content">
-                    <p class="graph-title">Title</p>
-                    <input class="title-input" name="title" placeholder="Untitled Graph" value="${title}" maxlength="140" tabindex="0" autofocus="true">
-                    <button type="submit" class="title-save">Save</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
-}
-
-function confirmAlert() {
-    return `
-    <div class="dcg-alert-container">
-        <div class="dcg-modal-background"></div>
-        <div class="dcg-box-modal">
-            <span role="link" tabindex="0" aria-label="Close Dialog" class="dcg-close-modal" ontap="">
-                <i class="dcg-icon-remove-custom"></i>
-            </span>
-            <div class="alert-dialog">
-                <h1>Create New Graph</h1>
-                <div class="alert-content">
-                    <p>Are you sure you want to create a new graph?
-                    This graph will be lost</p>
-                    <div class="alert-buttons">
-                        <button type="submit" class="dcg-dark-gray-link">Cancel</button>
-                        <button type="submit" class="dcg-btn-red dcg-action-delete">New</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    `;
+function makeConfig() {
+    let config = {};
+    config["title"] = $(".dcg-config-name").text();
+    config["state"] = Calc.getState();
+    return config;
 }
 
 function addAlert(alert, type) {
@@ -157,7 +116,11 @@ function addAlert(alert, type) {
             $(".title-save").click(() => {
                 let txt = $(".title-input").val();
                 let title = (txt != "") ? txt : "Untitled Graph";
-                $(".dcg-config-name").text(title);
+                let old_title = $(".dcg-config-name").text();
+                if (old_title !== title) {
+                    $(".dcg-config-name").text(title);
+                    Calc._calc.controller._hasUnsavedChanges = true;
+                }
                 $(".dcg-icon-remove-custom").click();
             });
             break;
@@ -169,13 +132,36 @@ function addAlert(alert, type) {
                 $(".dcg-config-name").text("Untitled Graph");
                 Calc.setBlank();
                 Calc.newRandomSeed();
+                Calc._calc.controller._hasUnsavedChanges = true;
+                nodeAPI.send("newFile", "[main] new file");
             })
             break;
+
+        case "about":
+            $(".about-link").click((e) => {
+                e.preventDefault();
+                nodeAPI.send("open-link", e.target.href);
+            })
+            break
 
         default:
             $(".dcg-alert-container").remove();
             throw new Error("This type is unknown");
     }
+}
+
+function addLoader() {
+    $("body").append(`
+        <div class="dcg-loading-container" style="display: none;">
+            <div class="dcg-loading-modal">
+                <h2 class="title">Loading on Web</h2>
+                <div class="loader">
+                    <div class="dot-floating"></div>
+                </div>
+            </div>
+        </div>
+    `);
+    $(".dcg-loading-container").fadeIn(300);
 }
 
 function addTooltip(elt) {
@@ -213,4 +199,44 @@ function makeEventsTooltip(elt) {
         );
     $(`.dcg-tooltip-mount-pt-${elt}`).mouseleave(() => $(`.dcg-tooltip-mount-pt-${elt}`).hide());
     $(window).resize(() => updateTooltip(elt));
+}
+
+function setupSaveBtn() {
+    saveBtn = $(".dcg-action-save");
+    saveBtn.enable = () => {
+        saveBtn.removeClass("dcg-disabled").addClass("dcg-btn-green");
+        saveBtn.attr("disabled", false);
+    }
+    saveBtn.disable = () => {
+        saveBtn.removeClass("dcg-btn-green").addClass("dcg-disabled");
+        saveBtn.attr("disabled", true);
+    }
+}
+
+async function openOnWeb() {
+    const e = Calc._calc;
+    const F = jQuery;
+    let t = JSON.stringify(e.getState()),
+        n = e.grapher.screenshot({ width: 100, height: 100 }),
+        r = e.graphSettings.config.crossOriginSaveTest,
+        i = r ? "/" : "https://www.desmos.com/",
+        o = i + "api/v1/calculator/cross_origin_save";
+
+    a = F('<input type="text" name="calc_state" />').val(t);
+    s = F('<input type="text" name="thumb_data" />').val(n);
+    c = F('<form method="POST" style="display:none;"></form>').attr("action", o).append(F('<input type="text" name="is_open_on_web" value="true" />')).append(F('<input type="text" name="my_graphs" value="false" />')).append(F('<input type="text" name="is_update" value="false" />')).append(a).append(s);
+
+    const url = o;
+    const data = new URLSearchParams(new FormData(c[0]));
+
+    const res = await fetch(url, {
+        method: "POST",
+        body: data,
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+        }
+    });
+
+    if (res.status === 200)
+        return res.url
 }
