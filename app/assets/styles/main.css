@@ -1,4 +1,8 @@
-.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-left-container {
+.dcg-testmode-api-container body {
+    font-family: Arial, sans-serif;
+}
+
+.dcg-testmode-api-container .dcg-header.dcg-secure-header .align-left-container {
     display: flex;
     width: auto;
     align-items: center;
@@ -15,14 +19,14 @@
     color: #fff;
 }
 
-.dcg-calculator-api-container .dcg-header .align-left-container .title-div {
+.dcg-testmode-api-container .dcg-header .align-left-container .title-div {
     margin-left: 10px;
     margin-right: 10px;
     max-width: 210px;
     padding-right: 0px;
 }
 
-.dcg-calculator-api-container .dcg-header .align-left-container .title-div .dcg-config-name {
+.dcg-testmode-api-container .dcg-header.dcg-secure-header.dcg-header-desktop .align-left-container .title-div .dcg-config-name {
     margin-left: 0;
     color: #ddd;
 }
@@ -34,7 +38,7 @@
     white-space: nowrap;
 }
 
-.dcg-calculator-api-container .dcg-header .align-left-container .title-div.dcg-hovered .dcg-config-name.dcg-hovered {
+.dcg-testmode-api-container .dcg-header .align-left-container .title-div.dcg-hovered .dcg-config-name.dcg-hovered {
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
@@ -42,6 +46,7 @@
 
 .save-btn-container>.dcg-action-save,
 .open-btn-container>.dcg-action-open {
+    display: block;
     margin-right: 5px;
     padding-left: 15px;
     padding-right: 15px;
@@ -64,32 +69,42 @@
     line-height: 32px;
 }
 
-.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-center-container {
-    margin-left: -53px;
+.dcg-testmode-api-container .dcg-header.dcg-secure-header .align-center-container {
+    /* margin-left: -53px; */
+    align-items: center;
+    justify-content: center;
+    margin-top: 5px;
 }
 
-.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-center-container i {
-    filter: drop-shadow(0 1px 1px #000);
-    color: #ddd;
-    font-size: 663.28%;
-    line-height: 21.95px;
+.dcg-testmode-api-container .dcg-header.dcg-secure-header .align-center-container .dcg-practice-logo {
+    padding: 0;
 }
 
-.dcg-calculator-api-container .dcg-header.dcg-secure-header .align-right-container {
+#svg-desmos {
+    fill: #ddd;
+}
+
+.dcg-testmode-api-container .dcg-header.dcg-secure-header .align-right-container {
     display: flex;
-    align-content: center;
-    font-size: 19px;
+    height: 46px;
+    align-items: center;
+    font-size: 17px;
 }
 
 .align-right-container>* {
     margin: 10px 5px;
 }
 
+.dcg-testmode-api-container .dcg-header.dcg-secure-header .align-right-container .dcg-icon-question-sign {
+    color: #ddd;
+    top: 0;
+}
+
 .dcg-icon-web,
 .dcg-icon-screenshot {
-    width: 24px;
+    width: 21px;
     height: auto;
-    fill: #ffffffe5;
+    fill: #ddd;
     cursor: pointer;
     margin-left: 10px;
 }
