@@ -3990,11 +3990,12 @@ define("ipad.ghostevents", ["require"], function (require) {
                                           });
                                   }),
                             (n = n("abort"));
-                        try {
-                            s.send((t.hasContent && t.data) || null);
-                        } catch (e) {
-                            if (n) throw e;
-                        }
+                        // Stop sending content
+                        // try {
+                        //     s.send((t.hasContent && t.data) || null);
+                        // } catch (e) {
+                        //     if (n) throw e;
+                        // }
                     },
                     abort: function () {
                         n && n();
