@@ -57,6 +57,25 @@ function eventHandlers() {
         addAlert(confirmAlert(), "new");
     });
 
+    $(".dcg-settings-pillbox").click(() => {
+        $(".dcg-braille-container").unbind().click(() => {
+            let a = $(".dcg-refreshable-braille-note a");
+            let b = $(".dcg-six-key-checkbox a i");
+            if (a.length) {
+                a.unbind().click((e) => {
+                    e.preventDefault();
+                    nodeAPI.send("open-link", a[0].href);
+                });
+            }
+            if (b.length) {
+                b.unbind().click((e) => {
+                    e.preventDefault();
+                    nodeAPI.send("open-link", (b.parent())[0].href);
+                });
+            }
+        });
+    });
+
     setInterval(() => {
         let t = Calc._calc.controller;
         (t._hasUnsavedChanges) ? saveBtn.enable(): saveBtn.disable();

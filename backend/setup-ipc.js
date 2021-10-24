@@ -10,7 +10,7 @@ module.exports.setup = () => {
     ipcMain.on("newFile", (event) => newFile());
     ipcMain.on("open-link", async (event, link) => {
         let validLinks = require("./valid-links");
-        if (validLinks.includes(link) || link.startsWith("https://www.desmos.com/calculator/"))
+        if (validLinks.includes(link) || link.startsWith("https://www.desmos.com/"))
             await shell.openExternal(link);
         else
             console.error(`The link: ${link}.\nThis Link is not valid.`);
