@@ -145,5 +145,7 @@ function fixCalc() {
         }
     }
 
+    fixShortcuts();
+
     console.log("[fix_calc] calc api fixed!");
 }
