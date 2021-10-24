@@ -91,11 +91,16 @@ function fixCalc() {
 
     Calc.colorRotation = [Desmos.Colors.RED, Desmos.Colors.BLUE, Desmos.Colors.GREEN, Desmos.Colors.PURPLE, Desmos.Colors.BLACK];
 
+    Calc.getNextColor = () => {
+        let t = Calc._calc.controller;
+        let index = t.listModel.colorIdx;
+        return Calc.colorRotation[index];
+    };
+
     Calc.setNextColor = (color) => {
         let validColors = Calc.colorRotation;
         if (!validColors.includes(color)) {
-            console.error(`${color} is not a valid color.`);
-            return;
+            throw new Error(`${color} is not a valid color.`);
         }
         let t = Calc._calc.controller;
         let id = validColors.indexOf(color);
@@ -109,6 +114,35 @@ function fixCalc() {
         e.color = color;
         if (e.type === "expression" || e.type === "table")
             Calc.setExpression(e);
+    }
+
+    Calc._toggleOptions = (item) => {
+        let t = Calc._calc.controller;
+        let item_modal = t.getItemModel(item.id);
+        let item_type = (item.sliderExists) ? "slider" : item.type;
+        if (item_type === "expression" || item_type === "image" || item_type === "slider") {
+            t.dispatch({ type: "toggle-item-settings-menu", menu: { type: item_type, model: item_modal, focusFirstOption: !1 } });
+        } else {
+            throw new Error(`"${item_type}" type doesn't have menu options.`);
+        }
+    }
+
+    Calc._add = (type) => {
+        const validTypes = ["expression", "table", "note", "text", "folder", "image", "simulation"];
+        if (!validTypes.includes(type)) {
+            throw new Error(`${type} is not a valid type.`);
+        }
+        let e = Calc._calc.controller;
+        if (type !== "image") {
+            let t = (type === "note") ? "new-text" : `new-${type}`;
+            e.dispatch({ type: t });
+        } else {
+            const imageInput = $(`<input type="file" accept="image/*" style="display: none">`);
+            imageInput.on("change", () => {
+                const fileList = imageInput.prop("files");
+                e.dispatch({ type: "new-images", files: fileList });
+            }).click();
+        }
     }
 
     console.log("[fix_calc] calc api fixed!");
