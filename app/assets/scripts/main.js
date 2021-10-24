@@ -18,8 +18,32 @@ function setupDOM() {
 function eventHandlers() {
     $(".dcg-icon-question-sign.dcg-help-btn").click(() => {
         let t = $(".dcg-non-chromeos-message")[0];
-        if (t)
+        if (t) {
             t.innerText = "You are using Desmos Offline Mode. As a result, some features may be missing. To use online version, visit www.desmos.com/calculator";
+            $(".dcg-link").on("dcg-tap", () => {
+                let table = $(".dcg-hotkey-section-header:contains('Common Actions')").next();
+                let rows = table.children();
+
+                function createRow(shortcut, keys) {
+                    let elt = `<tr><td>${shortcut}</td><td class="dcg-keyboard-shortcut dcg-os-windows">`;
+                    keys.forEach(key => {
+                        elt += `<span class="dcg-key-command">${key}</span>+`;
+                    });
+                    elt = elt.slice(0, -1);
+                    elt += `<td class="dcg-keyboard-shortcut dcg-os-mac" style="display: none;"></td></tr>`;
+                    return $(elt);
+                }
+                $(rows[2]).before(createRow("Create a New Graph", ["CTRL", "N"]));
+                $(rows[2]).before(createRow("Open a Graph", ["CTRL", "O"]));
+                $(rows[2]).before(createRow("Save a Graph", ["CTRL", "S"]));
+                $(rows[2]).before(createRow("Show or Hide the Expression List", ["SHIFT", "ALT", "E"]));
+                $(rows[3]).children(":first").text("Toggle Options for the Focused Expression");
+                $(rows[6]).before(createRow("Add a Note", ["CTRL", "ALT", "O"]));
+                $(rows[6]).before(createRow("Collapse / Expand Selected Folder", ["ALT", "Up Arrow"]));
+                $(rows[6]).before(createRow("Add a Folder", ["CTRL", "ALT", "F"]));
+                $(rows[6]).before(createRow("Add an Image", ["CTRL", "ALT", "I"]));
+            });
+        }
     });
     $(".dcg-config-name").click(() => {
         let txt = $(".dcg-config-name").text();
