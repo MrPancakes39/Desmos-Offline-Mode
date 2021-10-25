@@ -71,6 +71,7 @@
     cursor: default;
     font-size: 14px;
     line-height: 32px;
+    pointer-events: none;
 }
 
 .dcg-testmode-api-container .dcg-header.dcg-secure-header .align-center-container {
