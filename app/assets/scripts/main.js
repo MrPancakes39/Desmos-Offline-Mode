@@ -176,7 +176,7 @@ function addAlert(alert, type) {
                 Calc.setBlank();
                 Calc.newRandomSeed();
                 Calc._calc.controller._hasUnsavedChanges = true;
-                Calc._calc.controller.dispatch({ type: "toast/show", toast: { message: "New Graph Created", hideAfter: 4e3 } });
+                Calc._calc.controller.dispatch({ type: "toast/show", toast: { message: "New Graph Created", hideAfter: 6e3 } });
                 nodeAPI.send("newFile", "[main] new file");
             });
             if (!Calc._calc.controller._hasUnsavedChanges)
