@@ -38,6 +38,7 @@ function eventHandlers() {
                 $(rows[2]).before(createRow("Create a New Graph", ["CTRL", "N"]));
                 $(rows[2]).before(createRow("Open a Graph", ["CTRL", "O"]));
                 $(rows[2]).before(createRow("Save a Graph", ["CTRL", "S"]));
+                $(rows[2]).before(createRow("Print a Graph", ["CTRL", "P"]));
                 $(rows[2]).before(createRow("Show or Hide the Expression List", ["SHIFT", "ALT", "E"]));
                 $(rows[3]).children(":first").text("Toggle Options for the Focused Expression");
                 $(rows[6]).before(createRow("Add a Note", ["CTRL", "ALT", "O"]));
