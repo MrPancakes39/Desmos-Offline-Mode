@@ -108,7 +108,13 @@ function fixShortcuts() {
         }
         // Undo
         if (Ctrl && e.code === "KeyZ") {
-            Calc.undo();
+            const t = Calc._calc.controller;
+            const toastData = t.getToastData();
+            if (!_.isEmpty(toastData) && typeof toastData.undoCallback === "function") {
+                toastData.undoCallback();
+            } else {
+                Calc.undo();
+            }
             return;
         }
         // Redo
