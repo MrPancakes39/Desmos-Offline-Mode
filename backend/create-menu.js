@@ -28,12 +28,12 @@ module.exports = Menu.buildFromTemplate([{
             { role: "toggleDevTools" }
         ]
     }, {
-        role: "help",
+        label: "Help",
         submenu: [
             { label: "Documentation" },
             { label: "Report Issue", click: async () => await shell.openExternal("https://github.com/MrPancakes39/Desmos-Offline-Mode/issues") },
             { type: "separator" },
-            { label: "About Desmos Offline Mode", role: "about", click: () => aboutDesmos() }
+            { label: "About Desmos Offline Mode", click: () => aboutDesmos() }
         ]
     }
 ]);

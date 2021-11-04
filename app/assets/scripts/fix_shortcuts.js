@@ -30,6 +30,11 @@ function fixShortcuts() {
             $(".align-left-container .dcg-icon.dcg-icon-plus").click()
             return;
         }
+        // Print Graph
+        if (Ctrl && e.code === "KeyP") {
+            Calc._calc.controller.dispatch({ type: "toast/show", toast: { message: "Printing is currently not supported", toastStyle: "error", hideAfter: 6e3 } });
+            return;
+        }
         // Show or Hide the Expression List
         if (ShiftAlt && e.code === "KeyE") {
             e.preventDefault();
