@@ -107,10 +107,23 @@ function eventHandlers() {
     }, 100);
 
     nodeAPI.receive("open-file", (json) => {
+        let t = Calc._calc.controller;
+        let saved = makeConfig();
         const config = JSON.parse(json);
         $(".dcg-config-name").text(config["title"]);
         Calc.setState(config["state"]);
-        Calc._calc.controller._hasUnsavedChanges = false;
+        t._hasUnsavedChanges = false;
+        t.dispatch({
+            type: "toast/show",
+            toast: {
+                message: t.s("account-shell-text-mygraphs-opened-graph", { graphTitle: config["title"] }),
+                undoCallback: () => {
+                    $(".dcg-config-name").text(saved.title);
+                    Calc.setState(saved.state);
+                },
+                hideAfter: 6e3
+            }
+        });
     });
 
     saveBtn.click(() => {
