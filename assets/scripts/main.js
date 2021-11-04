@@ -84,7 +84,20 @@ function eventHandlers() {
             addAlert(customAlert("Error", "Please select a .desmos file"), "custom");
         else {
             fr.onload = () => {
+                let t = Calc._calc.controller;
                 let data = JSON.parse(fr.result);
+                let saved = makeConfig();
+                t.dispatch({
+                    type: "toast/show",
+                    toast: {
+                        message: t.s("account-shell-text-mygraphs-opened-graph", { graphTitle: data["title"] }),
+                        undoCallback: () => {
+                            $(".dcg-config-name").text(saved.title);
+                            Calc.setState(saved.state);
+                        },
+                        hideAfter: 6e3
+                    }
+                });
                 $(".dcg-config-name").text(data["title"]);
                 Calc.setState(data["state"]);
             };
