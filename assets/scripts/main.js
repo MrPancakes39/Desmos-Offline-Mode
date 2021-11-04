@@ -139,11 +139,24 @@ function addAlert(alert, type) {
         case "new":
             $(".dcg-dark-gray-link").click(() => $(".dcg-icon-remove-custom").click());
             $(".dcg-btn-red.dcg-action-delete").click(() => {
+                let saved = makeConfig();
                 $(".dcg-icon-remove-custom").click();
                 $(".dcg-config-name").text("Untitled Graph");
                 Calc.setBlank();
                 Calc.newRandomSeed();
-            })
+                let t = Calc._calc.controller;
+                t.dispatch({
+                    type: "toast/show",
+                    toast: {
+                        message: t.s("account-shell-text-new-graph-created"),
+                        undoCallback: () => {
+                            $(".dcg-config-name").text(saved.title);
+                            Calc.setState(saved.state);
+                        },
+                        hideAfter: 6e3
+                    }
+                });
+            });
             break;
 
         default:
