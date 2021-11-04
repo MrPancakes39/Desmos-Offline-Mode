@@ -185,12 +185,24 @@ function addAlert(alert, type) {
         case "new":
             $(".dcg-dark-gray-link").click(() => $(".dcg-icon-remove-custom").click());
             $(".dcg-btn-red.dcg-action-delete").click(() => {
+                let saved = makeConfig();
+                let t = Calc._calc.controller;
                 $(".dcg-icon-remove-custom").click();
                 $(".dcg-config-name").text("Untitled Graph");
                 Calc.setBlank();
                 Calc.newRandomSeed();
-                Calc._calc.controller._hasUnsavedChanges = true;
-                Calc._calc.controller.dispatch({ type: "toast/show", toast: { message: "New Graph Created", hideAfter: 6e3 } });
+                t._hasUnsavedChanges = true;
+                t.dispatch({
+                    type: "toast/show",
+                    toast: {
+                        message: t.s("account-shell-text-new-graph-created"),
+                        undoCallback: () => {
+                            $(".dcg-config-name").text(saved.title);
+                            Calc.setState(saved.state);
+                        },
+                        hideAfter: 6e3
+                    }
+                });
                 nodeAPI.send("newFile", "[main] new file");
             });
             if (!Calc._calc.controller._hasUnsavedChanges)
