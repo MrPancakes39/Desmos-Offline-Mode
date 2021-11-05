@@ -145,6 +145,9 @@ function fixCalc() {
         }
     }
 
+    Calc._newFile = true;
+    Calc._hasUnsavedChanges = () => (Calc._newFile || Calc._calc.controller._hasUnsavedChanges);
+
     fixShortcuts();
 
     console.log("[fix_calc] calc api fixed!");

@@ -102,17 +102,16 @@ function eventHandlers() {
     });
 
     setInterval(() => {
-        let t = Calc._calc.controller;
-        (t._hasUnsavedChanges) ? saveBtn.enable(): saveBtn.disable();
+        (Calc._hasUnsavedChanges()) ? saveBtn.enable(): saveBtn.disable();
     }, 100);
 
     nodeAPI.receive("open-file", (json) => {
         let t = Calc._calc.controller;
         let saved = makeConfig();
+        saved._newFile = Calc._newFile;
         const config = JSON.parse(json);
         $(".dcg-config-name").text(config["title"]);
         Calc.setState(config["state"]);
-        t._hasUnsavedChanges = false;
         t.dispatch({
             type: "toast/show",
             toast: {
@@ -120,10 +119,13 @@ function eventHandlers() {
                 undoCallback: () => {
                     $(".dcg-config-name").text(saved.title);
                     Calc.setState(saved.state);
+                    Calc._newFile = saved._newFile;
                 },
                 hideAfter: 6e3
             }
         });
+        Calc._newFile = false;
+        t._hasUnsavedChanges = false;
     });
 
     saveBtn.click(() => {
@@ -142,6 +144,7 @@ function eventHandlers() {
     });
 
     nodeAPI.receive("save-done", (msg) => {
+        Calc._newFile = false;
         Calc._calc.controller._hasUnsavedChanges = false;
     });
 
@@ -186,26 +189,29 @@ function addAlert(alert, type) {
             $(".dcg-dark-gray-link").click(() => $(".dcg-icon-remove-custom").click());
             $(".dcg-btn-red.dcg-action-delete").click(() => {
                 let saved = makeConfig();
+                saved._newFile = Calc._newFile;
                 let t = Calc._calc.controller;
                 $(".dcg-icon-remove-custom").click();
                 $(".dcg-config-name").text("Untitled Graph");
                 Calc.setBlank();
                 Calc.newRandomSeed();
-                t._hasUnsavedChanges = true;
                 t.dispatch({
                     type: "toast/show",
                     toast: {
-                        message: t.s("account-shell-text-new-graph-created"),
+                        message: t.s(`account-shell-text-${(Calc._newFile) ? "graph-cleared" : "new-graph-created"}`),
                         undoCallback: () => {
                             $(".dcg-config-name").text(saved.title);
                             Calc.setState(saved.state);
+                            Calc._newFile = saved._newFile;
                         },
                         hideAfter: 6e3
                     }
                 });
+                Calc._newFile = true;
+                t._hasUnsavedChanges = true;
                 nodeAPI.send("newFile", "[main] new file");
             });
-            if (!Calc._calc.controller._hasUnsavedChanges)
+            if (!Calc._hasUnsavedChanges())
                 $(".dcg-btn-red.dcg-action-delete").click();
             break;
 
