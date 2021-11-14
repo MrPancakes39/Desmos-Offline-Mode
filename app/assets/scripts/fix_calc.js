@@ -1,10 +1,5 @@
 function fixCalc() {
     let default_settings = {
-        __observers: {},
-        __eventObservers: {},
-        __oldProperties: { randomSeed: 'da01d19b8ec6413cf2839e412c8ee61a' },
-        __propertyComparators: {},
-        guid: 'guid_933076_1632673458878_11',
         showGrid: true,
         showXAxis: true,
         showYAxis: true,
@@ -74,8 +69,7 @@ function fixCalc() {
         sixKeyInput: false,
         brailleControls: true,
         zoomFit: true,
-        forceLogModeRegressions: false,
-        actions: 'auto'
+        forceLogModeRegressions: false
     };
 
     // Fix Calc Settings

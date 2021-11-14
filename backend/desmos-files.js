@@ -70,7 +70,7 @@ module.exports.aboutDesmos = () => {
         ver: require("../package.json").version,
         elec: process.versions["electron"],
         node: process.versions["node"],
-        os: `${os.type()} ${process.arch} ${os.release()}`
+        os: `${os.type()} ${os.arch()} ${os.release()}`
     }
     const stringify = JSON.stringify(info);
     win.webContents.send("open-about", stringify);

@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/MrPancakes39/Desmos-Offline-Mode#readme",
   "devDependencies": {
-    "electron": "^13.1.6",
+    "electron": "^13.6.1",
     "electron-packager": "^15.4.0"
   }
 }

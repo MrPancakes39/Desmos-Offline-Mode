@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, Menu, nativeTheme } = require("electron");
 
 const fs = require("fs");
 const path = require("path");
@@ -34,6 +34,7 @@ function createWindow(filePath) {
 }
 
 app.whenReady().then(() => {
+    nativeTheme.themeSource = "dark";
     if (process.argv.length >= 2 && process.argv[1] !== ".") {
         let filePath = process.argv[1];
         if (validateFile(filePath))

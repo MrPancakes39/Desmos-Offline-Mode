@@ -99,6 +99,11 @@ function eventHandlers() {
                 });
             }
         });
+        const reverseColors = $(".dcg-checkbox[aria-label='Reverse Contrast']");
+        reverseColors.parent().unbind().click(() => {
+            const checked = (reverseColors.attr("aria-checked") === "true") ? true : false;
+            $("body").css("background", (checked ? "#000" : "#fff"));
+        });
     });
 
     setInterval(() => {
