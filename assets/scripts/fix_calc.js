@@ -82,6 +82,8 @@ function fixCalc() {
     Calc.default_settings = default_settings;
     Calc.updateSettings(default_settings);
     Calc.newRandomSeed();
+    Calc.setBlank();
+    Calc.focusFirstExpression();
 
     Calc.getSelectedItem = () => {
         let e = Calc._calc.controller.getSelectedItem();
