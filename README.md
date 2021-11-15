@@ -3,12 +3,6 @@
 Desmos is a well known Graphing Calculator available for the web and mobile, but no desktop port exist.
 
 Desmos Offline Mode is a desktop port of Desmos Web Version, with the added feature of working offline.
-
-## Branches
-
-`web-app`: Desmos Offline Mode as a web app.  
-`docker`: A docker container for the web app.  
-`main`: The desktop app based of web app.
  
 # Build Instructions:
 
