@@ -27,6 +27,16 @@ Calc.colorRotation is the default color rotation in desmos.
 Calc.getSelectedItem() is used to get the current selected/focused expression.  
 It returns an expression with same format returned from Calc.getExpressions().
 
+&#x1F537; **Set Item Color**:  
+Calc.setItemColor() is used to set the selected/focused expression's color.
+
+&#x1F537; **Get Next Color**:  
+Calc.getNextColor() is used to get next color in desmos color rotation.
+
+&#x1F537; **Set Next Color**:  
+Calc.setNextColor() is used to set next coloe in desmos color rotation.
+
+
 ## Private:
 
 ### Variables:
