@@ -1,7 +1,7 @@
 {
   "name": "desmos-offline-mode",
   "version": "1.0.0",
-  "description": "Desmos Calc that works offline",
+  "description": "Desmos Graphing Calculator as a Desktop App",
   "main": "index.js",
   "scripts": {
     "start": "electron .",
