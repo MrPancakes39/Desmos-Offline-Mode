@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Desmos Offline Mode"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion APP_VER
 #define MyAppPublisher "Salman's Production"
 #define MyAppExeName "desmos-offline-mode.exe"
 #define MyAppAssocName "Desmos Graph File"
