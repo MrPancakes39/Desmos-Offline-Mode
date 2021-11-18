@@ -34,6 +34,7 @@ build_script:
   - sh: cd .. && ls release-builds/
 
   # Creates Exe Setup with Inno Setup for Windows.
+  - ps: if($isWindows) { copy .\resources\desmos_file.ico .\release-builds\desmos-offline-mode-win32-ia32\ }
   - ps: if ($isWindows) { (Get-Content -Raw -Path desmos-setup.iss) -replace "APP_VER",('"'+$env:package_version+'"') | Set-Content -Path desmos-setup.iss }
   - cmd: C:\"Program Files (x86)"\"Inno Setup 6"\ISCC.exe .\desmos-setup.iss
   - ps: if ($isWindows) { move Output\desmos-setup.exe release-builds\desmos-setup.exe }
