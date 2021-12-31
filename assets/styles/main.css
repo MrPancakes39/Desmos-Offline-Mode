@@ -10,18 +10,29 @@
     align-items: center;
 }
 
-.align-left-container > .dcg-icon.dcg-icon-plus {
-    font-size: 18px;
+.new-graph-btn {
     margin-left: 10px;
+}
+
+.new-graph-btn > .dcg-tooltip-hit-area-container {
+    height: 28px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.align-left-container .dcg-icon.dcg-icon-plus {
+    font-size: 18px;
     color: #ddd;
     cursor: pointer;
 }
 
-.align-left-container > .dcg-icon.dcg-icon-plus:hover {
+.align-left-container .dcg-icon.dcg-icon-plus:hover {
     color: #fff;
 }
 
 .dcg-testmode-api-container .dcg-header .align-left-container .title-div {
+    display: flex;
     margin-left: 10px;
     margin-right: 10px;
     max-width: 210px;
@@ -35,6 +46,7 @@
     .dcg-config-name {
     margin-left: 0;
     color: #ddd;
+    line-height: 28px;
 }
 
 .dcg-config-name {
@@ -54,8 +66,8 @@
     cursor: pointer;
 }
 
-.save-btn-container > .dcg-action-save,
-.open-btn-container > .dcg-action-open {
+.save-btn-container .dcg-action-save,
+.open-btn-container .dcg-action-open {
     display: block;
     margin-right: 5px;
     padding-left: 15px;
@@ -64,7 +76,7 @@
     line-height: 32px;
 }
 
-.open-btn-container > input {
+.open-btn-container input {
     display: none;
 }
 
