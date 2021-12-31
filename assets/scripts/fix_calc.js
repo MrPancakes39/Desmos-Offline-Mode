@@ -139,7 +139,182 @@ define("calc/private_props", ["jquery"], function ($) {
     };
 });
 
-define("calc/fix_calc", ["calc/default_settings"], function (settings) {
+define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function (
+    $,
+    props
+) {
+    return function () {
+        $(document).keydown((e) => {
+            e.superKey = e["originalEvent"].getModifierState("OS");
+
+            const noMod = !e.ctrlKey && !e.shiftKey && !e.altKey && !e.superKey;
+            const Ctrl = e.ctrlKey && !e.shiftKey && !e.altKey && !e.superKey;
+            const Shift = !e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey;
+            const Alt = !e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
+            const Super = !e.ctrlKey && !e.shiftKey && !e.altKey && e.superKey;
+            const CtrlShift = e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey; // prettier-ignore
+            const CtrlAlt = e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
+            const ShiftAlt = !e.ctrlKey && e.shiftKey && e.altKey && !e.superKey; // prettier-ignore
+            const CtrlAltShift = e.ctrlKey && e.shiftKey && e.altKey && !e.superKey; // prettier-ignore
+
+            // Close a dialog
+            if (noMod && e.code === "Escape") {
+                const dcg_elt = $("#dcg-modal-container .dcg-icon-remove");
+                if (dcg_elt.length) {
+                    dcg_elt.trigger("dcg-tap");
+                }
+                const alert_elt = $(".dcg-alert-container");
+                if (alert_elt.length) {
+                    alert_elt.remove();
+                }
+                return;
+            }
+            // New Graph
+            if (Ctrl && e.code === "KeyN") {
+                e.preventDefault();
+                $(".align-left-container .dcg-icon.dcg-icon-plus").click();
+                return;
+            }
+            // Open a Graph
+            if (Ctrl && e.code === "KeyO") {
+                e.preventDefault();
+                $(".dcg-action-open").click();
+                return;
+            }
+            // Save a Graph
+            if (Ctrl && e.code === "KeyS") {
+                e.preventDefault();
+                $(".save-btn-container").click();
+                return;
+            }
+            // Show or Hide the Expression List
+            if (ShiftAlt && e.code === "KeyE") {
+                e.preventDefault();
+                const t = Calc._calc.controller;
+                const expVisible = t.layoutModel.expressionsVisible;
+                if (expVisible) {
+                    t.dispatch({
+                        type: "hide-expressions-list",
+                        focusShowIcon: !1,
+                    });
+                } else {
+                    t.dispatch({
+                        type: "show-expressions-list",
+                        focusShowIcon: !1,
+                    });
+                }
+                return;
+            }
+            // Focus the Expression List
+            if (CtrlAlt && e.code === "KeyE") {
+                Calc.focusFirstExpression();
+                return;
+            }
+            // Toggle Options for the Focused Expression
+            if (CtrlShift && e.code === "KeyO") {
+                let t = Calc._calc.controller;
+                let item = t.getSelectedItem();
+                if (
+                    item &&
+                    (item.type === "expression" || item.type === "image")
+                )
+                    props.toggleOptions(item);
+                return;
+            }
+            // Delete the Focused Expression
+            if (CtrlShift && e.code === "KeyD") {
+                Calc.removeSelected();
+                return;
+            }
+            // Add an Expression
+            if (CtrlAlt && e.code === "KeyX") {
+                props.addItem("expression");
+                return;
+            }
+            // Add a Note
+            if (CtrlAlt && e.code === "KeyO") {
+                props.addItem("note");
+                return;
+            }
+            // Collapse / Expand Selected Folder
+            if (Alt && e.code === "ArrowUp") {
+                let t = Calc._calc.controller;
+                let item = t.getSelectedItem();
+                if (item && item.type === "folder") {
+                    item.model = t.getItemModel(item.id);
+                    t.dispatch({
+                        type: "set-folder-collapsed",
+                        id: item.id,
+                        isCollapsed: !item.model.collapsed,
+                    });
+                }
+            }
+            // Add a Folder
+            if (CtrlAlt && e.code === "KeyF") {
+                props.addItem("folder");
+                return;
+            }
+            // Add a Note
+            if (CtrlAlt && e.code === "KeyI") {
+                props.addItem("image");
+                return;
+            }
+            // Add a Table
+            if (CtrlAlt && e.code === "KeyT") {
+                props.addItem("table");
+                return;
+            }
+            // Undo
+            if (Ctrl && e.code === "KeyZ") {
+                const t = Calc._calc.controller;
+                if (t.hasVisibleAndUndoableToast()) {
+                    t.toastUndo();
+                } else {
+                    Calc.undo();
+                }
+                return;
+            }
+            // Redo
+            if (
+                (CtrlShift && e.code === "KeyZ") ||
+                (Ctrl && e.code === "KeyY")
+            ) {
+                Calc.redo();
+                return;
+            }
+            // Turn Edit List Mode On or Off
+            if (CtrlAlt && e.code === "KeyD") {
+                let t = Calc._calc.controller;
+                let mode = !t.isInEditListMode();
+                t.dispatch({
+                    type: "set-edit-list-mode",
+                    isEditListMode: mode,
+                    focusExpressionList: !0,
+                });
+                return;
+            }
+            // Open or Close the Graph Settings Menu
+            if (CtrlAlt && e.code === "KeyG") {
+                Calc._calc.controller.dispatch({
+                    type: "toggle-graph-settings",
+                    focusOnOpen: !0,
+                });
+                return;
+            }
+            // Open or Close the Help Menu
+            if (CtrlAlt && e.code === "KeyH") {
+                $(".dcg-help-btn").trigger("dcg-tap");
+                return;
+            }
+        });
+    };
+});
+
+define("calc/fix_calc", [
+    "calc/default_settings",
+    "calc/private_props",
+    "calc/fix_shortcuts",
+], function (settings, props, fixShortcuts) {
     return function () {
         // Fix Calc Settings
         Calc.updateSettings(settings);
@@ -155,16 +330,15 @@ define("calc/fix_calc", ["calc/default_settings"], function (settings) {
         Calc.getNextColor = () => {
             let t = Calc._calc.controller;
             let index = t.listModel.colorIdx;
-            return Calc.colorRotation[index];
+            return props.colorRotation[index];
         };
 
         Calc.setNextColor = (color) => {
-            let validColors = Calc.colorRotation;
-            if (!validColors.includes(color)) {
+            if (!props.colorRotation.includes(color)) {
                 throw new Error(`${color} is not a valid color.`);
             }
             let t = Calc._calc.controller;
-            let id = validColors.indexOf(color);
+            let id = props.colorRotation.indexOf(color);
             t.listModel.colorIdx = id;
         };
 
@@ -176,6 +350,7 @@ define("calc/fix_calc", ["calc/default_settings"], function (settings) {
                 Calc.setExpression(e);
         };
 
+        fixShortcuts();
         console.log("[fix_calc] calc api fixed!");
     };
 });
