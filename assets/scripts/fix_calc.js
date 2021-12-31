@@ -324,7 +324,20 @@ define("calc/fix_calc", [
 
         Calc.getSelectedItem = () => {
             let e = Calc._calc.controller.getSelectedItem();
-            if (e) return Calc._santizer.sanitizeItem(e);
+            if (e) {
+                let i = Calc._santizer.sanitizeItem(e);
+                if (i.type === "expression") {
+                    delete i.fill;
+                    delete i.lines;
+                    delete i.points;
+                    i.domain = { min: "0", max: "1" };
+                }
+                if (i.type === "table") {
+                    i.columns.pop();
+                    i.columns.forEach((v) => v.values.pop());
+                }
+                return i;
+            }
         };
 
         Calc.getNextColor = () => {
