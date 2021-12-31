@@ -136,6 +136,7 @@ define("calc/private_props", ["jquery"], function ($) {
                     .click();
             }
         },
+        sanitizer: Desmos.require("graphing-calc/api/sanitize-expression"),
     };
 });
 
@@ -325,7 +326,7 @@ define("calc/fix_calc", [
         Calc.getSelectedItem = () => {
             let e = Calc._calc.controller.getSelectedItem();
             if (e) {
-                let i = Calc._santizer.sanitizeItem(e);
+                let i = props.santizer.sanitizeItem(e);
                 if (i.type === "expression") {
                     delete i.fill;
                     delete i.lines;
