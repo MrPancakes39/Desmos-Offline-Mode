@@ -1,5 +1,4 @@
 @media only print {
-
     html,
     body,
     .dcg-calculator-api-container .dcg-sliding-interior,
@@ -69,7 +68,9 @@
         border: none;
     }
 
-    .dcg-calculator-api-container .dcg-exppanel-outer .dcg-exppanel-container.dcg-add-shadow {
+    .dcg-calculator-api-container
+        .dcg-exppanel-outer
+        .dcg-exppanel-container.dcg-add-shadow {
         box-shadow: none;
     }
 
@@ -78,7 +79,10 @@
         border-top: 1px solid #ddd;
     }
 
-    .dcg-calculator-api-container .dcg-exppanel-outer .dcg-expressionitem .dcg-tab {
+    .dcg-calculator-api-container
+        .dcg-exppanel-outer
+        .dcg-expressionitem
+        .dcg-tab {
         border: 0;
     }
 
@@ -91,13 +95,19 @@
         margin-top: 800px;
     }
 
-    .dcg-calculator-api-container .dcg-exppanel-outer .dcg-expressionitem .dcg-variable-index {
+    .dcg-calculator-api-container
+        .dcg-exppanel-outer
+        .dcg-expressionitem
+        .dcg-variable-index {
         font-size: 14px;
         color: #aaa;
         text-align: center;
     }
 
-    .dcg-calculator-api-container .dcg-exppanel-outer .dcg-expressionitem .dcg-variable-index:after {
+    .dcg-calculator-api-container
+        .dcg-exppanel-outer
+        .dcg-expressionitem
+        .dcg-variable-index:after {
         content: ".";
     }
 
@@ -105,7 +115,10 @@
         left: 0 !important;
     }
 
-    #graph-container .dcg-calculator-api-container .dcg-grapher canvas:first-of-type {
+    #graph-container
+        .dcg-calculator-api-container
+        .dcg-grapher
+        canvas:first-of-type {
         border: 2px solid #444;
     }
 
