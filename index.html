@@ -47,10 +47,10 @@
     <script src="assets/scripts/fix_calc.js"></script>
     <script src="assets/scripts/main.js"></script>
     <script>
-        require(['testbridge', 'jquery', 'toplevel/calculator_practice', 'calc/init'], function(TestBridge, $, __toplevel, init) {
+        require(['testbridge', 'jquery', 'toplevel/calculator_practice', 'calc/init'], function(TestBridge, $, __toplevel, app_init) {
+            app_init();
             $('.dcg-loading-div-container').fadeOut();
             TestBridge.ready();
-            init();
         });
     </script>
 </body>

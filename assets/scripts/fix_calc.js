@@ -365,6 +365,8 @@ define("calc/fix_calc", [
         };
 
         fixShortcuts();
+        window._ = Desmos._;
+
         console.log("[fix_calc] calc api fixed!");
     };
 });
