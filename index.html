@@ -44,10 +44,13 @@
     <script src="assets/desmos/api_practice_mode.js"></script>
     <script src="assets/desmos/locales.js"></script>
     <script src="assets/desmos/calculator_practice.js"></script>
+    <script src="assets/scripts/fix_calc.js"></script>
+    <script src="assets/scripts/main.js"></script>
     <script>
-        require(['testbridge', 'jquery', 'toplevel/calculator_practice'], function(TestBridge, $, __toplevel) {
+        require(['testbridge', 'jquery', 'toplevel/calculator_practice', 'calc/init'], function(TestBridge, $, __toplevel, init) {
             $('.dcg-loading-div-container').fadeOut();
             TestBridge.ready();
+            init();
         });
     </script>
 </body>
