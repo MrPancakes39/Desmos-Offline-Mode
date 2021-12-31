@@ -19,10 +19,6 @@
     <link rel="stylesheet" href="assets/styles/main.css" />
     <link rel="stylesheet" href="assets/styles/print.css" />
     <script src="assets/scripts/file_downloader.js"></script>
-    <script src="assets/scripts/fix_shortcuts.js"></script>
-    <script src="assets/scripts/fix_calc.js"></script>
-    <script src="assets/scripts/alerts.js"></script>
-    <script src="assets/scripts/main.js"></script>
 
     <div id="root"></div>
     <div class="dcg-loading-div-container">
@@ -52,11 +48,6 @@
         require(['testbridge', 'jquery', 'toplevel/calculator_practice'], function(TestBridge, $, __toplevel) {
             $('.dcg-loading-div-container').fadeOut();
             TestBridge.ready();
-
-            window._ = Desmos._;
-            fixCalc();
-            setupDOM();
-            eventHandlers();
         });
     </script>
 </body>
