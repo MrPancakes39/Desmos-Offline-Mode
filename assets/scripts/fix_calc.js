@@ -73,6 +73,15 @@ define("calc/default_settings", [], function () {
     };
 });
 
+define("calc/make_config", [], function () {
+    return function () {
+        let config = {};
+        config["title"] = $(".dcg-config-name").text();
+        config["state"] = Calc.getState();
+        return config;
+    };
+});
+
 define("calc/private_props", ["jquery"], function ($) {
     return {
         colorRotation: [
@@ -365,8 +374,6 @@ define("calc/fix_calc", [
         };
 
         fixShortcuts();
-        window._ = Desmos._;
-
         console.log("[fix_calc] calc api fixed!");
     };
 });
