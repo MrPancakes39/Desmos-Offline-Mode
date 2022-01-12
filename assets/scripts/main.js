@@ -1,14 +1,16 @@
+// creates the dcg elements for the app
 define("calc/setup_dom", [
     "jquery",
     "dcgview",
     "shared-components/tooltip",
-], function ($, n, t) {
+    "calc/add_alert",
+    "calc/make_config",
+], function ($, n, t, addAlert, makeConfig) {
     return function () {
+        const fDown = new FileDownloader();
+
         // change header's background color
-        $(".dcg-header.dcg-secure-header.dcg-header-desktop").css(
-            "background-color",
-            "#2a2a2a"
-        );
+        $(".dcg-header").css("background-color", "#2a2a2a");
 
         // create left-container elements
         const left_container = $(".align-left-container")[0];
@@ -23,7 +25,10 @@ define("calc/setup_dom", [
                     // new-graph-btn
                     n.createElement(
                         "div",
-                        { class: n.const("new-graph-btn") },
+                        {
+                            class: n.const("new-graph-btn"),
+                            onClick: () => addAlert({ type: "confirm" }),
+                        },
                         n.createElement(
                             t.Tooltip,
                             {
@@ -50,6 +55,15 @@ define("calc/setup_dom", [
                                     role: n.const("heading"),
                                     tooltip: n.const("Rename (f2)"),
                                     "aria-level": n.const("1"),
+                                    onClick: () => {
+                                        let txt = $(".dcg-config-name").text();
+                                        let title = txt != "Untitled Graph" ? txt : "";
+                                        addAlert({
+                                            type: "rename",
+                                            args: { title },
+                                        });
+                                        $(".title-input").select();
+                                    },
                                 },
                                 n.const("Untitled Graph")
                             )
@@ -65,15 +79,64 @@ define("calc/setup_dom", [
                             n.createElement("input", {
                                 type: n.const("file"),
                                 accept: n.const("application/desmos"),
+                                onChange: function () {
+                                    let input = $(".open-btn-container input")[0];
+                                    let file = input.files[0];
+                                    let fr = new FileReader();
+                                    let t = Calc._calc.controller;
+
+                                    if (!file)
+                                        t.dispatch({
+                                            type: "toast/show",
+                                            toast: {
+                                                message: "Please select a file",
+                                                toastStyle: "error",
+                                                hideAfter: 6e3,
+                                            },
+                                        });
+                                    else if (!/\.desmos$/g.test(file.name))
+                                        t.dispatch({
+                                            type: "toast/show",
+                                            toast: {
+                                                message: "Please select a .desmos file",
+                                                toastStyle: "error",
+                                                hideAfter: 6e3,
+                                            },
+                                        });
+                                    else {
+                                        fr.onload = () => {
+                                            let data = JSON.parse(fr.result);
+                                            let saved = makeConfig();
+                                            t.dispatch({
+                                                type: "toast/show",
+                                                toast: {
+                                                    message: t.s(
+                                                        "account-shell-text-mygraphs-opened-graph",
+                                                        {
+                                                            graphTitle: data["title"],
+                                                        }
+                                                    ),
+                                                    undoCallback: () => {
+                                                        $(".dcg-config-name").text(saved.title);
+                                                        Calc.setState(saved.state);
+                                                    },
+                                                    hideAfter: 6e3,
+                                                },
+                                            });
+                                            $(".dcg-config-name").text(data["title"]);
+                                            Calc.setState(data["state"]);
+                                        };
+                                        fr.readAsText(file);
+                                    }
+                                },
                             }),
                             n.createElement(
                                 "span",
                                 {
-                                    class: n.const(
-                                        "dcg-action-open tooltip-offset dcg-btn-red"
-                                    ),
+                                    class: n.const("dcg-action-open tooltip-offset dcg-btn-red"),
                                     role: n.const("button"),
                                     tooltip: n.const("Open Graph (ctrl+o)"),
+                                    onClick: () => $(".open-btn-container input").click(),
                                 },
                                 n.const("Open")
                             )
@@ -82,16 +145,21 @@ define("calc/setup_dom", [
                     // save-btn
                     n.createElement(
                         "span",
-                        { class: n.const("save-btn-container") },
+                        {
+                            class: n.const("save-btn-container"),
+                            onClick: () => {
+                                let config = makeConfig();
+                                let stringify = JSON.stringify(config);
+                                fDown.saveStrings(stringify.split("\n"), config["title"], "desmos");
+                            },
+                        },
                         n.createElement(
                             t.Tooltip,
                             { tooltip: n.const("Save Changes (ctrl+s)") },
                             n.createElement(
                                 "span",
                                 {
-                                    class: n.const(
-                                        "dcg-action-save tooltip-offset dcg-btn-green"
-                                    ),
+                                    class: n.const("dcg-action-save tooltip-offset dcg-btn-green"),
                                     role: n.const("button"),
                                     tooltip: n.const("Save Changes (ctrl+s)"),
                                 },
@@ -157,9 +225,14 @@ define("calc/setup_dom", [
                     );
                 // remove elements wrappers
                 $(c).replaceWith(() => $(c).children());
-                $(right_container).replaceWith(() =>
-                    $(right_container).children()
-                );
+                $(right_container).replaceWith(() => $(right_container).children());
+
+                // event handlers
+                $(".dcg-icon-screenshot").on("click", () => {
+                    fDown.saveImage(Calc.screenshot());
+                    $(".dcg-tooltip-mount-pt-screenshot").hide();
+                });
+                $(".dcg-icon-web").on("click", () => Calc._calc.controller._openOnWeb());
             },
         });
         n.mountToNode(right_elts, right_container);
@@ -168,12 +241,64 @@ define("calc/setup_dom", [
     };
 });
 
-define("calc/init", ["calc/fix_calc", "calc/setup_dom"], function (
+// creates additional shorcuts for default modal
+define("calc/shortcut_modal_setup", ["jquery"], function ($) {
+    // creates a row for table
+    function createRow(shortcut, keys) {
+        let elt = `<tr><td>${shortcut}</td><td class="dcg-keyboard-shortcut dcg-os-windows">`;
+        keys.forEach((key) => {
+            elt += `<span class="dcg-key-command">${key}</span>+`;
+        });
+        elt = elt.slice(0, -1);
+        elt += `<td class="dcg-keyboard-shortcut dcg-os-mac" style="display: none;"></td></tr>`;
+        return $(elt);
+    }
+
+    return function () {
+        let table = $(".dcg-hotkey-section-header:contains('Common Actions')").next();
+        let rows = table.children();
+
+        $(rows[2]).before(createRow("Rename a Graph", ["F2"]));
+        $(rows[2]).before(createRow("Create a New Graph", ["CTRL", "N"]));
+        $(rows[2]).before(createRow("Open a Graph", ["CTRL", "O"]));
+        $(rows[2]).before(createRow("Save a Graph", ["CTRL", "S"]));
+        $(rows[2]).before(createRow("Print a Graph", ["CTRL", "P"]));
+        $(rows[2]).before(createRow("Show or Hide the Expression List", ["SHIFT", "ALT", "E"]));
+        $(rows[3]).children(":first").text("Toggle Options for the Focused Expression");
+        $(rows[6]).before(createRow("Add a Note", ["CTRL", "ALT", "O"]));
+        $(rows[6]).before(createRow("Collapse / Expand Selected Folder", ["ALT", "Up Arrow"]));
+        $(rows[6]).before(createRow("Add a Folder", ["CTRL", "ALT", "F"]));
+        $(rows[6]).before(createRow("Add an Image", ["CTRL", "ALT", "I"]));
+    };
+});
+
+// sets up additional event listeners
+define("calc/event_handlers", ["jquery", "calc/shortcut_modal_setup"], function ($, shortModal) {
+    return function () {
+        // when we click on help icon
+        $(".dcg-help-btn").on("dcg-tap", () => {
+            let t = $(".dcg-non-chromeos-message");
+            if (t.length) {
+                // change modal's text
+                t.text(
+                    "You are using Desmos Offline Mode. As a result, some features may be missing. To use online version, visit www.desmos.com/calculator"
+                );
+                // when we open keyboard shortcuts modal.
+                $(".dcg-link").on("dcg-tap", shortModal);
+            }
+        });
+    };
+});
+
+// defines an init point
+define("calc/init", ["calc/fix_calc", "calc/setup_dom", "calc/event_handlers"], function (
     fixCalc,
-    setupDOM
+    setupDOM,
+    eventHandlers
 ) {
     return function () {
         fixCalc();
         setupDOM();
+        eventHandlers();
     };
 });
