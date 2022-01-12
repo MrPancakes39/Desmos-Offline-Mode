@@ -365,3 +365,7 @@
     animation: dcg-fadeIn-modal 0.3s;
     color: #444;
 }
+
+.dcg-testmode-api-container .dcg-singleappmode-help-container .dcg-help-links .dcg-link {
+    margin: 6px 0px;
+}
