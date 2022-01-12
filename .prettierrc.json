@@ -4,5 +4,7 @@
     "endOfLine": "lf",
     "tabWidth": 4,
     "trailingComma": "es5",
-    "singleQuote": false
+    "singleQuote": false,
+    "semi": true,
+    "printWidth": 100
 }

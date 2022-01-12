@@ -58,42 +58,31 @@ define("calc/alerts", [], function () {
     };
 });
 
-define("calc/add_alert", [
-    "jquery",
-    "lodash",
-    "calc/alerts",
-    "calc/make_config",
-], function ($, _, alerts, makeConfig) {
+define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"], function (
+    $,
+    _,
+    alerts,
+    makeConfig
+) {
     return function (props) {
         // Check props object
-        if (!_.isPlainObject(props))
-            throw new Error("props needs to be a plain object.");
-        if (!_.isString(props.type))
-            throw new Error("props.type needs to be a string.");
+        if (!_.isPlainObject(props)) throw new Error("props needs to be a plain object.");
+        if (!_.isString(props.type)) throw new Error("props.type needs to be a string.");
         let validTypes = ["custom", "rename", "confirm"];
-        if (!validTypes.includes(props.type))
-            throw new Error(`${props.type} is not a valid type.`);
+        if (!validTypes.includes(props.type)) throw new Error(`${props.type} is not a valid type.`);
         if (!_.isPlainObject(props.args)) props.args = {};
 
         // Creates alert
         let alert;
         if (props.type === "custom")
-            alert = alerts.customAlert(
-                props.args.title || "",
-                props.args.html || ""
-            );
-        else if (props.type === "rename")
-            alert = alerts.renameAlert(props.args.title || "");
+            alert = alerts.customAlert(props.args.title || "", props.args.html || "");
+        else if (props.type === "rename") alert = alerts.renameAlert(props.args.title || "");
         else alert = alerts.confirmAlert();
 
         // Adds alert to body
         $("body").append(alert);
-        $(".dcg-modal-background").click(() =>
-            $(".dcg-modal-background").parent().remove()
-        );
-        $(".dcg-icon-remove-custom").click(() =>
-            $(".dcg-alert-container").remove()
-        );
+        $(".dcg-modal-background").click(() => $(".dcg-modal-background").parent().remove());
+        $(".dcg-icon-remove-custom").click(() => $(".dcg-alert-container").remove());
 
         // set up the events
         if (props.type === "rename") {
@@ -105,9 +94,7 @@ define("calc/add_alert", [
             });
         }
         if (props.type === "confirm") {
-            $(".dcg-dark-gray-link").click(() =>
-                $(".dcg-icon-remove-custom").click()
-            );
+            $(".dcg-dark-gray-link").click(() => $(".dcg-icon-remove-custom").click());
             $(".dcg-btn-red.dcg-action-delete").click(() => {
                 let saved = makeConfig();
                 $(".dcg-icon-remove-custom").click();

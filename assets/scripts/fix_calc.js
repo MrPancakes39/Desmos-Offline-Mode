@@ -96,11 +96,7 @@ define("calc/private_props", ["jquery"], function ($) {
             let t = Calc._calc.controller;
             let item_modal = t.getItemModel(item.id);
             let item_type = item.sliderExists ? "slider" : item.type;
-            if (
-                item_type === "expression" ||
-                item_type === "image" ||
-                item_type === "slider"
-            ) {
+            if (item_type === "expression" || item_type === "image" || item_type === "slider") {
                 t.dispatch({
                     type: "toggle-item-settings-menu",
                     menu: {
@@ -110,9 +106,7 @@ define("calc/private_props", ["jquery"], function ($) {
                     },
                 });
             } else {
-                throw new Error(
-                    `"${item_type}" type doesn't have menu options.`
-                );
+                throw new Error(`"${item_type}" type doesn't have menu options.`);
             }
         },
 
@@ -134,9 +128,7 @@ define("calc/private_props", ["jquery"], function ($) {
                 let t = type === "note" ? "new-text" : `new-${type}`;
                 e.dispatch({ type: t });
             } else {
-                const imageInput = $(
-                    `<input type="file" accept="image/*" style="display: none">`
-                );
+                const imageInput = $(`<input type="file" accept="image/*" style="display: none">`);
                 imageInput
                     .on("change", () => {
                         const fileList = imageInput.prop("files");
@@ -149,10 +141,7 @@ define("calc/private_props", ["jquery"], function ($) {
     };
 });
 
-define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function (
-    $,
-    props
-) {
+define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, props) {
     return function () {
         $(document).keydown((e) => {
             e.superKey = e["originalEvent"].getModifierState("OS");
@@ -162,10 +151,10 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function (
             const Shift = !e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey;
             const Alt = !e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
             const Super = !e.ctrlKey && !e.shiftKey && !e.altKey && e.superKey;
-            const CtrlShift = e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey; // prettier-ignore
+            const CtrlShift = e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey;
             const CtrlAlt = e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
-            const ShiftAlt = !e.ctrlKey && e.shiftKey && e.altKey && !e.superKey; // prettier-ignore
-            const CtrlAltShift = e.ctrlKey && e.shiftKey && e.altKey && !e.superKey; // prettier-ignore
+            const ShiftAlt = !e.ctrlKey && e.shiftKey && e.altKey && !e.superKey;
+            const CtrlAltShift = e.ctrlKey && e.shiftKey && e.altKey && !e.superKey;
 
             // Close a dialog
             if (noMod && e.code === "Escape") {
@@ -224,10 +213,7 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function (
             if (CtrlShift && e.code === "KeyO") {
                 let t = Calc._calc.controller;
                 let item = t.getSelectedItem();
-                if (
-                    item &&
-                    (item.type === "expression" || item.type === "image")
-                )
+                if (item && (item.type === "expression" || item.type === "image"))
                     props.toggleOptions(item);
                 return;
             }
@@ -285,10 +271,7 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function (
                 return;
             }
             // Redo
-            if (
-                (CtrlShift && e.code === "KeyZ") ||
-                (Ctrl && e.code === "KeyY")
-            ) {
+            if ((CtrlShift && e.code === "KeyZ") || (Ctrl && e.code === "KeyY")) {
                 Calc.redo();
                 return;
             }
@@ -369,8 +352,7 @@ define("calc/fix_calc", [
             let e = Calc.getSelectedItem();
             if (typeof e === "undefined") return;
             e.color = color;
-            if (e.type === "expression" || e.type === "table")
-                Calc.setExpression(e);
+            if (e.type === "expression" || e.type === "table") Calc.setExpression(e);
         };
 
         fixShortcuts();
