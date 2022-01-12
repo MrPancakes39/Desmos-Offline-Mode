@@ -168,6 +168,11 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, prop
                 }
                 return;
             }
+            // Rename a Graph
+            if (e.code === "F2") {
+                $(".dcg-config-name").click();
+                return;
+            }
             // New Graph
             if (Ctrl && e.code === "KeyN") {
                 e.preventDefault();
