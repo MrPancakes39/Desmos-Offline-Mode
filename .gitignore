@@ -2,3 +2,4 @@ node_modules/
 app/
 release-builds/
 Output/
+assets/desmos/*
