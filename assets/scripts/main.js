@@ -56,7 +56,7 @@ define("calc/setup_dom", [
                                     tooltip: n.const("Rename (f2)"),
                                     "aria-level": n.const("1"),
                                     onClick: () => {
-                                        let txt = $(".dcg-config-name").text();
+                                        let txt = Calc.header.title;
                                         let title = txt != "Untitled Graph" ? txt : "";
                                         addAlert({
                                             type: "rename",
@@ -117,13 +117,13 @@ define("calc/setup_dom", [
                                                         }
                                                     ),
                                                     undoCallback: () => {
-                                                        $(".dcg-config-name").text(saved.title);
+                                                        Calc.header.title = saved.title;
                                                         Calc.setState(saved.state);
                                                     },
                                                     hideAfter: 6e3,
                                                 },
                                             });
-                                            $(".dcg-config-name").text(data["title"]);
+                                            Calc.header.title = data["title"];
                                             Calc.setState(data["state"]);
                                         };
                                         fr.readAsText(file);
@@ -305,14 +305,16 @@ define("calc/event_handlers", [
 });
 
 // defines an init point
-define("calc/init", ["calc/fix_calc", "calc/setup_dom", "calc/event_handlers"], function (
-    fixCalc,
-    setupDOM,
-    eventHandlers
-) {
+define("calc/init", [
+    "calc/fix_calc",
+    "calc/setup_dom",
+    "calc/event_handlers",
+    "calc/header",
+], function (fixCalc, setupDOM, eventHandlers, makeHeader) {
     return function () {
         fixCalc();
         setupDOM();
+        makeHeader();
         eventHandlers();
     };
 });

@@ -1,7 +1,7 @@
 define("calc/make_config", [], function () {
     return function () {
         let config = {};
-        config["title"] = $(".dcg-config-name").text();
+        config["title"] = Calc.header.title;
         config["state"] = Calc.getState();
         return config;
     };
@@ -92,7 +92,7 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, prop
                 },
                 // Rename a Graph
                 F2: () => {
-                    $(".dcg-config-name").click();
+                    Calc.header.clickTitle();
                 },
                 // New Graph
                 "Ctrl+KeyN": () => {
@@ -211,25 +211,12 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, prop
     };
 });
 
-define("calc/fix_calc", ["calc/private_props", "calc/fix_shortcuts"], function (
-    props,
-    fixShortcuts
-) {
+define("calc/custom_methods", ["calc/private_props"], function (props) {
     return function () {
-        // Generate Calc
-        let container = document.querySelector("#graph-container .dcg-wrapper");
-        container.innerHTML = "";
-        window.Calc = Desmos.GraphingCalculator(container);
-
-        // Fix Calc Settings
-        Calc.newRandomSeed();
-        Calc.setBlank();
-        Calc.focusFirstExpression();
-
         Calc.getSelectedItem = () => {
             let e = Calc._calc.controller.getSelectedItem();
             if (e) {
-                let i = props.santizer.sanitizeItem(e);
+                let i = props.sanitizer.sanitizeItem(e);
                 if (i.type === "expression") {
                     delete i.fill;
                     delete i.lines;
@@ -265,7 +252,44 @@ define("calc/fix_calc", ["calc/private_props", "calc/fix_shortcuts"], function (
             e.color = color;
             if (e.type === "expression" || e.type === "table") Calc.setExpression(e);
         };
+    };
+});
 
+define("calc/header", [], function () {
+    return function () {
+        let e = {};
+        e.rootElt = document.querySelector(".dcg-header");
+        let titleDOM = e.rootElt.querySelector(".dcg-config-name");
+        Object.defineProperty(e, "title", {
+            get() {
+                return titleDOM.innerText;
+            },
+            set(value) {
+                titleDOM.innerText = value;
+            },
+            enumerable: true,
+        });
+        e.clickTitle = () => titleDOM.click();
+        Calc.header = e;
+    };
+});
+
+define("calc/fix_calc", ["calc/fix_shortcuts", "calc/custom_methods"], function (
+    fixShortcuts,
+    customMethods
+) {
+    return function () {
+        // Generate Calc
+        let container = document.querySelector("#graph-container .dcg-wrapper");
+        container.innerHTML = "";
+        window.Calc = Desmos.GraphingCalculator(container);
+
+        // Fix Calc Settings
+        Calc.newRandomSeed();
+        Calc.setBlank();
+        Calc.focusFirstExpression();
+
+        customMethods();
         fixShortcuts();
         console.log("[fix_calc] calc api fixed!");
     };

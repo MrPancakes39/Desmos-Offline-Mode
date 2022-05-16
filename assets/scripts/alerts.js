@@ -89,7 +89,7 @@ define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"]
             $(".title-save").click(() => {
                 let txt = $(".title-input").val();
                 let title = txt != "" ? txt : "Untitled Graph";
-                $(".dcg-config-name").text(title);
+                Calc.header.title = title;
                 $(".dcg-icon-remove-custom").click();
             });
         }
@@ -98,7 +98,7 @@ define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"]
             $(".dcg-btn-red.dcg-action-delete").click(() => {
                 let saved = makeConfig();
                 $(".dcg-icon-remove-custom").click();
-                $(".dcg-config-name").text("Untitled Graph");
+                Calc.header.title = "Untitled Graph";
                 Calc.setBlank();
                 Calc.newRandomSeed();
                 let t = Calc._calc.controller;
@@ -107,7 +107,7 @@ define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"]
                     toast: {
                         message: t.s("account-shell-text-new-graph-created"),
                         undoCallback: () => {
-                            $(".dcg-config-name").text(saved.title);
+                            Calc.header.title = saved.title;
                             Calc.setState(saved.state);
                         },
                         hideAfter: 6e3,
