@@ -1,78 +1,3 @@
-define("calc/default_settings", [], function () {
-    return {
-        showGrid: true,
-        showXAxis: true,
-        showYAxis: true,
-        xAxisStep: 0,
-        yAxisStep: 0,
-        xAxisMinorSubdivisions: 0,
-        yAxisMinorSubdivisions: 0,
-        xAxisArrowMode: "NONE",
-        yAxisArrowMode: "NONE",
-        xAxisLabel: "",
-        yAxisLabel: "",
-        xAxisNumbers: true,
-        yAxisNumbers: true,
-        polarMode: false,
-        polarNumbers: true,
-        degreeMode: false,
-        randomSeed: "a2779c2a4fc02c679fa49e2297d6a930",
-        restrictGridToFirstQuadrant: false,
-        keypad: true,
-        graphpaper: true,
-        expressions: true,
-        settingsMenu: true,
-        zoomButtons: true,
-        showResetButtonOnGraphpaper: false,
-        expressionsTopbar: true,
-        capExpressionSize: false,
-        pointsOfInterest: true,
-        trace: true,
-        border: false,
-        lockViewport: false,
-        expressionsCollapsed: false,
-        administerSecretFolders: false,
-        advancedStyling: false,
-        images: true,
-        folders: true,
-        notes: true,
-        sliders: true,
-        links: true,
-        qwertyKeyboard: true,
-        restrictedFunctions: false,
-        forceEnableGeometryFunctions: false,
-        pasteGraphLink: true,
-        pasteTableData: true,
-        clearIntoDegreeMode: false,
-        autosize: true,
-        plotSingleVariableImplicitEquations: true,
-        plotImplicits: true,
-        plotInequalities: true,
-        colors: {
-            RED: "#c74440",
-            BLUE: "#2d70b3",
-            GREEN: "#388c46",
-            ORANGE: "#fa7e19",
-            PURPLE: "#6042a6",
-            BLACK: "#000000",
-        },
-        invertedColors: false,
-        functionDefinition: true,
-        projectorMode: false,
-        decimalToFraction: true,
-        fontSize: 16,
-        language: "en",
-        backgroundColor: "#fff",
-        textColor: "#000",
-        distributions: true,
-        brailleMode: "none",
-        sixKeyInput: false,
-        brailleControls: true,
-        zoomFit: true,
-        forceLogModeRegressions: false,
-    };
-});
-
 define("calc/make_config", [], function () {
     return function () {
         let config = {};
@@ -308,14 +233,17 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, prop
     };
 });
 
-define("calc/fix_calc", [
-    "calc/default_settings",
-    "calc/private_props",
-    "calc/fix_shortcuts",
-], function (settings, props, fixShortcuts) {
+define("calc/fix_calc", ["calc/private_props", "calc/fix_shortcuts"], function (
+    props,
+    fixShortcuts
+) {
     return function () {
+        // Generate Calc
+        let container = document.querySelector("#graph-container .dcg-wrapper");
+        container.innerHTML = "";
+        window.Calc = Desmos.GraphingCalculator(container);
+
         // Fix Calc Settings
-        Calc.updateSettings(settings);
         Calc.newRandomSeed();
         Calc.setBlank();
         Calc.focusFirstExpression();
