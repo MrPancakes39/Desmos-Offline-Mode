@@ -71,164 +71,142 @@ define("calc/fix_shortcuts", ["jquery", "calc/private_props"], function ($, prop
         $(document).keydown((e) => {
             e.superKey = e["originalEvent"].getModifierState("OS");
 
-            const noMod = !e.ctrlKey && !e.shiftKey && !e.altKey && !e.superKey;
-            const Ctrl = e.ctrlKey && !e.shiftKey && !e.altKey && !e.superKey;
-            const Shift = !e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey;
-            const Alt = !e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
-            const Super = !e.ctrlKey && !e.shiftKey && !e.altKey && e.superKey;
-            const CtrlShift = e.ctrlKey && e.shiftKey && !e.altKey && !e.superKey;
-            const CtrlAlt = e.ctrlKey && !e.shiftKey && e.altKey && !e.superKey;
-            const ShiftAlt = !e.ctrlKey && e.shiftKey && e.altKey && !e.superKey;
-            const CtrlAltShift = e.ctrlKey && e.shiftKey && e.altKey && !e.superKey;
+            let comb = "";
+            comb += e.superKey ? "Super+" : "";
+            comb += e.ctrlKey ? "Ctrl+" : "";
+            comb += e.shiftKey ? "Shift+" : "";
+            comb += e.altKey ? "Alt+" : "";
+            comb += e.code;
 
-            // Close a dialog
-            if (noMod && e.code === "Escape") {
-                const dcg_elt = $("#dcg-modal-container .dcg-icon-remove");
-                if (dcg_elt.length) {
-                    dcg_elt.trigger("dcg-tap");
-                }
-                const alert_elt = $(".dcg-alert-container");
-                if (alert_elt.length) {
-                    alert_elt.remove();
-                }
-                return;
-            }
-            // Rename a Graph
-            if (e.code === "F2") {
-                $(".dcg-config-name").click();
-                return;
-            }
-            // New Graph
-            if (Ctrl && e.code === "KeyN") {
-                e.preventDefault();
-                $(".align-left-container .dcg-icon.dcg-icon-plus").click();
-                return;
-            }
-            // Open a Graph
-            if (Ctrl && e.code === "KeyO") {
-                e.preventDefault();
-                $(".dcg-action-open").click();
-                return;
-            }
-            // Save a Graph
-            if (Ctrl && e.code === "KeyS") {
-                e.preventDefault();
-                $(".save-btn-container").click();
-                return;
-            }
-            // Show or Hide the Expression List
-            if (ShiftAlt && e.code === "KeyE") {
-                e.preventDefault();
-                const t = Calc._calc.controller;
-                const expVisible = t.layoutModel.expressionsVisible;
-                if (expVisible) {
+            let keyHandler = {
+                // Close a dialog
+                Escape: () => {
+                    const dcg_elt = $("#dcg-modal-container .dcg-icon-remove");
+                    if (dcg_elt.length) {
+                        dcg_elt.trigger("dcg-tap");
+                    }
+                    const alert_elt = $(".dcg-alert-container");
+                    if (alert_elt.length) {
+                        alert_elt.remove();
+                    }
+                },
+                // Rename a Graph
+                F2: () => {
+                    $(".dcg-config-name").click();
+                },
+                // New Graph
+                "Ctrl+KeyN": () => {
+                    e.preventDefault();
+                    $(".align-left-container .dcg-icon.dcg-icon-plus").click();
+                },
+                // Open a Graph
+                "Ctrl+KeyO": () => {
+                    e.preventDefault();
+                    $(".dcg-action-open").click();
+                },
+                // Save a Graph
+                "Ctrl+KeyS": () => {
+                    e.preventDefault();
+                    $(".save-btn-container").click();
+                },
+                // Show or Hide the Expression List
+                "Shift+Alt+KeyE": () => {
+                    e.preventDefault();
+                    const t = Calc._calc.controller;
+                    const expVisible = t.layoutModel.expressionsVisible;
                     t.dispatch({
-                        type: "hide-expressions-list",
+                        type: expVisible ? "hide-expressions-list" : "show-expressions-list",
                         focusShowIcon: !1,
                     });
-                } else {
+                },
+                // Focus the Expression List
+                "Ctrl+Alt+KeyE": () => {
+                    Calc.focusFirstExpression();
+                },
+                // Toggle Options for the Focused Expression
+                "Ctrl+Shift+KeyO": () => {
+                    e.preventDefault();
+                    let t = Calc._calc.controller;
+                    let item = t.getSelectedItem();
+                    if (item && (item.type === "expression" || item.type === "image"))
+                        props.toggleOptions(item);
+                },
+                // Delete the Focused Expression
+                "Ctrl+Shift+KeyD": () => {
+                    Calc.removeSelected();
+                },
+                // Add an Expression
+                "Ctrl+Alt+KeyX": () => {
+                    props.addItem("expression");
+                },
+                // Add a Note
+                "Ctrl+Alt+KeyO": () => {
+                    props.addItem("note");
+                },
+                // Collapse / Expand Selected Folder
+                "Alt+ArrowUp": () => {
+                    let t = Calc._calc.controller;
+                    let item = t.getSelectedItem();
+                    if (item && item.type === "folder") {
+                        console.log(item);
+                        item.model = t.getItemModel(item.id);
+                        t.dispatch({
+                            type: "set-folder-collapsed",
+                            id: item.id,
+                            isCollapsed: !item.model.collapsed,
+                        });
+                    }
+                },
+                // Add a Folder
+                "Ctrl+Alt+KeyF": () => {
+                    props.addItem("folder");
+                },
+                // Add an Image
+                "Ctrl+Alt+KeyI": () => {
+                    props.addItem("image");
+                },
+                // Add a Table
+                "Ctrl+Alt+KeyT": () => {
+                    props.addItem("table");
+                },
+                // Undo
+                "Ctrl+KeyZ": () => {
+                    const t = Calc._calc.controller;
+                    if (t.hasVisibleAndUndoableToast()) {
+                        t.toastUndo();
+                    } else {
+                        Calc.undo();
+                    }
+                },
+                // Redo
+                "Ctrl+Shift+KeyZ": () => {
+                    Calc.redo();
+                },
+                "Ctrl+KeyY": () => keyHandler["Ctrl+Shift+KeyZ"](),
+                // Turn Edit List Mode On or Off
+                "Ctrl+Alt+KeyD": () => {
+                    let t = Calc._calc.controller;
+                    let mode = !t.isInEditListMode();
                     t.dispatch({
-                        type: "show-expressions-list",
-                        focusShowIcon: !1,
+                        type: "set-edit-list-mode",
+                        isEditListMode: mode,
+                        focusExpressionList: !0,
                     });
-                }
-                return;
-            }
-            // Focus the Expression List
-            if (CtrlAlt && e.code === "KeyE") {
-                Calc.focusFirstExpression();
-                return;
-            }
-            // Toggle Options for the Focused Expression
-            if (CtrlShift && e.code === "KeyO") {
-                let t = Calc._calc.controller;
-                let item = t.getSelectedItem();
-                if (item && (item.type === "expression" || item.type === "image"))
-                    props.toggleOptions(item);
-                return;
-            }
-            // Delete the Focused Expression
-            if (CtrlShift && e.code === "KeyD") {
-                Calc.removeSelected();
-                return;
-            }
-            // Add an Expression
-            if (CtrlAlt && e.code === "KeyX") {
-                props.addItem("expression");
-                return;
-            }
-            // Add a Note
-            if (CtrlAlt && e.code === "KeyO") {
-                props.addItem("note");
-                return;
-            }
-            // Collapse / Expand Selected Folder
-            if (Alt && e.code === "ArrowUp") {
-                let t = Calc._calc.controller;
-                let item = t.getSelectedItem();
-                if (item && item.type === "folder") {
-                    item.model = t.getItemModel(item.id);
-                    t.dispatch({
-                        type: "set-folder-collapsed",
-                        id: item.id,
-                        isCollapsed: !item.model.collapsed,
+                },
+                // Open or Close the Graph Settings Menu
+                "Ctrl+Alt+KeyG": () => {
+                    Calc._calc.controller.dispatch({
+                        type: "toggle-graph-settings",
+                        focusOnOpen: !0,
                     });
-                }
-            }
-            // Add a Folder
-            if (CtrlAlt && e.code === "KeyF") {
-                props.addItem("folder");
-                return;
-            }
-            // Add a Note
-            if (CtrlAlt && e.code === "KeyI") {
-                props.addItem("image");
-                return;
-            }
-            // Add a Table
-            if (CtrlAlt && e.code === "KeyT") {
-                props.addItem("table");
-                return;
-            }
-            // Undo
-            if (Ctrl && e.code === "KeyZ") {
-                const t = Calc._calc.controller;
-                if (t.hasVisibleAndUndoableToast()) {
-                    t.toastUndo();
-                } else {
-                    Calc.undo();
-                }
-                return;
-            }
-            // Redo
-            if ((CtrlShift && e.code === "KeyZ") || (Ctrl && e.code === "KeyY")) {
-                Calc.redo();
-                return;
-            }
-            // Turn Edit List Mode On or Off
-            if (CtrlAlt && e.code === "KeyD") {
-                let t = Calc._calc.controller;
-                let mode = !t.isInEditListMode();
-                t.dispatch({
-                    type: "set-edit-list-mode",
-                    isEditListMode: mode,
-                    focusExpressionList: !0,
-                });
-                return;
-            }
-            // Open or Close the Graph Settings Menu
-            if (CtrlAlt && e.code === "KeyG") {
-                Calc._calc.controller.dispatch({
-                    type: "toggle-graph-settings",
-                    focusOnOpen: !0,
-                });
-                return;
-            }
-            // Open or Close the Help Menu
-            if (CtrlAlt && e.code === "KeyH") {
-                $(".dcg-help-btn").trigger("dcg-tap");
-                return;
-            }
+                },
+                // Open or Close the Help Menu
+                "Ctrl+Alt+KeyH": () => {
+                    $(".dcg-help-btn").trigger("dcg-tap");
+                },
+            };
+
+            if (comb in keyHandler) keyHandler[comb]();
         });
     };
 });
