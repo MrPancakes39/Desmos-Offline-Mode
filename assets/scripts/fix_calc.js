@@ -350,7 +350,27 @@ define("calc/set_lang", ["@fluent/bundle", "text!l10n/all-en-strings.ftl"], func
         Calc._calc.controller.s = createDictionaryLookupFunction;
     };
 });
+
+define("calc/update_lang", ["calc/fetch_lang", "calc/set_lang"], function (
+    fetchLanguage,
+    setLanguage
 ) {
+    return function (lang) {
+        fetchLanguage(lang).then((success) => {
+            if (success) {
+                setLanguage(lang);
+                Calc.updateSettings({ language: lang });
+            }
+        });
+    };
+});
+
+define("calc/fix_calc", [
+    "calc/fix_shortcuts",
+    "calc/custom_methods",
+    "calc/fetch_lang",
+    "calc/update_lang",
+], function (fixShortcuts, customMethods, fetchLanguage, fetchAndSetLanguage) {
     return function () {
         // Generate Calc
         let container = document.querySelector("#graph-container .dcg-wrapper");
@@ -367,6 +387,7 @@ define("calc/set_lang", ["@fluent/bundle", "text!l10n/all-en-strings.ftl"], func
         Desmos.supportedLanguages = ["en"];
         Desmos.localeData = {};
         Calc.fetchLanguage = fetchLanguage;
+        Calc._calc.controller.fetchAndSetLanguage = fetchAndSetLanguage;
         console.log("[fix_calc] calc api fixed!");
     };
 });
