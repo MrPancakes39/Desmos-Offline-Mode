@@ -27,7 +27,7 @@ define("calc/alerts", [], function () {
                         <h1>Rename This Graph</h1>
                         <div class="alert-content">
                             <p class="graph-title">Title</p>
-                            <input class="title-input" name="title" placeholder="Untitled Graph" value="${title}" maxlength="140" tabindex="0" autofocus="true">
+                            <input class="title-input" name="title" placeholder="${Calc.header.defaultTitle}" value="${title}" maxlength="140" tabindex="0" autofocus="true">
                             <button type="submit" class="title-save">Save</button>
                         </div>
                     </div>
@@ -88,7 +88,7 @@ define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"]
         if (props.type === "rename") {
             $(".title-save").click(() => {
                 let txt = $(".title-input").val();
-                let title = txt != "" ? txt : "Untitled Graph";
+                let title = txt != "" ? txt : Calc.header.defaultTitle;
                 Calc.header.title = title;
                 $(".dcg-icon-remove-custom").click();
             });
@@ -98,7 +98,7 @@ define("calc/add_alert", ["jquery", "lodash", "calc/alerts", "calc/make_config"]
             $(".dcg-btn-red.dcg-action-delete").click(() => {
                 let saved = makeConfig();
                 $(".dcg-icon-remove-custom").click();
-                Calc.header.title = "Untitled Graph";
+                Calc.header.title = Calc.header.defaultTitle;
                 Calc.setBlank();
                 Calc.newRandomSeed();
                 let t = Calc._calc.controller;

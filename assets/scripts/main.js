@@ -57,7 +57,7 @@ define("calc/setup_dom", [
                                     "aria-level": n.const("1"),
                                     onClick: () => {
                                         let txt = Calc.header.title;
-                                        let title = txt != "Untitled Graph" ? txt : "";
+                                        let title = txt != Calc.header.defaultTitle ? txt : "";
                                         addAlert({
                                             type: "rename",
                                             args: { title },

@@ -255,9 +255,10 @@ define("calc/custom_methods", ["calc/private_props"], function (props) {
     };
 });
 
-define("calc/header", [], function () {
+define("calc/header", ["jquery"], function ($) {
     return function () {
         let e = {};
+        let t = Calc._calc.controller;
         e.rootElt = document.querySelector(".dcg-header");
         let titleDOM = e.rootElt.querySelector(".dcg-config-name");
         Object.defineProperty(e, "title", {
@@ -270,6 +271,13 @@ define("calc/header", [], function () {
             enumerable: true,
         });
         e.clickTitle = () => titleDOM.click();
+        e.defaultTitle = t.s("account-shell-text-untitled-graph");
+        e.update = () => {
+            const isDefault = e.title === e.defaultTitle;
+            e.defaultTitle = t.s("account-shell-text-untitled-graph");
+            e.title = isDefault ? e.defaultTitle : e.title;
+            $(".save-btn-container .dcg-action-save").text(t.s("shared-button-save"));
+        };
         Calc.header = e;
     };
 });
@@ -359,6 +367,7 @@ define("calc/update_lang", ["calc/fetch_lang", "calc/set_lang"], function (
         fetchLanguage(lang).then((success) => {
             if (success) {
                 setLanguage(lang);
+                Calc.header.update();
                 Calc.updateSettings({ language: lang });
             }
         });
