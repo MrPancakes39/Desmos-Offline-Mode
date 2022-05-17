@@ -274,9 +274,56 @@ define("calc/header", [], function () {
     };
 });
 
-define("calc/fix_calc", ["calc/fix_shortcuts", "calc/custom_methods"], function (
-    fixShortcuts,
-    customMethods
+define("calc/fetch_lang", [], function () {
+    return async function (lang) {
+        let validLangs = [
+            "en",
+            "ar",
+            "pl",
+            "el",
+            "da",
+            "zh-TW",
+            "vi",
+            "it",
+            "id",
+            "is",
+            "cs",
+            "haw",
+            "ka",
+            "ko",
+            "ru",
+            "th",
+            "pt-BR",
+            "en-GB",
+            "hy-AM",
+            "hu",
+            "zh-CN",
+            "ca",
+            "tr",
+            "fr",
+            "es-ES",
+            "sv-SE",
+            "uk",
+            "nl",
+            "de",
+            "hi",
+            "ja",
+            "no",
+            "pt-PT",
+        ];
+        if (!validLangs.includes(lang)) {
+            console.warn(`${lang} is not an available language.`);
+            return false;
+        }
+        if (!Desmos.supportedLanguages.includes(lang)) {
+            let res = await fetch(`/lang/${lang}.ftl`);
+            let ftl = await res.json();
+            Object.assign(Desmos.localeData, ftl);
+            Desmos.supportedLanguages.push(lang);
+        }
+        return true;
+    };
+});
 ) {
     return function () {
         // Generate Calc
@@ -291,6 +338,9 @@ define("calc/fix_calc", ["calc/fix_shortcuts", "calc/custom_methods"], function 
 
         customMethods();
         fixShortcuts();
+        Desmos.supportedLanguages = ["en"];
+        Desmos.localeData = {};
+        Calc.fetchLanguage = fetchLanguage;
         console.log("[fix_calc] calc api fixed!");
     };
 });
