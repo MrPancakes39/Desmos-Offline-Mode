@@ -63,9 +63,12 @@ def parse_files():
             os.rename(path+f[0], path+f[1])
         # move all the files to desmos directory
         file_list = [i[1] for i in rename_list]
+        path = "./assets/desmos/"
+        if not os.path.isdir(path):
+            os.mkdir(path)
         for f in file_list:
             shutil.move(
-                f"./www/assets/build/{f}", f"./assets/desmos/{f}")
+                f"./www/assets/build/{f}", path+f)
         # saves the css and js in index.html to seperate files
         print("[3/4] Generating files")
         soup = BeautifulSoup(content, "html.parser")
