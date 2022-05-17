@@ -324,6 +324,32 @@ define("calc/fetch_lang", [], function () {
         return true;
     };
 });
+
+define("calc/set_lang", ["@fluent/bundle", "text!l10n/all-en-strings.ftl"], function (
+    fluent,
+    en_ftl
+) {
+    return function (lang) {
+        if (!Desmos.supportedLanguages.includes(lang)) {
+            console.warn(`${lang} is not supported.`);
+            return;
+        }
+        let resource;
+        if (lang != "en") {
+            resource = new fluent.FluentResource(Desmos.localeData[lang]);
+        } else {
+            resource = new fluent.FluentResource(en_ftl);
+        }
+        let bundle = new fluent.FluentBundle(lang);
+        bundle.addResource(resource);
+        const createDictionaryLookupFunction = function (msg, format) {
+            let str = bundle.getMessage(msg);
+            if (str.value) return bundle.formatPattern(str.value, format);
+            return str.value;
+        };
+        Calc._calc.controller.s = createDictionaryLookupFunction;
+    };
+});
 ) {
     return function () {
         // Generate Calc
