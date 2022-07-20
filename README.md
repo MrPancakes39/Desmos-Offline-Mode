@@ -4,6 +4,10 @@ Desmos is a well known Graphing Calculator available for the web and mobile, but
 
 Desmos Offline Mode is a desktop port of Desmos Web Version, with the added feature of working offline.
 
+## Update
+
+This is not a dead project. I am just a little busy because of University.
+
 ## Branches
 
 `web-app`: Desmos Offline Mode as a web app.  
