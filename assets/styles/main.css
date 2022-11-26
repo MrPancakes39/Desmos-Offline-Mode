@@ -111,6 +111,7 @@
     height: 46px;
     align-items: center;
     font-size: 17px;
+    position: relative;
 }
 
 .align-right-container > * {
