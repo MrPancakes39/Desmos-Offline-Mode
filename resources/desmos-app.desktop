@@ -1,9 +1,0 @@
-[Desktop Entry]
-Version=1.0
-Name=Desmos Offline Mode
-Comment=Desmos Graphing Calculator as a Desktop App
-Exec=/path/to/desmos-offline-mode/desmos-offline-mode
-Icon=/path/to/desmos-offline-mode/icon.png
-Terminal=false
-Type=Application
-Categories=Education;Science;Graphics;Utility;
