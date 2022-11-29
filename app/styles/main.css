@@ -1,0 +1,27 @@
+html,
+body,
+#root {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+#dcg-header-container {
+    width: 100%;
+    height: 46px;
+    background: #2a2a2a;
+    line-height: 46px;
+    overflow: hidden;
+    color: #ddd;
+    box-shadow: 3px 1px 6px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid #000;
+}
+
+#graph-container {
+    flex-grow: 1;
+}
