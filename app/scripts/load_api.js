@@ -104,6 +104,12 @@ define("calc/load_api", [
         return props.colorRotation[index];
     };
 
+    Calc.printNextColor = () => {
+        let colors = Desmos.Colors;
+        let next = Calc.getNextColor();
+        return Object.keys(colors).find((key) => colors[key] === next);
+    };
+
     Calc.setNextColor = (color) => {
         if (!props.colorRotation.includes(color)) {
             throw new Error(`${color} is not a valid color.`);
