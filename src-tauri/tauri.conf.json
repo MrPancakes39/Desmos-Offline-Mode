@@ -2,7 +2,7 @@
   "build": {
     "beforeBuildCommand": "",
     "beforeDevCommand": "",
-    "devPath": "http://127.0.0.1:8080/",
+    "devPath": "http://127.0.0.1:5000/",
     "distDir": "../app"
   },
   "package": {
