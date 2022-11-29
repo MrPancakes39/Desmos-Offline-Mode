@@ -10,6 +10,13 @@
   <link rel="icon" href="./favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="./desmos/calculator.css">
   <link rel="stylesheet" href="./desmos/loading.css">
+  <script>
+    // defines window.IS_BROWSER constant
+    Object.defineProperty(window, "IS_BROWSER", {
+      value: window.__TAURI__ === undefined,
+      writable: false,
+    });
+  </script>
 </head>
 
 <body>
@@ -27,6 +34,7 @@
 
   <div id="dcg-modal-container"></div>
   <script src="./desmos/calculator.js"></script>
+  <script src="./scripts/load_api.js"></script>
   <script src="./scripts/main.js"></script>
   <script>
     require(["calc/app", "testbridge", "jquery"], function (_, TestBridge, $) {
