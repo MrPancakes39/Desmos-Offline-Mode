@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html no_gl="true" lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Init App</title>
+
+  <title>Desmos | Offline Mode</title>
+  <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./desmos/calculator.css">
+  <link rel="stylesheet" href="./desmos/loading.css">
 </head>
 
 <body>
-  <h1>Hello World!</h1>
+
+  <div class="dcg-loading-div-container">
+    <div class="dcg-loading-background-div"></div>
+    <div class="dcg-loading-div">Loading...</div>
+  </div>
+
+  <div class="root">
+    <div id="dcg-header-container"></div>
+    <div id="graph-container"></div>
+  </div>
+
+  <div id="dcg-modal-container"></div>
+  <script src="./desmos/calculator.js"></script>
+  <script src="./scripts/main.js"></script>
+  <script>
+    require(["calc/app", "testbridge", "jquery"], function (_, TestBridge, $) {
+      setTimeout(function () {
+        $('.dcg-loading-div-container').hide();
+        TestBridge.ready();
+      }, 10);
+    });
+  </script>
 </body>
 
 </html>
