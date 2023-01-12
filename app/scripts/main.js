@@ -22,7 +22,7 @@ define("calc/play", ["htm", "dcgview", "touchtracking"], function (
                     touch.monitor(elt);
                 }}
             >
-                <${Tooltip} tooltip=${cst("Hello")}>
+                <${Tooltip} tooltip=${cst("Hello")} gravity=${cst("se")}>
                     <span>${cst("Hello")}</span>
                 </${Tooltip}>
             </div>
