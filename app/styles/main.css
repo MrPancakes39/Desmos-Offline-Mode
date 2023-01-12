@@ -25,3 +25,13 @@ body,
 #graph-container {
     flex-grow: 1;
 }
+
+.hello-btn {
+    width: 100px;
+    background-color: rebeccapurple;
+    padding: 5px;
+    border-radius: 6px;
+    line-height: 30px;
+    margin-top: 3px;
+    margin-left: 5px;
+}
