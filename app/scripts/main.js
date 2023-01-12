@@ -1,6 +1,10 @@
 "use strict";
 
-define("calc/play", ["htm", "dcgview"], function (htm, dcgview) {
+define("calc/play", ["htm", "dcgview", "touchtracking"], function (
+    htm,
+    dcgview,
+    touch
+) {
     // for debugging
     window.dcgview = dcgview;
     // setup
@@ -11,8 +15,14 @@ define("calc/play", ["htm", "dcgview"], function (htm, dcgview) {
     class Button extends dcgview.Class {
         template() {
             return html`
-            <div role=${cst("button")} class=${cst("hello-btn")}>
-                <${Tooltip}>
+            <div role=${cst("button")}
+                class=${cst("hello-btn")}
+                onClick=${() => alert("Hello")}
+                didMount=${function (elt) {
+                    touch.monitor(elt);
+                }}
+            >
+                <${Tooltip} tooltip=${cst("Hello")}>
                     <span>${cst("Hello")}</span>
                 </${Tooltip}>
             </div>
