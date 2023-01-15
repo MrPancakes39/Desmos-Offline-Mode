@@ -26,17 +26,6 @@ body,
     flex-grow: 1;
 }
 
-.hello-btn {
-    width: 100px;
-    background-color: rebeccapurple;
-    padding: 5px;
-    border-radius: 6px;
-    line-height: 30px;
-    margin-top: 3px;
-    margin-left: 5px;
-    text-align: center;
-}
-
 /* Fixes tooltip display issue inside the header */
 .dcg-calculator-api-container .dcg-tooltip-mount-pt {
     position: fixed;
