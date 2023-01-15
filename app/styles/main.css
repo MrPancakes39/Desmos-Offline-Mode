@@ -37,13 +37,6 @@ body,
     text-align: center;
 }
 
-#dcg-header-container .dcg-tooltip-mount-pt {
-    z-index: 1;
-    position: absolute;
-}
-
-#dcg-header-container .dcg-tooltip-mount-pt .dcg-tooltip-positioning-container,
-#dcg-header-container .dcg-tooltip-mount-pt .dcg-tooltip-message-container,
-#dcg-header-container .dcg-tooltip-mount-pt .dcg-tooltip-arrow {
-    position: absolute;
+.dcg-tooltip-message-container {
+    margin-top: -5px !important;
 }
