@@ -1,15 +1,36 @@
 "use strict";
 
-define("calc/header", ["htm", "dcgview"], function (htm, n) {
+define("calc/header", ["htm", "dcgview", "touchtracking"], function (
+    htm,
+    n,
+    touch
+) {
     const html = htm.bind(n.createElement);
-    window.n = n;
+    const { addSVGLogo } = require("frontpage/desmos-svg-logo").DesmosSVGLogo
+        .prototype;
 
     class Header extends n.Class {
         template() {
             return html`
-                <div class=${n.const("dcg-header")}>
+                <div
+                    class=${n.const("dcg-header")}
+                    didMount=${function (elt) {
+                        touch.monitor(elt);
+                    }}
+                >
                     <div class=${n.const("align-left-container")}></div>
-                    <div class=${n.const("align-center-container")}></div>
+                    <div class=${n.const("align-center-container")}>
+                        <a
+                            href=${n.const("https://www.desmos.com/")}
+                            target=${n.const("_blank")}
+                            class=${n.const("dcg-home-link")}
+                        >
+                            <span
+                                class=${n.const("desmos-logo")}
+                                onMount=${addSVGLogo}
+                            ></span>
+                        </a>
+                    </div>
                     <div class=${n.const("align-right-container")}></div>
                 </div>
             `;

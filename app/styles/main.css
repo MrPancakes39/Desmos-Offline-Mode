@@ -84,3 +84,11 @@ body,
     flex-direction: row;
     justify-content: space-between;
 }
+
+.desmos-logo {
+    fill: #ddd;
+}
+
+.desmos-logo:hover {
+    fill: #fff;
+}
