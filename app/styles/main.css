@@ -1,3 +1,5 @@
+/* ==============================[ Top Level Containers ]============================== */
+
 html,
 body,
 #root {
@@ -9,22 +11,26 @@ body,
 #root {
     display: flex;
     flex-direction: column;
+    --header-height: 46px;
 }
 
-#dcg-header-container {
+#root .dcg-header {
     width: 100%;
-    height: 46px;
+    height: var(--header-height);
     background: #2a2a2a;
-    line-height: 46px;
+    line-height: var(--header-height);
     overflow: hidden;
     color: #ddd;
     box-shadow: 3px 1px 6px rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid #000;
 }
 
-#graph-container {
+#root #graph-container {
     flex-grow: 1;
+    position: static;
 }
+
+/* ==============================[ Tooltip ]============================== */
 
 /* Fixes tooltip display issue inside the header */
 .dcg-calculator-api-container .dcg-tooltip-mount-pt {
@@ -69,4 +75,12 @@ body,
     .dcg-tooltip-message-container[style="transform:translate(0, -50%);right:100%;width:200px;top:9.5px;margin-right:5px;text-align:right"]
     .dcg-tooltip-message {
     align-self: flex-end;
+}
+
+/* ==============================[ Header Bar ]============================== */
+
+.dcg-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
