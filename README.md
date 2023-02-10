@@ -27,7 +27,8 @@ $ yarn run package-win # or npm run package-win
 ```
 For Linux:  
 ```console
-$ yarn run package-linux # or npm run package-linux
+$ # arch: x64 or arm64 
+$ yarn run package-linux-arch # or npm run package-linux-arch
 ```
 
 # Differences from Web Version
