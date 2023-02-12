@@ -37,8 +37,7 @@ define("calc/header", ["htm", "dcgview", "touchtracking"], function (
         }
     }
 
-    const headerContainer = document.querySelector("#dcg-header-container");
-    n.mountToNode(Header, headerContainer);
+    n.mountToNode(Header, document.querySelector("#dcg-header-container"));
 });
 
 define("calc/app", ["calc/load_api", "calc/header"], function () {
