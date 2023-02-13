@@ -6,37 +6,10 @@ Desmos Offline Mode is a desktop port of Desmos Web Version, with the added feat
 
 ## Update
 
-This is not a dead project. I am just a little busy because of University.
+Source has been archived under the tag [archive/main](https://github.com/MrPancakes39/Desmos-Offline-Mode/tree/archive/main). To build v1.0.0 clone the repo and then do `git checkout archive/main`. Follow the instructions in the `REAME.md` file in the archive to continue.
 
-## Branches
+## Why?
 
-`web-app`: Desmos Offline Mode as a web app.  
-`docker`: A docker container for the web app.  
-`main`: The desktop app based of web app.
- 
-# Build Instructions:
+After the release of v1.0.0, I contacted desmos support to see if they were cool with the thing. Support said they can't give permission and to not host their code on GitHub. I thought next update was gonna release sooner but it's more than a year later and still haven't finished due to University and other issues. So I decided to finally remove the code to honor the respectful desmos support team.
 
-```console
-$ git clone https://github.com/MrPancakes39/Desmos-Offline-Mode.git 
-$ cd Desmos-Offline-Mode
-$ yarn # or npm install
-```
-For Windows:  
-```console
-$ yarn run package-win # or npm run package-win
-```
-For Linux:  
-```console
-$ # arch: x64 or arm64 
-$ yarn run package-linux-arch # or npm run package-linux-arch
-```
-
-# Differences from Web Version
-
-See [differences.md](./differences.md)
-
-## Licenses
-
-![GPL-v3](https://www.gnu.org/graphics/gplv3-127x51.png)
-
-All source codes (except `desmos/` directory) are licensed under [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
+I am working on the next release this is not a dead project and I'll try to contact desmos again once the next update releases with all it's changes.
