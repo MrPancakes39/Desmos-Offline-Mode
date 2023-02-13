@@ -2,6 +2,9 @@
 
 import re
 import requests
+from os import path, mkdir
+
+TESTED_COMMIT = ""
 
 
 def main():
@@ -12,6 +15,21 @@ def main():
     if not response.ok:
         raise Exception("Couldn't get html page of desmos.")
     html = response.content.decode()
+
+    # Tests which commit we are using
+    website_commit = [line.strip().split(" ").pop()[1:-2]
+                      for line in html.splitlines()
+                      if line.strip().startswith("Desmos.commit")][0]
+    if website_commit != TESTED_COMMIT:
+        print(
+            f"WARN: The app was tested and built on COMMIT '{TESTED_COMMIT}' but the website has a newer COMMIT '{website_commit}'.")
+
+    # Checks if directories don't exist and creates them
+    for dir in ["./app", "./app/desmos"]:
+        if not path.exists(dir):
+            mkdir(dir)
+        if not path.isdir(dir):
+            raise Exception(f"{dir} is not a directory.")
 
     print("[2/4] Getting Calculator API")
     # Fetch the calculator CSS and JS
