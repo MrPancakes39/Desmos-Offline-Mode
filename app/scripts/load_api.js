@@ -54,19 +54,13 @@ define("calc/private/add-item", ["jquery"], function ($) {
     };
 });
 
-define("calc/load_api", [
-    "api/calculator",
-    "main/instantiate-top-level-components",
-    "text!example_graphs",
-], function (_, init_components, example_graphs) {
-    const seed = crypto.randomUUID().split("-").join("");
-    // temporary exposer
-    window.descont = init_components.default({
-        seed: seed,
-        exampleGraphsRaw: example_graphs,
-        calcOptions: { pasteGraphLink: !0 },
-    });
-    const { Calc } = descont;
+/**
+ * "api/calculator" isn't actually required we can use global Desmos Object.
+ * This is kept in case Desmos global object isn't loaded.
+ */
+define("calc/load_api", ["api/calculator"], function ({ DesmosAPI }) {
+    const graphContainer = document.getElementById("graph-container");
+    const Calc = DesmosAPI.GraphingCalculator(graphContainer);
 
     const sanitizer = require("graphing-calc/api/sanitize-expression");
     const colorRotation = [

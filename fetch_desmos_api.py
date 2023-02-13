@@ -4,7 +4,7 @@ import re
 import requests
 from os import path, mkdir
 
-TESTED_COMMIT = ""
+TESTED_COMMIT = "ddcff15b335fb50e3dc3ede4880703915c967321"
 
 
 def main():
@@ -51,12 +51,17 @@ def main():
     open("./app/desmos/loading.css", "w").write(loading.group()[24:-9])
 
     print("[4/4] Fixing files")
+    """
+    In this commit the enitre file is wrapped in a function:
+    starts with "(function () {\n" (len: 15)
+    ends with   "}());\n"          (len: 6)
+    """
+    js = open("./app/desmos/calculator.js").read()[15:-6]
     # Removing bugsnag
-    js = open("./app/desmos/calculator.js").read()
     old_bugsnag = re.search("define\('bugsnag'.*?}\);\ndefine", js).group()
     new_bugsnag = "define('bugsnag',[\"exports\"],function(e){e.setBeforeSendCB=e.leaveBreadcrumb=e.notify=e.init=function(){}});\ndefine"
-    open("./app/desmos/calculator.js", "w"
-         ).write(js.replace(old_bugsnag, new_bugsnag))
+    js = js.replace(old_bugsnag, new_bugsnag)
+    open("./app/desmos/calculator.js", "w").write(js)
 
 
 if __name__ == "__main__":
