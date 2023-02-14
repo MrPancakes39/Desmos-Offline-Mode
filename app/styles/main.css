@@ -74,6 +74,12 @@ body,
 
 /* ==============================[ Header Bar ]============================== */
 
+@media screen and (max-width: 450px) {
+    #root #dcg-header-container {
+        display: none;
+    }
+}
+
 #root .dcg-header {
     width: 100%;
     height: var(--header-height);
