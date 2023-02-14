@@ -4,7 +4,7 @@ import re
 import requests
 from os import path, mkdir
 
-TESTED_COMMIT = "ddcff15b335fb50e3dc3ede4880703915c967321"
+TESTED_COMMIT = "235cc4d4e155375d9a041befd1761ad30c550d00"
 
 
 def main():
