@@ -11,6 +11,7 @@ DEBUG_MODE = False
 if len(sys.argv) > 1:
     if sys.argv[1] == "-d" or sys.argv[1] == "--debug":
         DEBUG_MODE = True
+        import jsbeautifier as jsb
 
 
 def main():
@@ -77,8 +78,12 @@ def main():
     open("./app/desmos/calculator.js", "w").write(js)
 
     if DEBUG_MODE:
-        print("Desmos default load function:")
-        print(old_load)
+        print("\nDesmos default load function:")
+        print(jsb.beautify(old_load))
+        print("\nBeautifying calculator.js for debug...")
+        open("./app/desmos/calc_debug.js", "w").write(
+            jsb.beautify(js)
+        )
 
 
 if __name__ == "__main__":
