@@ -57,11 +57,21 @@ def main():
     ends with   "}());\n"          (len: 6)
     """
     js = open("./app/desmos/calculator.js").read()[15:-6]
+
     # Removing bugsnag
     old_bugsnag = re.search("define\('bugsnag'.*?}\);\ndefine", js).group()
     new_bugsnag = "define('bugsnag',[\"exports\"],function(e){e.setBeforeSendCB=e.leaveBreadcrumb=e.notify=e.init=function(){}});\ndefine"
     js = js.replace(old_bugsnag, new_bugsnag)
+
+    # Removes loading of calculator and prints it
+    old_load = re.search(
+        "define\(['\"]toplevel/calculator_desktop.*?}\);", js).group()
+    new_load = 'define("toplevel/calculator_desktop",[],function(){})'
+    js = js.replace(old_load, new_load)
     open("./app/desmos/calculator.js", "w").write(js)
+
+    print("Desmos default load function:")
+    print(old_load)
 
 
 if __name__ == "__main__":
