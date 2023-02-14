@@ -3,8 +3,14 @@
 import re
 import requests
 from os import path, mkdir
+import sys
 
 TESTED_COMMIT = "235cc4d4e155375d9a041befd1761ad30c550d00"
+DEBUG_MODE = False
+
+if len(sys.argv) > 1:
+    if sys.argv[1] == "-d" or sys.argv[1] == "--debug":
+        DEBUG_MODE = True
 
 
 def main():
@@ -70,8 +76,9 @@ def main():
     js = js.replace(old_load, new_load)
     open("./app/desmos/calculator.js", "w").write(js)
 
-    print("Desmos default load function:")
-    print(old_load)
+    if DEBUG_MODE:
+        print("Desmos default load function:")
+        print(old_load)
 
 
 if __name__ == "__main__":
