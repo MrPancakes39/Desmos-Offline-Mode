@@ -41,11 +41,14 @@
   <script src="./scripts/load_api.js"></script>
   <script src="./scripts/main.js"></script>
   <script>
-    require(["calc/app", "testbridge", "jquery"], function (_, TestBridge, $) {
-      setTimeout(function () {
+    require(["testbridge", "jquery", "calc/app"], function (TestBridge, $, calcPromise) {
+      require("touchtracking").monitor(document.body);
+      require("main/noconflict")();
+      calcPromise.then(Calc => {
         $('.dcg-loading-div-container').hide();
+        window.Calc = Calc;
         TestBridge.ready();
-      }, 10);
+      })
     });
   </script>
 </body>

@@ -40,6 +40,9 @@ define("calc/header", ["htm", "dcgview", "touchtracking"], function (
     n.mountToNode(Header, document.querySelector("#dcg-header-container"));
 });
 
-define("calc/app", ["calc/load_api", "calc/header"], function () {
-    console.log(window.Calc);
+define("calc/app", ["calc/load_api"], function (calc) {
+    return new Promise((resolve) => {
+        require("calc/header");
+        resolve(calc);
+    });
 });

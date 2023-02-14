@@ -55,8 +55,7 @@ define("calc/private/add-item", ["jquery"], function ($) {
 });
 
 /**
- * "api/calculator" isn't actually required we can use global Desmos Object.
- * This is kept in case Desmos global object isn't loaded.
+ * "api/calculator" is used to load the DesmosAPI in as Desmos global object hasn't been created yet.
  */
 define("calc/load_api", ["api/calculator"], function ({ DesmosAPI }) {
     const graphContainer = document.getElementById("graph-container");
@@ -118,5 +117,5 @@ define("calc/load_api", ["api/calculator"], function ({ DesmosAPI }) {
             Calc.setExpression(e);
     };
 
-    window.Calc = Calc;
+    return Calc;
 });
