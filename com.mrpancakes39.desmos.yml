@@ -1,0 +1,31 @@
+app-id: com.mrpancakes39.desmos
+runtime: org.gnome.Platform
+runtime-version: "43"
+sdk: org.gnome.Sdk
+command: desmos-offline-mode
+modules:
+  - name: desmos_offline_mode
+    buildsystem: simple
+    build-options:
+      build-args:
+        - "--share=network"
+        - "--filesystem=host"
+    sources:
+      - type: dir
+        path: src-tauri/target/release/bundle/deb/
+    build-commands:
+      - mkdir -p myapp
+      - echo $FLATPAK_DEST
+      # fetch files manually
+      - mv desmos*/data data
+      - mv data/usr myapp/
+      - rm -rf data
+      - chmod +x myapp/usr/bin/desmos-offline-mode
+      # install app
+      - install -D myapp/usr/bin/desmos-offline-mode $FLATPAK_DEST/bin/desmos-offline-mode
+      - desktop-file-install --dir=$FLATPAK_DEST/share/applications myapp/usr/share/applications/desmos-offline-mode.desktop
+      - cp myapp/usr/share/icons/hicolor/512x512/apps/desmos-offline-mode.png $FLATPAK_DEST/share/icons/hicolor/scalable/apps/
+    cleanup:
+      - rm -rf myapp/
+    run-commands:
+      - desmos-offline-mode

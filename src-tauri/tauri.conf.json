@@ -20,11 +20,11 @@
       "deb": {
         "depends": []
       },
+      "appimage": {
+        "bundleMediaFramework": true
+      },
       "externalBin": [],
-      "icon": [
-        "icons/icon.ico",
-        "icons/icon.png"
-      ],
+      "icon": ["icons/icon.ico", "icons/icon.png"],
       "identifier": "com.mrpancakes39.desmos",
       "longDescription": "",
       "macOS": {
@@ -36,11 +36,15 @@
       },
       "resources": [],
       "shortDescription": "",
-      "targets": "all",
+      "targets": ["deb", "msi", "appimage"],
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+        "webviewInstallMode": {
+          "silent": true,
+          "type": "embedBootstrapper"
+        }
       }
     },
     "security": {
