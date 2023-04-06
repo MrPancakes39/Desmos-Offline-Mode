@@ -5,7 +5,7 @@ import requests
 from os import path, mkdir
 import sys
 
-TESTED_COMMIT = "235cc4d4e155375d9a041befd1761ad30c550d00"
+TESTED_COMMIT = "fe5cbbbfa09ae1e8899580e1fbdd8ae1d047ea0e"
 DEBUG_MODE = False
 
 if len(sys.argv) > 1:
@@ -66,9 +66,10 @@ def main():
     js = open("./src/desmos/calculator.js").read()
 
     # Removing bugsnag
-    # old_bugsnag = re.search("define\('bugsnag'.*?}\);\ndefine", js).group()
-    # new_bugsnag = "define('bugsnag',[\"exports\"],function(e){e.setBeforeSendCB=e.leaveBreadcrumb=e.notify=e.init=function(){}});\ndefine"
-    # js = js.replace(old_bugsnag, new_bugsnag)
+    old_bugsnag = re.search(
+        "return Mf=function\(A\){.*Mf.default=Mf,Mf", js).group()
+    new_bugsnag = "return Mf=function(){},Mf.default=Mf,Mf"
+    js = js.replace(old_bugsnag, new_bugsnag)
 
     # Removes loading of calculator and prints it
     # old_load = re.search(
