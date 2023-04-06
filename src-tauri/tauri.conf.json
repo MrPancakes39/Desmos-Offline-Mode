@@ -1,9 +1,9 @@
 {
   "build": {
-    "beforeBuildCommand": "",
-    "beforeDevCommand": "",
-    "devPath": "http://127.0.0.1:5000/",
-    "distDir": "../app"
+    "beforeBuildCommand": "npm run build",
+    "beforeDevCommand": "npm run dev",
+    "devPath": "http://localhost:5173/",
+    "distDir": "../dist"
   },
   "package": {
     "productName": "desmos-offline-mode",
@@ -21,10 +21,7 @@
         "depends": []
       },
       "externalBin": [],
-      "icon": [
-        "icons/icon.ico",
-        "icons/icon.png"
-      ],
+      "icon": ["icons/icon.ico", "icons/icon.png"],
       "identifier": "com.mrpancakes39.desmos",
       "longDescription": "",
       "macOS": {

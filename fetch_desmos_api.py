@@ -32,7 +32,7 @@ def main():
             f"WARN: The app was tested and built on COMMIT '{TESTED_COMMIT}' but the website has a newer COMMIT '{website_commit}'.")
 
     # Checks if directories don't exist and creates them
-    for dir in ["./app", "./app/desmos"]:
+    for dir in ["./src", "./src/desmos"]:
         if not path.exists(dir):
             mkdir(dir)
         if not path.isdir(dir):
@@ -48,14 +48,14 @@ def main():
         response = requests.get(URL + search.group())
         if not response.ok:
             raise Exception(f"Couldn't get {ext} of desmos.")
-        open(f"./app/desmos/calculator.{ext}", "wb").write(response.content)
+        open(f"./src/desmos/calculator.{ext}", "wb").write(response.content)
 
     print("[3/4] Extracting additional assets")
     # Extract the loading CSS
     loading = re.search("<style type='text/css'>.+</style>", html, re.S)
     if loading is None:
         raise Exception("Couldn't get loading css of desmos.")
-    open("./app/desmos/loading.css", "w").write(loading.group()[24:-9])
+    open("./src/desmos/loading.css", "w").write(loading.group()[24:-9])
 
     print("[4/4] Fixing files")
     """
@@ -63,25 +63,25 @@ def main():
     starts with "(function () {\n" (len: 15)
     ends with   "}());\n"          (len: 6)
     """
-    js = open("./app/desmos/calculator.js").read()[15:-6]
+    js = open("./src/desmos/calculator.js").read()
 
     # Removing bugsnag
-    old_bugsnag = re.search("define\('bugsnag'.*?}\);\ndefine", js).group()
-    new_bugsnag = "define('bugsnag',[\"exports\"],function(e){e.setBeforeSendCB=e.leaveBreadcrumb=e.notify=e.init=function(){}});\ndefine"
-    js = js.replace(old_bugsnag, new_bugsnag)
+    # old_bugsnag = re.search("define\('bugsnag'.*?}\);\ndefine", js).group()
+    # new_bugsnag = "define('bugsnag',[\"exports\"],function(e){e.setBeforeSendCB=e.leaveBreadcrumb=e.notify=e.init=function(){}});\ndefine"
+    # js = js.replace(old_bugsnag, new_bugsnag)
 
     # Removes loading of calculator and prints it
-    old_load = re.search(
-        "define\(['\"]toplevel/calculator_desktop.*?}\);", js).group()
-    new_load = 'define("toplevel/calculator_desktop",[],function(){})'
-    js = js.replace(old_load, new_load)
-    open("./app/desmos/calculator.js", "w").write(js)
+    # old_load = re.search(
+    #     "define\(['\"]toplevel/calculator_desktop.*?}\);", js).group()
+    # new_load = 'define("toplevel/calculator_desktop",[],function(){})'
+    # js = js.replace(old_load, new_load)
+    open("./src/desmos/calculator.js", "w").write(js)
 
     if DEBUG_MODE:
-        print("\nDesmos default load function:")
-        print(jsb.beautify(old_load))
+        # print("\nDesmos default load function:")
+        # print(jsb.beautify(old_load))
         print("\nBeautifying calculator.js for debug...")
-        open("./app/desmos/calc_debug.js", "w").write(
+        open("./src/desmos/calc_debug.js", "w").write(
             jsb.beautify(js)
         )
 
