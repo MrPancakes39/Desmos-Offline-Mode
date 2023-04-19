@@ -80,8 +80,6 @@ def main():
     open("./src/desmos/calculator.js", "w").write(js)
 
     if DEBUG_MODE:
-        # print("\nDesmos default load function:")
-        # print(jsb.beautify(old_load))
         print("\nBeautifying calculator.js for debug...")
         open("./src/desmos/calc_debug.js", "w").write(
             jsb.beautify(js)
