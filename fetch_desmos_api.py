@@ -66,10 +66,11 @@ def main():
     js = open("./src/desmos/calculator.js").read()
 
     # Removing bugsnag
-    # old_bugsnag = re.search(
-    # "return Mf=function\(A\){.*Mf.default=Mf,Mf", js).group()
-    # new_bugsnag = "return Mf=function(){},Mf.default=Mf,Mf"
-    # js = js.replace(old_bugsnag, new_bugsnag)
+    old_bugsnag = re.search("\.Bugsnag={.*?\.default=.*?,", js).group()
+    at_export = old_bugsnag.find("default=") + len("default=")
+    bugsnag_function_name = old_bugsnag[at_export:-1]
+    new_bugsnag = old_bugsnag + f"{bugsnag_function_name}=function(){{}},"
+    js = js.replace(old_bugsnag, new_bugsnag)
 
     # Removes loading of calculator and prints it
     old_load = re.search(
