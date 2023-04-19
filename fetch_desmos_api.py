@@ -75,8 +75,8 @@ def main():
     # Removes loading of calculator and prints it
     old_load = re.search(
         'then\(function\(\){return ..\(..\)},function\(\){return ..\("en"\)}\);..\(\);typeof Desmos=="undefined"&&\(Desmos={}\);', js).group()
-    endOfThen = len('..();typeof Desmos=="undefined"&&(Desmos={});')
-    new_load = 'then(function(){});' + old_load[-endOfThen:]
+    end_of_then = len('..();typeof Desmos=="undefined"&&(Desmos={});')
+    new_load = 'then(function(){});' + old_load[-end_of_then:]
     js = js.replace(old_load, new_load)
     open("./src/desmos/calculator.js", "w").write(js)
 
