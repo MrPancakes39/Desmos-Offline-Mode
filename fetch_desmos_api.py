@@ -5,7 +5,7 @@ import requests
 from os import path, mkdir
 import sys
 
-TESTED_COMMIT = "c3706e3f9622ebb410dedfedada932261f87e3bd"
+TESTED_COMMIT = "3efe763187c352d58eeef72d3d43da96c92cbabb"
 DEBUG_MODE = False
 
 if len(sys.argv) > 1:
@@ -66,20 +66,22 @@ def main():
     js = open("./src/desmos/calculator.js").read()
 
     # Removing bugsnag
-    old_bugsnag = re.search(
-        "return Mf=function\(A\){.*Mf.default=Mf,Mf", js).group()
-    new_bugsnag = "return Mf=function(){},Mf.default=Mf,Mf"
-    js = js.replace(old_bugsnag, new_bugsnag)
+    # old_bugsnag = re.search(
+    # "return Mf=function\(A\){.*Mf.default=Mf,Mf", js).group()
+    # new_bugsnag = "return Mf=function(){},Mf.default=Mf,Mf"
+    # js = js.replace(old_bugsnag, new_bugsnag)
 
     # Removes loading of calculator and prints it
-    old_load = re.search("function ZK\(t\){.*?}var e5", js).group()
-    new_load = 'function ZK(){}var e5'
+    old_load = re.search(
+        'then\(function\(\){return ..\(..\)},function\(\){return ..\("en"\)}\);..\(\);typeof Desmos=="undefined"&&\(Desmos={}\);', js).group()
+    endOfThen = len('..();typeof Desmos=="undefined"&&(Desmos={});')
+    new_load = 'then(function(){});' + old_load[-endOfThen:]
     js = js.replace(old_load, new_load)
     open("./src/desmos/calculator.js", "w").write(js)
 
     if DEBUG_MODE:
-        print("\nDesmos default load function:")
-        print(jsb.beautify(old_load))
+        # print("\nDesmos default load function:")
+        # print(jsb.beautify(old_load))
         print("\nBeautifying calculator.js for debug...")
         open("./src/desmos/calc_debug.js", "w").write(
             jsb.beautify(js)
