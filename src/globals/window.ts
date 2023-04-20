@@ -1,8 +1,10 @@
 import type DesmosType from "./Desmos";
+import CalcType from "./Calc";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;
   Desmos: DesmosType;
+  Calc: CalcType;
 }
 
 declare const window: windowConfig;
