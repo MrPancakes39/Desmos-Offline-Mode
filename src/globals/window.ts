@@ -1,6 +1,9 @@
+// Ensures loading of Desmos API
+import "../desmos/calc_debug.js";
+// import "../desmos/calculator.js";
+
 import type DesmosType from "./Desmos";
 import CalcType from "./Calc";
-import CalcObj from "../main/loadApi";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;
@@ -21,5 +24,10 @@ export const IS_BROWSER = window.IS_BROWSER;
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;
 
-window.Calc = CalcObj;
-export const Calc = window.Calc;
+// Creating Calc object
+const graphContainer = document.getElementById("graph-container");
+if (graphContainer === null) {
+  throw new Error("Graph Container couldn't be found!");
+}
+export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcType;
+window.Calc = Calc;
