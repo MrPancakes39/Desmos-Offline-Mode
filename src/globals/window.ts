@@ -1,5 +1,6 @@
 import type DesmosType from "./Desmos";
 import CalcType from "./Calc";
+import CalcObj from "../main/loadApi";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;
@@ -19,3 +20,6 @@ export const IS_BROWSER = window.IS_BROWSER;
 
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;
+
+window.Calc = CalcObj as CalcType;
+export const Calc = window.Calc;
