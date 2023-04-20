@@ -1,4 +1,5 @@
 import "desmos";
+import { DCGViewModule } from "../DCGView";
 
 type DesmosType = typeof Desmos & {
   version: string;
