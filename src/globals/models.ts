@@ -94,6 +94,23 @@ export interface ExpressionModel extends BasicSetExpression, ItemModelBase {
     | "right"
     | "auto_right";
   clickableInfo?: BaseClickable;
+  readonly?: boolean;
+  interactiveLabel?: boolean;
+  domain?: {
+    min: string | undefined;
+    max: string | undefined;
+  };
+  slider?: {
+    animationPeriod: number;
+    hardMax: boolean;
+    hardMin: boolean;
+    isPlaying: boolean;
+    loopMode: string;
+    max: string;
+    min: string;
+    playDirection: number;
+    step: string;
+  };
 }
 
 interface TableColumn extends BasicSetExpression {
@@ -124,6 +141,7 @@ export interface ImageModel extends ItemModelBase {
     hoveredImage?: string;
     depressedImage?: string;
   };
+  hidden?: boolean;
 }
 
 export interface FolderModel {
@@ -133,6 +151,7 @@ export interface FolderModel {
   title?: string;
   secret?: boolean;
   error?: any;
+  hidden?: boolean;
 }
 
 export type ItemModel = ExpressionModel | TableModel | TextModel | ImageModel | FolderModel;
