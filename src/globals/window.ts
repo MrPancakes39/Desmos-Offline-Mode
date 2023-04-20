@@ -9,6 +9,9 @@ interface windowConfig extends Window {
   IS_BROWSER: boolean;
   Desmos: DesmosType;
   Calc: CalcType;
+  $: JQueryStatic;
+  MathQuill: unknown;
+  jQuery: JQueryStatic;
 }
 
 declare const window: windowConfig;
@@ -31,3 +34,8 @@ if (graphContainer === null) {
 }
 export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcType;
 window.Calc = Calc;
+
+// Fix missing globals
+window.$ = window.Desmos.$;
+window.jQuery = window.Desmos.Private.Fragile.jQuery;
+window.MathQuill = window.Desmos.MathQuill;

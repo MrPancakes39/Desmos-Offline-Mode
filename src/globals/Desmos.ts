@@ -1,9 +1,13 @@
 import "desmos";
 import { DCGViewModule } from "../DCGView";
 import { ItemModel } from "./models";
+import _ from "underscore";
 
 type DesmosType = typeof Desmos & {
   version: string;
+  $: JQueryStatic;
+  _: typeof _;
+  MathQuill: unknown;
   Private: {
     Fragile: FragileType;
   };
@@ -36,7 +40,7 @@ type FragileType = {
     isRedo: (e: KeyboardEvent) => boolean;
     isHelp: (e: KeyboardEvent) => boolean;
   };
-  jQuery: any;
+  jQuery: JQueryStatic;
   getQueryParams: () => Record<string, string | true>;
   getReconciledExpressionProps: (
     type: string,
