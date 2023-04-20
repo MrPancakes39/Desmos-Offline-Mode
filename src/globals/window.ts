@@ -3,12 +3,13 @@ import "../desmos/calc_debug.js";
 // import "../desmos/calculator.js";
 
 import type DesmosType from "./Desmos";
-import CalcType from "./Calc";
+import { CalcWithPatches } from "./Calc";
+import { applyPatches } from "../main/patches.js";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;
   Desmos: DesmosType;
-  Calc: CalcType;
+  Calc: CalcWithPatches;
   $: JQueryStatic;
   MathQuill: unknown;
   jQuery: JQueryStatic;
@@ -32,7 +33,8 @@ const graphContainer = document.getElementById("graph-container");
 if (graphContainer === null) {
   throw new Error("Graph Container couldn't be found!");
 }
-export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcType;
+export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcWithPatches;
+applyPatches(Calc);
 window.Calc = Calc;
 
 // Fix missing globals

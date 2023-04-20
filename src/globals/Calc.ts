@@ -151,7 +151,7 @@ interface CalcPrivate {
         killWorker: () => void;
       };
     };
-    listModel: unknown;
+    listModel: { colorIdx: number };
     _addItemToEndFromAPI: (item: ItemModel) => void;
     _showToast: (toast: Toast) => void;
     getViewState: () => {
@@ -188,3 +188,13 @@ interface CalcPrivate {
 
 type Calc = CalcPrivate & Desmos.Calculator;
 export default Calc;
+
+type DesmosColorNames = keyof typeof Desmos.Colors;
+type DesmosColorsValues = typeof Desmos.Colors[DesmosColorNames];
+
+export type CalcWithPatches = Calc & {
+  getSelectedItem: () => unknown;
+  setItemColor: (color?: string) => boolean;
+  getNextColor: () => DesmosColorsValues;
+  setNextColor: (color?: string) => boolean;
+};
