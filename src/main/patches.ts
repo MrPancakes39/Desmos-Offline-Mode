@@ -28,6 +28,37 @@ export function applyPatches(Calc: CalcWithPatches) {
   };
 }
 
+type SanitizedExpressionItem = Omit<ExpressionModel, "sliderBounds"> & {
+  sliderBounds?: {
+    min?: string;
+    max?: string;
+    step?: string | undefined;
+  };
+  playing?: boolean;
+};
+type SanitizedTableItem = {
+  id: string;
+  type: "table";
+  columns: TableModel["columns"];
+};
+type SanitizedImageItem = {
+  id: string;
+  type: "image";
+  hidden: boolean | undefined;
+  secret: boolean | undefined;
+};
+type SanitizedFolderItem = {
+  id: string;
+  type: "folder";
+  hidden: boolean | undefined;
+  secret: boolean | undefined;
+};
+type SanitizedTextItem = {
+  id: string;
+  type: "text";
+  secret: boolean | undefined;
+};
+
 const sanitizeItem = function (item: ItemModel) {
   type TableColumn = TableModel["columns"] extends Array<infer T> ? T : never;
   const tableColumn = (column: TableColumn) => {
@@ -52,11 +83,12 @@ const sanitizeItem = function (item: ItemModel) {
   switch (item.type) {
     case "expression":
       return (function (modal) {
-        const tmp: Record<string, any> = {
+        const tmp: SanitizedExpressionItem = {
           id: modal.id,
           type: modal.type,
         };
         type keyModal = keyof typeof modal;
+        type keySanitized = keyof SanitizedExpressionItem;
         const properties: keyModal[] = [
           "latex",
           "color",
@@ -81,37 +113,35 @@ const sanitizeItem = function (item: ItemModel) {
           "readonly",
         ];
         properties.forEach((prop) => {
-          if (prop in modal) tmp[prop] = modal[prop];
+          if (prop in modal) tmp[prop as keySanitized] = modal[prop];
         });
-        if ("parametricDomain" in modal) {
+        if ("parametricDomain" in modal && modal.parametricDomain) {
           tmp.parametricDomain = {
-            min: modal.parametricDomain?.min,
-            max: modal.parametricDomain?.max,
+            min: modal.parametricDomain.min,
+            max: modal.parametricDomain.max,
           };
         }
-        if ("polarDomain" in modal) {
+        if ("polarDomain" in modal && modal.polarDomain) {
           tmp.polarDomain = {
-            min: modal.polarDomain?.min,
-            max: modal.polarDomain?.max,
+            min: modal.polarDomain.min,
+            max: modal.polarDomain.max,
           };
         }
-        if ("domain" in modal) {
+        if ("domain" in modal && modal.domain) {
           tmp.domain = {
-            min: modal.domain?.min,
-            max: modal.domain?.max,
+            min: modal.domain.min,
+            max: modal.domain.max,
           };
         }
         if (modal.slider) {
+          tmp.sliderBounds = {};
           if (modal.slider.hardMin) {
-            tmp.sliderBounds = tmp.sliderBounds || {};
             tmp.sliderBounds.min = modal.slider.min;
           }
           if (modal.slider.hardMax) {
-            tmp.sliderBounds = tmp.sliderBounds || {};
             tmp.sliderBounds.min = modal.slider.max;
           }
           if (modal.slider.step) {
-            tmp.sliderBounds = tmp.sliderBounds || {};
             tmp.sliderBounds.step = modal.slider.step;
           }
           tmp.playing = modal.slider.isPlaying;
@@ -124,7 +154,7 @@ const sanitizeItem = function (item: ItemModel) {
           id: modal.id,
           type: modal.type,
           columns: modal.columns.map(tableColumn),
-        };
+        } as SanitizedTableItem;
       })(item);
     case "folder":
     case "image":
@@ -134,7 +164,7 @@ const sanitizeItem = function (item: ItemModel) {
           type: modal.type,
           hidden: modal.hidden,
           secret: modal.secret,
-        };
+        } as SanitizedImageItem | SanitizedFolderItem;
       })(item);
     case "text":
       return (function (modal) {
@@ -142,9 +172,9 @@ const sanitizeItem = function (item: ItemModel) {
           id: modal.id,
           type: modal.type,
           secret: modal.secret,
-        };
+        } as SanitizedTextItem;
       })(item);
     default:
-      return item;
+      return item as never;
   }
 };
