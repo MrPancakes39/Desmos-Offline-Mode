@@ -3,6 +3,7 @@ interface windowConfig extends Window {
 }
 
 declare const window: windowConfig;
+export default window;
 
 // defines window.IS_BROWSER constant
 Object.defineProperty(window, "IS_BROWSER", {
@@ -10,5 +11,3 @@ Object.defineProperty(window, "IS_BROWSER", {
   writable: false,
 });
 export const IS_BROWSER = window.IS_BROWSER;
-
-export default window;
