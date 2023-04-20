@@ -21,5 +21,5 @@ export const IS_BROWSER = window.IS_BROWSER;
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;
 
-window.Calc = CalcObj as CalcType;
+window.Calc = CalcObj;
 export const Calc = window.Calc;
