@@ -1,4 +1,4 @@
-import { ItemModel, TableModel } from "../globals/models";
+import { ExpressionModel, ItemModel, TableModel } from "../globals/models";
 import { CalcWithPatches } from "../globals/Calc";
 
 export function applyPatches(Calc: CalcWithPatches) {
@@ -25,6 +25,32 @@ export function applyPatches(Calc: CalcWithPatches) {
     }
     Calc.controller.listModel.colorIdx = colorIndex;
     return true;
+  };
+
+  type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
+  type SelectedItem =
+    | ExpressionItem
+    | SanitizedTableItem
+    | SanitizedImageItem
+    | SanitizedFolderItem
+    | SanitizedTextItem
+    | undefined;
+  Calc.getSelectedItem = (): SelectedItem => {
+    let item = Calc.controller.getSelectedItem();
+    if (item === undefined) return undefined;
+
+    let sanitized = sanitizeItem(item);
+    if (sanitized.type === "expression") {
+      delete sanitized.fill;
+      delete sanitized.lines;
+      delete sanitized.points;
+      sanitized.domain = { min: "0", max: "1" };
+    }
+    if (sanitized.type === "table") {
+      sanitized.columns.pop();
+      sanitized.columns.forEach((column) => column.values?.pop());
+    }
+    return sanitized;
   };
 }
 
