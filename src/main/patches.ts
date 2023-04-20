@@ -54,6 +54,20 @@ export function applyPatches(Calc: CalcWithPatches) {
     }
     return sanitized;
   };
+
+  Calc.setItemColor = (color) => {
+    if (color === undefined) return false;
+    let item = Calc.getSelectedItem();
+    if (item === undefined) return false;
+    if (item.type === "expression") {
+      item.color = color;
+      // TODO: Fix Later
+      // @ts-expect-error
+      Calc.setExpression(item);
+      return true;
+    }
+    return false;
+  };
 }
 
 type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
