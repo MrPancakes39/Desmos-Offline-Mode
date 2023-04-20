@@ -27,14 +27,6 @@ export function applyPatches(Calc: CalcWithPatches) {
     return true;
   };
 
-  type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
-  type SelectedItem =
-    | ExpressionItem
-    | SanitizedTableItem
-    | SanitizedImageItem
-    | SanitizedFolderItem
-    | SanitizedTextItem
-    | undefined;
   Calc.getSelectedItem = (): SelectedItem => {
     let item = Calc.controller.getSelectedItem();
     if (item === undefined) return undefined;
@@ -54,12 +46,16 @@ export function applyPatches(Calc: CalcWithPatches) {
   };
 }
 
-type SanitizedExpressionItem = Omit<ExpressionModel, "sliderBounds"> & {
-  sliderBounds?: {
-    min?: string;
-    max?: string;
-    step?: string | undefined;
-  };
+type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
+type SelectedItem =
+  | ExpressionItem
+  | SanitizedTableItem
+  | SanitizedImageItem
+  | SanitizedFolderItem
+  | SanitizedTextItem
+  | undefined;
+
+type SanitizedExpressionItem = ExpressionModel & {
   playing?: boolean;
 };
 type SanitizedTableItem = {
@@ -160,16 +156,11 @@ const sanitizeItem = function (item: ItemModel) {
           };
         }
         if (modal.slider) {
-          tmp.sliderBounds = {};
-          if (modal.slider.hardMin) {
-            tmp.sliderBounds.min = modal.slider.min;
-          }
-          if (modal.slider.hardMax) {
-            tmp.sliderBounds.min = modal.slider.max;
-          }
-          if (modal.slider.step) {
-            tmp.sliderBounds.step = modal.slider.step;
-          }
+          tmp.sliderBounds = {
+            min: modal.slider.hardMin ? modal.slider.min : "",
+            max: modal.slider.hardMax ? modal.slider.max : "",
+            step: modal.slider.step,
+          };
           tmp.playing = modal.slider.isPlaying;
         }
         return tmp;
