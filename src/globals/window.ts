@@ -3,8 +3,7 @@ import "../desmos/calc_debug.js";
 // import "../desmos/calculator.js";
 
 import type DesmosType from "./Desmos";
-import { CalcWithPatches } from "./Calc";
-import { applyPatches } from "../main/patches.js";
+import { CalcWithPatches, applyPatches } from "../main/patches";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;

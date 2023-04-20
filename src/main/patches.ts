@@ -1,5 +1,15 @@
+import CalcType from "../globals/Calc";
 import { ExpressionModel, ItemModel, TableModel } from "../globals/models";
-import { CalcWithPatches } from "../globals/Calc";
+
+type DesmosColorNames = keyof typeof Desmos.Colors;
+type DesmosColorsValues = typeof Desmos.Colors[DesmosColorNames];
+
+export type CalcWithPatches = CalcType & {
+  getSelectedItem: () => SelectedItem;
+  setItemColor: (color?: string) => boolean;
+  getNextColor: () => DesmosColorsValues;
+  setNextColor: (color?: string) => boolean;
+};
 
 export function applyPatches(Calc: CalcWithPatches) {
   const colorRotation = [
