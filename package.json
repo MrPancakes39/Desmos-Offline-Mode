@@ -9,8 +9,12 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@desmodder/graph-state": "^0.2.3",
     "@types/node": "^18.15.11",
     "typescript": "^5.0.3",
     "vite": "^4.2.1"
+  },
+  "dependencies": {
+    "@types/desmos": "^1.6.0"
   }
 }
