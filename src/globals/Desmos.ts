@@ -1,6 +1,15 @@
 import "desmos";
 import { DCGViewModule } from "../DCGView";
 import { ItemModel } from "./models";
+import {
+  CheckboxComponent,
+  DStaticMathquillViewComponent,
+  InlineMathInputViewComponent,
+  MathQuillField,
+  MathQuillViewComponent,
+  SegmentedControlComponent,
+  TooltipComponent,
+} from "../desmosComponents";
 import _ from "underscore";
 
 type DesmosType = typeof Desmos & {
@@ -16,15 +25,15 @@ type DesmosType = typeof Desmos & {
 type FragileType = {
   DCGView: DCGViewModule;
   PromptSliderView: any;
-  Checkbox: unknown;
-  SegmentedControl: unknown;
-  MathquillView: unknown & {
+  Checkbox: typeof CheckboxComponent;
+  SegmentedControl: typeof SegmentedControlComponent;
+  MathquillView: typeof MathQuillViewComponent & {
     // static abstract getFocusedMathquill()
-    getFocusedMathquill: () => unknown;
+    getFocusedMathquill: () => MathQuillField;
   };
-  InlineMathInputView: unknown;
-  StaticMathquillView: unknown;
-  Tooltip: unknown;
+  InlineMathInputView: typeof InlineMathInputViewComponent;
+  StaticMathquillView: typeof DStaticMathquillViewComponent;
+  Tooltip: typeof TooltipComponent;
   ExpressionOptionsMenuView: {
     prototype: {
       getSections: {
