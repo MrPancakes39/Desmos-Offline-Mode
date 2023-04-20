@@ -1,3 +1,2 @@
-import window from "./globals/window";
-console.log("Window", window);
-console.log("IS_BROWSER", window.IS_BROWSER);
+import { IS_BROWSER } from "./globals/window";
+console.log("IS_BROWSER", IS_BROWSER);

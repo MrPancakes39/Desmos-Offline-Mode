@@ -9,5 +9,6 @@ Object.defineProperty(window, "IS_BROWSER", {
   value: !("__TAURI__" in window),
   writable: false,
 });
+export const IS_BROWSER = window.IS_BROWSER;
 
 export default window;
