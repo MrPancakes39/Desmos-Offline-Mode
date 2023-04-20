@@ -5,7 +5,7 @@ import requests
 from os import path, mkdir
 import sys
 
-TESTED_COMMIT = "3efe763187c352d58eeef72d3d43da96c92cbabb"
+TESTED_COMMIT = "d1bd01557d001e21454ca44406d5333f385a28e3"
 DEBUG_MODE = False
 
 if len(sys.argv) > 1:
@@ -78,6 +78,13 @@ def main():
     end_of_then = len('..();typeof Desmos=="undefined"&&(Desmos={});')
     new_load = 'then(function(){});' + old_load[-end_of_then:]
     js = js.replace(old_load, new_load)
+
+    # Removes window.Calc assignment
+    old_calc = re.search(
+        '\("\.dcg-loading-div-container"\)\.hide\(\),window.Calc=.*?\)}\)', js).group()
+    new_calc = ";})"
+    js = js.replace(old_calc, new_calc)
+
     open("./src/desmos/calculator.js", "w").write(js)
 
     if DEBUG_MODE:
