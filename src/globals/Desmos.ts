@@ -52,4 +52,6 @@ type FragileType = {
   currentLanguage: () => string;
 };
 
+type Section = "colors-only" | "lines" | "points" | "fill" | "label" | "drag";
+
 export default DesmosType;
