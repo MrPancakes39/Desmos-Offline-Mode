@@ -1,12 +1,11 @@
 // Original File: https://github.com/DesModder/DesModder/blob/main/src/globals/Calc.ts
 import { ItemModel } from "./models";
 import { GraphState } from "@desmodder/graph-state";
-import "desmos";
+import { MathQuillField } from "../components";
 
 export type DispatchedEvent =
   | {
       type:
-        | "keypad/set-minimized"
         | "close-graph-settings"
         | "open-expression-search"
         | "close-expression-search"
@@ -21,26 +20,89 @@ export type DispatchedEvent =
         | "resize-exp-list"
         | "set-none-selected"
         | "toggle-graph-settings"
-        | "clear-unsaved-changes";
+        | "clear-unsaved-changes"
+        | "undo"
+        | "tick"
+        | "redo"
+        | "tick-ticker"
+        | "keypad/functions"
+        | "commit-geo-objects"
+        | "upward-delete-selected-expression"
+        | "downward-delete-selected-expression"
+        | "ui/container-resized";
+    }
+  | {
+      type: "keypad/set-minimized";
+      minimized: boolean;
     }
   | {
       type:
         | "action-single-step"
-        | "toggle-item-hidden"
         | "duplicate-folder"
         | "duplicate-expression"
-        | "set-selected-id";
+        | "convert-image-to-draggable"
+        | "create-sliders-for-item"
+        | "toggle-item-hidden"
+        | "delete-item-and-animate-out"
+        | "move-focus-to-item";
       id: string;
     }
   | {
+      /** This is somewhat a super type of all the `DispatchedEvent`s. It's here
+       * to avoid annotating tons of types for modify.ts. This should really be
+       * `type: "set-slider-minlatex" | (100 others)`, but that's unmaintainable.
+       * A second best would be `type: "string"`, but that screws with the
+       * other types being useful. */
+      type: "__dummy-IDEvent";
+      id?: string;
+    }
+  | {
+      type: "set-selected-id";
+      id: string;
+      // Added to avoid feedback loop. Desmos will pass this through ignored.
+      dsmFromTextModeSelection?: boolean;
+    }
+  | {
       type: "set-focus-location";
-      location: { type: string };
+      location: { type: "expression"; id: string } | { type: string };
     }
   | {
       type: "on-evaluator-changes";
       changes: Record<string, EvaluatorChange>;
       timingData: TimingData;
-    };
+    }
+  | {
+      type: "set-state";
+      opts: {
+        allowUndo?: boolean;
+        // Added to avoid feedback loop. Desmos will pass this through ignored.
+        fromTextMode?: boolean;
+      };
+      state: GraphState;
+    }
+  | {
+      // Note: this has more parameters. I just haven't found a need for them yet.
+      type: "set-item-latex";
+      latex: string;
+      id: string;
+    }
+  | {
+      type: "on-special-key-pressed";
+      key: string;
+      // used in compact-view plugin
+      forceSwitchExpr?: boolean;
+    }
+  | {
+      type: "update-all-selected-items";
+      update: {
+        // folderId is 'move these objects to folder'
+        // Everything else is simply styling
+        prop: "folderId" | string;
+      };
+    }
+  | { type: "set-folder-collapsed"; id: string; isCollapsed: boolean }
+  | { type: "set-item-colorLatex"; id: string; colorLatex: string }
+  | { type: "set-note-text"; id: string; text: string };
 
 /**
  * Evaluator change: a change set associated with a single id, passed back from
@@ -107,7 +169,7 @@ export interface TopLevelComponents {
   };
 }
 
-interface Toast {
+export interface Toast {
   message: string;
   undoCallback?: () => void;
   toastStyle?: "error";
@@ -115,14 +177,32 @@ interface Toast {
   hideAfter?: number;
 }
 
+type Product = "graphing" | "geometry-calculator" | "graphing-3d";
+
 interface CalcPrivate {
+  focusedMathQuill:
+    | {
+        mq: MathQuillField;
+        typedText: (text: string) => void;
+      }
+    | undefined;
   /// / undocumented, may break
   controller: {
+    rootElt: HTMLElement;
+    isNarrow: () => boolean;
     // _removeExpressionSynchronously(model: ItemModel): void;
+    handleDispatchedAction: (evt: DispatchedEvent) => void;
     _toplevelReplaceItemAt: (index: number, model: ItemModel, shouldFocus: boolean) => void;
     createItemModel: (modelTemplate: any) => ItemModel;
     getPillboxBackgroundColor: () => string;
     isGraphSettingsOpen: () => boolean;
+    graphSettings: {
+      config: {
+        // only includes products desmodder is enabled for
+        product: Product;
+        settingsMenu: boolean;
+      };
+    };
     dispatch: (e: DispatchedEvent) => void;
     getExpressionSearchStr: () => string;
     dispatcher: {
@@ -133,6 +213,7 @@ interface CalcPrivate {
     // The item models returned are actually much more detailed
     getSelectedItem: () => ItemModel | undefined;
     getItemModel: (id: any) => ItemModel | undefined;
+    getAllSelectedItems: () => ItemModel[];
     getItemModelByIndex: (index: number) => ItemModel | undefined;
     getAllItemModels: () => ItemModel[];
     stopAllSliders: () => void;
@@ -150,8 +231,20 @@ interface CalcPrivate {
       workerPoolConnection: {
         killWorker: () => void;
       };
+      notifyWhenSynced: (cb: () => void) => void;
     };
-    listModel: { colorIdx: number };
+    listModel: {
+      // add properties as needed
+      __itemModelArray: {
+        id: string;
+        colorLatex: string;
+        folderId: string;
+        type: "folder" | "expression";
+      }[];
+      __itemIdToModel: Record<string, ItemModel>;
+      drawOrder: string[];
+      colorIdx: number; // TODO: Make a pull request to add colorIdx??
+    };
     _addItemToEndFromAPI: (item: ItemModel) => void;
     _showToast: (toast: Toast) => void;
     getViewState: () => {
@@ -166,6 +259,21 @@ interface CalcPrivate {
     markTickRequiredNextFrame: () => void;
     getPlayingSliders: () => { latex: string }[];
     _tickSliders: (nowTimestamp: number) => void;
+    computeMajorLayout: () => { grapher: { width: number } };
+    isGeometry: () => boolean;
+    geometryGettingStartedMessageState: string;
+    isGeoUIActive: () => boolean;
+    isNarrowGeometryHeader: () => boolean;
+    expressionSearchOpen: boolean;
+    /** Returns a function to call to unsubscribe */
+    subscribeToChanges: (cb: () => void) => () => void;
+    getBackgroundColor: () => string;
+    isInEditListMode: () => boolean;
+    getMathquillConfig: (e: { additionalOperators?: string[] }) => {
+      autoOperatorNames: string;
+      autoCommands: string;
+    };
+    is3dProduct: () => boolean;
   };
   _calc: {
     globalHotkeys: TopLevelComponents;
@@ -186,5 +294,5 @@ interface CalcPrivate {
   ) => void;
 }
 
-type Calc = CalcPrivate & Desmos.Calculator;
-export default Calc;
+export type Calc = CalcPrivate & Desmos.Calculator;
+export type CalcController = Calc["controller"];

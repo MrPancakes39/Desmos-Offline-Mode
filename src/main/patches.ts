@@ -1,8 +1,8 @@
-import CalcType from "../globals/Calc";
+import { Calc as CalcType } from "../globals/Calc";
 import { ExpressionModel, ItemModel, TableModel } from "../globals/models";
 
 type DesmosColorNames = keyof typeof Desmos.Colors;
-type DesmosColorsValues = typeof Desmos.Colors[DesmosColorNames];
+type DesmosColorsValues = (typeof Desmos.Colors)[DesmosColorNames];
 
 export type CalcWithPatches = CalcType & {
   getSelectedItem: () => SelectedItem;
@@ -19,7 +19,7 @@ export function applyPatches(Calc: CalcWithPatches) {
     Desmos.Colors.PURPLE,
     Desmos.Colors.BLACK,
   ] as const;
-  type DesmosColorRotation = typeof colorRotation[number];
+  type DesmosColorRotation = (typeof colorRotation)[number];
 
   Calc.getNextColor = () => {
     let index = Calc.controller.listModel.colorIdx;
@@ -79,7 +79,7 @@ type SelectedItem =
   | SanitizedTextItem
   | undefined;
 
-type SanitizedExpressionItem = ExpressionModel & {
+type SanitizedExpressionItem = Omit<ExpressionModel, "controller" | "index"> & {
   playing?: boolean;
 };
 type SanitizedTableItem = {
@@ -159,7 +159,8 @@ const sanitizeItem = function (item: ItemModel) {
           "readonly",
         ];
         properties.forEach((prop) => {
-          if (prop in modal) tmp[prop as keySanitized] = modal[prop];
+          // TODO: Fix???
+          if (prop in modal) tmp[prop as keySanitized] = modal[prop] as never;
         });
         if ("parametricDomain" in modal && modal.parametricDomain) {
           tmp.parametricDomain = {

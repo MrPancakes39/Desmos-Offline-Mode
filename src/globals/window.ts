@@ -26,6 +26,7 @@ export const IS_BROWSER = window.IS_BROWSER;
 
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;
+export const Fragile = Desmos.Private.Fragile;
 
 // Creating Calc object
 const graphContainer = document.getElementById("graph-container");
@@ -40,3 +41,6 @@ window.Calc = Calc;
 window.$ = window.Desmos.$;
 window.jQuery = window.Desmos.Private.Fragile.jQuery;
 window.MathQuill = window.Desmos.MathQuill;
+
+export type Calc = CalcWithPatches;
+export type CalcController = Calc["controller"];

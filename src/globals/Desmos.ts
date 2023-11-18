@@ -9,7 +9,7 @@ import {
   MathQuillViewComponent,
   SegmentedControlComponent,
   TooltipComponent,
-} from "../desmosComponents";
+} from "../components/desmosComponents";
 import _ from "underscore";
 
 type DesmosType = typeof Desmos & {

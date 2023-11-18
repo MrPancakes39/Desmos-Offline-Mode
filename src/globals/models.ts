@@ -3,6 +3,8 @@
  * This file includes type definition for internal graph state models.
  * These have more information than the graph state related to getState and setState.
  */
+import { ClassComponent } from "../DCGView";
+import { CalcController } from ".";
 
 interface BasicSetExpression {
   id: string;
@@ -23,6 +25,7 @@ interface BasicSetExpression {
 }
 
 interface ItemModelBase {
+  index: number;
   id: string;
   folderId?: string;
   secret?: boolean;
@@ -47,6 +50,8 @@ interface ItemModelBase {
     is_inequality: boolean;
     action_value?: Record<string, string>;
   };
+  controller: CalcController;
+  dcgView?: ClassComponent;
 }
 
 interface BaseClickable {
@@ -94,6 +99,8 @@ export interface ExpressionModel extends BasicSetExpression, ItemModelBase {
     | "right"
     | "auto_right";
   clickableInfo?: BaseClickable;
+  shouldGraph?: boolean;
+  // TODO: Check the properties below if exist
   readonly?: boolean;
   interactiveLabel?: boolean;
   domain?: {
@@ -146,12 +153,14 @@ export interface ImageModel extends ItemModelBase {
 
 export interface FolderModel {
   type: "folder";
-  // cannot have a folderId
+  folderId?: undefined;
   id: string;
   title?: string;
   secret?: boolean;
   error?: any;
-  hidden?: boolean;
+  hidden?: boolean; // TODO: Check if this property exists
+  index: number;
+  controller: CalcController;
 }
 
 export type ItemModel = ExpressionModel | TableModel | TextModel | ImageModel | FolderModel;
