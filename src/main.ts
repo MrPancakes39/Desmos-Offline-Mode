@@ -13,5 +13,5 @@ function select<E extends Element>(selector: string): E {
   console.log(Calc); // Sanity Check
 
   const HeaderContainer = select<HTMLDivElement>("#dcg-header-container");
-  Fragile.DCGView.mountToNode(Header, HeaderContainer, {});
+  Fragile.DCGView.mountToNode(Header, HeaderContainer, { controller: () => Calc.controller });
 })();
