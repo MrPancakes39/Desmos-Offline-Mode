@@ -25,3 +25,4 @@ dist-ssr
 
 # Desmos API from Website
 src/desmos
+public/assets
