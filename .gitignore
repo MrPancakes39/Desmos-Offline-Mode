@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Desmos API from Website
+# Desmos from Website
 src/desmos
 public/assets
