@@ -1,7 +1,3 @@
-// Ensures loading of Desmos API
-import "../desmos/calc_debug.js";
-// import "../desmos/calculator.js";
-
 import type DesmosType from "./Desmos";
 import { CalcWithPatches, applyPatches } from "../main/patches";
 

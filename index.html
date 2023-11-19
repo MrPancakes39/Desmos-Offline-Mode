@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html no_gl="true" lang="en" class="dcg-calculator-api-container">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Desmos | Offline Mode</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./src/main/main.less" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/favicon.ico" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Desmos | Offline Mode</title>
-  <link rel="icon" href="./favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="./src/main/main.less">
-</head>
+  <body>
+    <div class="dcg-loading-div-container" style="display: none">
+      <div class="dcg-loading-background-div"></div>
+      <div class="dcg-loading-div">Loading...</div>
+    </div>
 
-<body>
-  <div class="dcg-loading-div-container" style="display: none;">
-    <div class="dcg-loading-background-div"></div>
-    <div class="dcg-loading-div">Loading...</div>
-  </div>
+    <div id="root">
+      <div id="dcg-header-container"></div>
+      <div id="graph-container"></div>
+    </div>
 
-  <div id="root">
-    <div id="dcg-header-container"></div>
-    <div id="graph-container"></div>
-  </div>
-
-  <div id="dcg-modal-container"></div>
-  <script type="module" src="./src/main.ts"></script>
-</body>
-
+    <div id="dcg-modal-container"></div>
+    <script type="module" src="%VITE_DESMOS_FILE%"></script>
+    <script type="module" src="src/main.ts"></script>
+  </body>
 </html>
