@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "fetch_desmos": "node ./fetch_desmos_res/fetch_desmos.mjs",
+    "fetch_desmos_debug": "node ./fetch_desmos_res/fetch_desmos.mjs --debug"
   },
   "devDependencies": {
+    "fetch_desmos_resources": "file:./fetch_desmos_res",
     "@desmodder/graph-state": "^0.2.3",
     "@types/jquery": "^3.5.27",
     "@types/node": "^20.9.1",
