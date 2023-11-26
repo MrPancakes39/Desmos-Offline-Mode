@@ -15,4 +15,8 @@ function select<E extends Element>(selector: string): E {
 
   const HeaderContainer = select<HTMLDivElement>("#dcg-header-container");
   Fragile.DCGView.mountToNode(Header, HeaderContainer, {});
+
+  // Last in loading
+  Calc.focusFirstExpression();
+  document.querySelector<HTMLDivElement>(".dcg-loading-div-container")!.style.display = "none";
 })();
