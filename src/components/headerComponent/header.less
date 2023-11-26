@@ -1,6 +1,7 @@
 .dcg-header {
   display: flex;
   flex-direction: row;
+  padding: 0 10px;
   > * {
     flex: 1;
   }
@@ -9,6 +10,16 @@
     padding: 0 10px;
     height: 32px;
     line-height: 32px;
+  }
+
+  .desom-icon-inline {
+    all: unset;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+
+    &:hover {
+      color: #fff;
+    }
   }
 
   .graph-title {
@@ -27,13 +38,6 @@
     flex-direction: row;
     align-items: center;
     gap: 5px;
-
-    .desom-new-file {
-      all: unset;
-      font-size: 1.25rem;
-      line-height: 1.25rem;
-      margin-left: 10px;
-    }
   }
 
   .center-container {
@@ -50,5 +54,13 @@
         }
       }
     }
+  }
+
+  .right-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    gap: 5px;
   }
 }

@@ -7,7 +7,7 @@ export default class LeftContainer extends Component<{}> {
     return (
       <div class="left-container">
         <Tooltip tooltip={DesmosOM.format("account-shell-text-mygraphs-new-blank-graph")} gravity="s">
-          <button class="desom-icons-file-plus desom-new-file"></button>
+          <button class="desom-icons-file-plus desom-icon-inline"></button>
         </Tooltip>
         <h1 class="graph-title">Untitled Graph</h1>
         <Tooltip tooltip={DesmosOM.format("account-shell-button-open-graph")} gravity="s">
