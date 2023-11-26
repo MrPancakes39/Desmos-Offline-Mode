@@ -1,0 +1,30 @@
+@font-face {
+  font-family: "desom-icons";
+  src: url("./desom-icons.woff?763xno") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="desom-icons-"],
+[class*=" desom-icons-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "desom-icons" !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.desom-icons-folder-open:before {
+  content: "\e930";
+}
+.desom-icons-save:before {
+  content: "\e962";
+}

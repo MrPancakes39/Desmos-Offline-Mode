@@ -1,3 +1,4 @@
+import "./fonts/style.css";
 import { Calc, Fragile } from "./globals/window";
 import Header from "./components/headerComponent";
 
