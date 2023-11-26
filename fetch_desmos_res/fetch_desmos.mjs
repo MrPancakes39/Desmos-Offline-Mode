@@ -17,7 +17,7 @@ async function getFile(url, errMsg, filePath) {
 }
 
 async function main() {
-  const TESTED_COMMIT = "dac33e6e2fdbe291d8f19518dcc8af83691065a1";
+  const TESTED_COMMIT = "c273f3de5506c70233a1794fcc7d3945dcefc533";
   let DEBUG_MODE = false;
 
   // Check if in debug mode enabled
@@ -124,6 +124,11 @@ async function main() {
     const old_calc = end_of_js.match(/,window.Calc=.*?}\)/g)[0];
     const new_calc = ";})";
     new_end_js = new_end_js.replace(old_calc, new_calc);
+
+    // Removes hiding of loader
+    const old_loader = end_of_js.match(/\.dcg-loading-div-container.+?\.style\.display="none"/g)[0];
+    const new_loader = old_loader.slice(0, old_loader.indexOf(")") + 1);
+    new_end_js = new_end_js.replace(old_loader, new_loader);
 
     // Final Replacement
     js = js.replace(end_of_js, new_end_js);
