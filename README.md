@@ -4,6 +4,10 @@ Desmos is a well known Graphing Calculator available for the web and mobile, but
 
 Desmos Offline Mode is a desktop port of Desmos Web Version, with the added feature of working offline.
 
+## Update 2
+
+I graduated from university and will be working on this (hopefully) weekly, you can see the development being made on the develop branch.
+
 ## Update
 
 Source has been archived under the tag [archive/main](https://github.com/MrPancakes39/Desmos-Offline-Mode/tree/archive/main). To build v1.0.0 clone the repo and then do `git checkout archive/main`. Follow the instructions in the `REAME.md` file in the archive to continue.
