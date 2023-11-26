@@ -1,5 +1,5 @@
 import { Calc, Fragile } from "./globals/window";
-import Header from "./components/header";
+import Header from "./components/headerComponent";
 
 function select<E extends Element>(selector: string): E {
   const tmp = document.querySelector<E>(selector);
