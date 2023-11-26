@@ -275,7 +275,7 @@ interface CalcPrivate {
     };
     is3dProduct: () => boolean;
     // TODO: Pull Request??
-    s: (key: string, options?: Record<string, any>) => string;
+    s: (key: string, options?: Record<string, any> | null) => string;
   };
   _calc: {
     globalHotkeys: TopLevelComponents;
