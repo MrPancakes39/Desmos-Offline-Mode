@@ -49,7 +49,6 @@ type FragileType = {
     isRedo: (e: KeyboardEvent) => boolean;
     isHelp: (e: KeyboardEvent) => boolean;
   };
-  jQuery: JQueryStatic;
   getQueryParams: () => Record<string, string | true>;
   getReconciledExpressionProps: (
     type: string,

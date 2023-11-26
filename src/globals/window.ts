@@ -35,7 +35,7 @@ window.Calc = Calc;
 
 // Fix missing globals
 window.$ = window.Desmos.$;
-window.jQuery = window.Desmos.Private.Fragile.jQuery;
+window.jQuery = window.Desmos.$; // Is this right?
 window.MathQuill = window.Desmos.MathQuill;
 
 export type Calc = CalcWithPatches;
