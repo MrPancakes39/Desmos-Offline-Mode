@@ -133,6 +133,7 @@ declare global {
       td: any;
       button: any;
       br: any;
+      h1: any;
     }
   }
 }

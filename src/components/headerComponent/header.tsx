@@ -1,12 +1,13 @@
 import "./header.less";
 import { Component, jsx } from "../../DCGView";
 import CenterContainer from "./center-container";
+import LeftContainer from "./left-container";
 
 export default class Header extends Component<{}> {
   template() {
     return (
       <div class="dcg-header">
-        <div class="left-container"></div>
+        <LeftContainer />
         <CenterContainer />
         <div class="left-container"></div>
       </div>
