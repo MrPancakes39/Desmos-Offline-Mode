@@ -6,6 +6,12 @@
     flex: 1;
   }
 
+  .center-container {
+    display: grid;
+    place-items: center;
+    height: 100%;
+  }
+
   .desom-icon-btn {
     padding: 0 10px;
     height: 32px;
@@ -31,12 +37,17 @@
     height: 46px;
     font-size: 1rem;
     font-weight: 400;
+
+    &:hover {
+      color: #fff;
+      text-decoration: underline;
+    }
   }
 
   .left-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     gap: 5px;
   }
 
@@ -59,7 +70,7 @@
   .right-container {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: stretch;
     justify-content: right;
     gap: 5px;
   }

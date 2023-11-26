@@ -7,7 +7,9 @@ export default class RightContainer extends Component<{}> {
     return (
       <div class="right-container">
         <Tooltip tooltip={DesmosOM.format("account-shell-label-help")}>
-          <span class="dcg-icon-question-sign desom-icon-inline"></span>
+          <div class="center-container">
+            <span class="dcg-icon-question-sign desom-icon-inline"></span>
+          </div>
         </Tooltip>
       </div>
     );
