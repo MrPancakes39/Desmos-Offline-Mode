@@ -1,0 +1,97 @@
+@keyframes desom-fadein-back {
+  0% {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+  }
+
+  100% {
+    opacity: 0.7;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+    filter: alpha(opacity=70);
+  }
+}
+
+.desom-modal-background {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background: #000;
+  opacity: 0.7;
+  animation: desom-fadein-back 0.3s;
+}
+
+@keyframes desom-fadein-modal {
+  0% {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -webkit-transform: translate(0, -50px);
+    -moz-transform: translate(0, -50px);
+    -o-transform: translate(0, -50px);
+    -ms-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+  }
+
+  30% {
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -webkit-transform: translate(0, -50px);
+    -moz-transform: translate(0, -50px);
+    -o-transform: translate(0, -50px);
+    -ms-transform: translate(0, -50px);
+    transform: translate(0, -50px);
+  }
+
+  100% {
+    opacity: 1;
+    -ms-filter: none;
+    filter: none;
+    -webkit-transform: translate(0, 0);
+    -moz-transform: translate(0, 0);
+    -o-transform: translate(0, 0);
+    -ms-transform: translate(0, 0);
+    transform: translate(0, 0);
+  }
+}
+
+.desom-modal {
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  width: 486px;
+  margin-left: -243px;
+  max-height: 85vh;
+  overflow: auto;
+  z-index: 100;
+  padding: 15px 40px 25px;
+  font-size: 85%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  color: #444;
+  animation: desom-fadein-modal 0.3s;
+
+  .close-modal {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    color: #0000004d;
+    font-size: 150%;
+    padding: 15px;
+  }
+
+  .modal-dialog h1 {
+    color: #666;
+    font-weight: 400;
+    padding-bottom: 5px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+}
