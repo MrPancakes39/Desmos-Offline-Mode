@@ -1,0 +1,53 @@
+.dcg-calculator-api-container .dcg-btn-green {
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0 20px;
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-radius: 3px;
+  border: none;
+  font-size: 100%;
+  cursor: pointer;
+}
+.dcg-calculator-api-container .dcg-btn-green {
+  color: #fff;
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.15), inset 0 -1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.15), inset 0 -1px rgba(0, 0, 0, 0.1);
+}
+.dcg-calculator-api-container .dcg-btn-green {
+  background: #1aad57;
+}
+
+.dcg-calculator-api-container .dcg-btn-green.dcg-hovered {
+  background: #179d4f;
+}
+
+.dcg-calculator-api-container .dcg-btn-green.dcg-depressed,
+.dcg-calculator-api-container .dcg-btn-green.dcg-active {
+  background: #148e47;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.dcg-calculator-api-container .dcg-inverted-colors .dcg-btn-green {
+  -webkit-box-shadow: inset 0 -1px rgba(255, 255, 255, 0.15), inset 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 -1px rgba(255, 255, 255, 0.15), inset 0 1px rgba(0, 0, 0, 0.1);
+}
+.dcg-calculator-api-container .dcg-component-checkbox {
+  cursor: pointer;
+  position: relative;
+}
+
+.dcg-calculator-api-container .dcg-disabled {
+  pointer-events: none;
+}
+
+.dcg-calculator-api-container .dcg-btn-white-outline.dcg-disabled {
+  padding: 0 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(136, 136, 136, 0.5);
+  color: #88888880;
+  cursor: default;
+}
