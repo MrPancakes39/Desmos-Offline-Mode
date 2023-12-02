@@ -9,7 +9,8 @@ type BtnColor =
   | "red"
   | "pink"
   | "green" // Added back myself
-  | "white-outline";
+  | "white-outline"
+  | "invisible";
 // might have more but these are what I'm willing to support
 
 export default class DCGButton extends Component<{
