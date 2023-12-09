@@ -279,6 +279,7 @@ interface CalcPrivate {
   };
   _calc: {
     globalHotkeys: TopLevelComponents;
+    controller: CalcController;
   };
   /// / public
 
