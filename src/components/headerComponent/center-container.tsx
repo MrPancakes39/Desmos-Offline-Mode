@@ -1,5 +1,5 @@
 import { Component, jsx } from "#DCGView";
-import { DesmosOM } from "#globals";
+import window from "#globals";
 
 export default class CenterContainer extends Component<{}> {
   template() {
@@ -18,7 +18,7 @@ class DesmosLogo extends Component<{}> {
     e.innerHTML = `
       <svg version="1.1" class="dcg-desmos-svg-logo" id="svg-desmos" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
       viewBox="0 0 909.3 188.4" xml:space="preserve">
-      <title>${DesmosOM.format("frontpage-narration-shared-desmos-logo")}</title>
+      <title>${window.DSOM.format("frontpage-narration-shared-desmos-logo")}</title>
       <g>
         <path d="M129.6,0c-6.8,0-12.4,5.5-12.4,12.4v48c-27.7-25.4-70.6-24-96.7,3.1c-27.4,28.4-27.4,73.4,0,101.8
           c26.1,27.1,69.1,28.4,96.8,3v8.8c2,6.5,9,10.2,15.5,8.2c3.9-1.2,7-4.3,8.2-8.2V12.4C141.1,5.9,136.1,0.5,129.6,0z M103.9,148.7

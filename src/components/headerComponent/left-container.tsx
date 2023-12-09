@@ -1,13 +1,13 @@
 import { Tooltip } from "..";
 import { Component, jsx } from "#DCGView";
-import { DesmosOM } from "#globals";
+import window from "#globals";
 import DCGButton from "../Button";
 
 export default class LeftContainer extends Component<{}> {
   template() {
     return (
       <div class="left-container">
-        <Tooltip tooltip={DesmosOM.format("account-shell-text-mygraphs-new-blank-graph")} gravity="s">
+        <Tooltip tooltip={window.DSOM.format("account-shell-text-mygraphs-new-blank-graph")} gravity="s">
           <div class="center-container">
             <DCGButton
               color="invisible"
@@ -17,7 +17,7 @@ export default class LeftContainer extends Component<{}> {
           </div>
         </Tooltip>
         <h1 class="graph-title">Untitled Graph</h1>
-        <Tooltip tooltip={DesmosOM.format("account-shell-button-open-graph")} gravity="s">
+        <Tooltip tooltip={window.DSOM.format("account-shell-button-open-graph")} gravity="s">
           <div class="center-container">
             <DCGButton
               color="primary"
@@ -26,7 +26,7 @@ export default class LeftContainer extends Component<{}> {
             ></DCGButton>
           </div>
         </Tooltip>
-        <Tooltip tooltip={DesmosOM.format("account-shell-button-mygraphs-save")} gravity="s">
+        <Tooltip tooltip={window.DSOM.format("account-shell-button-mygraphs-save")} gravity="s">
           <div class="center-container">
             <DCGButton
               color="primary"

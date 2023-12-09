@@ -1,5 +1,6 @@
 import type DesmosType from "./Desmos";
 import { CalcWithPatches, applyPatches } from "./patches";
+import type DesmosOfflineMode from "#DSOM";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;
@@ -8,7 +9,7 @@ interface windowConfig extends Window {
   $: JQueryStatic;
   MathQuill: unknown;
   jQuery: JQueryStatic;
-  DesmosOM: DesmosOfflineMode;
+  DSOM: DesmosOfflineMode;
 }
 
 declare const window: windowConfig;
@@ -42,20 +43,4 @@ window.MathQuill = window.Desmos.MathQuill;
 export type Calc = CalcWithPatches;
 export type CalcController = Calc["controller"];
 
-// Desmos Offline Mode
-class DesmosOfflineMode {
-  constructor() {}
-  /**
-   * Returns a formatted string from the desmos's own fluent bundle.
-   *
-   * @param id The identifier of the message to format.
-   * @param args An object to resolve references to variables passed as arguments to the translation.
-   * @returns A formatted string.
-   */
-  format(id: string, args: Record<string, any> | null = null): string {
-    return Calc.controller.s(id, args);
-  }
-}
-
-window.DesmosOM = new DesmosOfflineMode();
-export const DesmosOM = window.DesmosOM;
+export const DSOM = window.DSOM;

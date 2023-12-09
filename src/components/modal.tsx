@@ -1,7 +1,7 @@
 import "./modal.less";
 import { If } from ".";
 import { Component, jsx } from "#DCGView";
-import { DesmosOM } from "#globals";
+import window from "#globals";
 
 export default class Modal extends Component<{
   title: string;
@@ -17,7 +17,7 @@ export default class Modal extends Component<{
               <span
                 role="link"
                 tabindex="0"
-                aria-label={DesmosOM.format("shared-button-close-dialog")}
+                aria-label={window.DSOM.format("shared-button-close-dialog")}
                 class="close-modal"
                 onTap=""
               >

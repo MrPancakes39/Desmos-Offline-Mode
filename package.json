@@ -6,6 +6,7 @@
   "imports": {
     "#globals": "./src/globals/index.ts",
     "#DCGView": "./src/DCGView.ts",
+    "#DSOM": "./src/MainController.ts",
     "#utils": "./src/utils.ts"
   },
   "scripts": {
