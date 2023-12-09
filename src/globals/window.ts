@@ -1,5 +1,5 @@
 import type DesmosType from "./Desmos";
-import { CalcWithPatches, applyPatches } from "../main/patches";
+import { CalcWithPatches, applyPatches } from "./patches";
 
 interface windowConfig extends Window {
   IS_BROWSER: boolean;

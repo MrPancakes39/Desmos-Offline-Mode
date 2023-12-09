@@ -1,5 +1,5 @@
-import { Calc as CalcType } from "../globals/Calc";
-import { ExpressionModel, ItemModel, TableModel } from "#globals";
+import { Calc as CalcType } from "./Calc";
+import { ExpressionModel, ItemModel, TableModel } from ".";
 
 type DesmosColorNames = keyof typeof Desmos.Colors;
 type DesmosColorsValues = (typeof Desmos.Colors)[DesmosColorNames];
