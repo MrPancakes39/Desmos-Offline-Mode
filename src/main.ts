@@ -1,4 +1,4 @@
-import { Calc, Fragile } from "./globals/window";
+import { Calc, Fragile } from "#globals";
 import Header from "./components/headerComponent";
 import Modal from "./components/modal";
 

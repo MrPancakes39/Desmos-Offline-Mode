@@ -1,5 +1,5 @@
 // Original File: https://github.com/DesModder/DesModder/blob/main/src/DCGView.ts
-import { Desmos } from "./globals";
+import { Desmos } from "#globals";
 
 export const DCGView = Desmos.Private.Fragile.DCGView;
 

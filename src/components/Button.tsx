@@ -1,6 +1,6 @@
 import "./button.css";
-import { Component, jsx } from "../DCGView";
-import { mergeClass, MaybeClassDict } from "../utils";
+import { Component, jsx } from "#DCGView";
+import { mergeClass, MaybeClassDict } from "#utils";
 
 type BtnColor =
   | "primary"

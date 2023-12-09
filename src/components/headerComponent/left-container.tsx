@@ -1,6 +1,6 @@
 import { Tooltip } from "..";
-import { Component, jsx } from "../../DCGView";
-import { DesmosOM } from "../../globals";
+import { Component, jsx } from "#DCGView";
+import { DesmosOM } from "#globals";
 import DCGButton from "../Button";
 
 export default class LeftContainer extends Component<{}> {

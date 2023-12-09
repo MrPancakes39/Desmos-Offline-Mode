@@ -1,5 +1,5 @@
-import { Component, jsx } from "../../DCGView";
-import { DesmosOM } from "../../globals";
+import { Component, jsx } from "#DCGView";
+import { DesmosOM } from "#globals";
 
 export default class CenterContainer extends Component<{}> {
   template() {

@@ -1,5 +1,5 @@
 import "desmos";
-import { DCGViewModule } from "../DCGView";
+import { DCGViewModule } from "#DCGView";
 import { ItemModel } from "./models";
 import {
   CheckboxComponent,

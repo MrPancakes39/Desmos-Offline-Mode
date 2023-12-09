@@ -1,5 +1,5 @@
 import "./header.less";
-import { Component, jsx } from "../../DCGView";
+import { Component, jsx } from "#DCGView";
 import CenterContainer from "./center-container";
 import LeftContainer from "./left-container";
 import RightContainer from "./right-container";

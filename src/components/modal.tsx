@@ -1,7 +1,7 @@
 import "./modal.less";
-import { Component, jsx } from "../DCGView";
 import { If } from ".";
-import { DesmosOM } from "../globals";
+import { Component, jsx } from "#DCGView";
+import { DesmosOM } from "#globals";
 
 export default class Modal extends Component<{
   title: string;

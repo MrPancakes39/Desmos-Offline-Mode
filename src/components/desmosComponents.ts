@@ -1,6 +1,5 @@
-import { ExpressionModel, ItemModel } from "../globals/models";
-import { ClassComponent, ComponentChild, ComponentTemplate, DCGView } from "../DCGView";
-import { CalcController, Fragile } from "../globals";
+import { ExpressionModel, ItemModel, CalcController, Fragile } from "#globals";
+import { ClassComponent, ComponentChild, ComponentTemplate, DCGView } from "#DCGView";
 
 export abstract class CheckboxComponent extends ClassComponent<{
   checked: boolean;

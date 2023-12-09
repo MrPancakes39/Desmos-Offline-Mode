@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "imports": {
+    "#globals": "./src/globals/index.ts",
+    "#DCGView": "./src/DCGView.ts",
+    "#utils": "./src/utils.ts"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
