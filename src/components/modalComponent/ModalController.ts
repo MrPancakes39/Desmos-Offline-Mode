@@ -1,9 +1,7 @@
 import { type Calc, Fragile } from "#globals";
 import { select } from "#utils";
 import ModalContainer from "./ModalContainer";
-
-const validModals = ["none", "show"] as const;
-export type ModalType = (typeof validModals)[number];
+import { type ModalType, validModals } from "./modal";
 
 export class ModalController {
   unsub: (() => void) | undefined;

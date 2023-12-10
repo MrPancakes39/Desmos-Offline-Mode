@@ -1,11 +1,9 @@
 import "./modal.less";
-import { Component, jsx } from "#DCGView";
+import { jsx } from "#DCGView";
 import window from "#globals";
+import { Modal } from "./modal";
 
-export default class Modal extends Component<{
-  title: string;
-  close: () => void;
-}> {
+export default class GenericModal extends Modal {
   template() {
     return (
       <div role="dialog" class="desom-modal-container">

@@ -1,7 +1,7 @@
 import { Component, jsx } from "#DCGView";
 import { If } from "..";
-import Modal from "./modal";
-import { type ModalType } from "./ModalController";
+import GenericModal from "./GenericModal";
+import { type ModalType } from "./modal";
 
 export default class ModalContainer extends Component<{
   modalType: ModalType;
@@ -11,7 +11,7 @@ export default class ModalContainer extends Component<{
     return (
       <If predicate={() => this.props.modalType() !== "none"}>
         {() => {
-          return <Modal title={"Test Title"} close={this.props.closeModal} />;
+          return <GenericModal title={"Test Title"} close={this.props.closeModal} />;
         }}
       </If>
     );
