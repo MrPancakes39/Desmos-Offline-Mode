@@ -279,7 +279,22 @@ interface CalcPrivate {
   };
   _calc: {
     globalHotkeys: TopLevelComponents;
+    // TODO: Pull Request??
     controller: CalcController;
+    getState: () => GraphState;
+    grapher: {
+      screenshot: (opts?: {
+        width?: number;
+        height?: number;
+        targetPixelRatio?: number;
+        preserveAxisNumbers?: boolean;
+      }) => string;
+    };
+    graphSettings: {
+      config: {
+        crossOriginSaveTest: boolean;
+      };
+    };
   };
   /// / public
 
