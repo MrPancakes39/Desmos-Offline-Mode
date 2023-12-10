@@ -2,20 +2,23 @@ import { type Calc, Fragile } from "#globals";
 import { select } from "#utils";
 import ModalContainer from "./ModalContainer";
 
+const validModals = ["none", "show"] as const;
+export type ModalType = (typeof validModals)[number];
+
 export class ModalController {
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
-  showShould: boolean;
+  currentType: ModalType;
 
   constructor(readonly cc: Calc["controller"]) {
     this.cc = cc;
-    this.showShould = false;
+    this.currentType = "none";
   }
 
   init() {
     this.divContainer = select<HTMLDivElement>("#dcg-modal-container");
     const view = Fragile.DCGView.mountToNode(ModalContainer, this.divContainer, {
-      shouldShow: () => this.showShould,
+      modalType: () => this.currentType,
       closeModal: () => this.closeModal(),
     });
     this.unsub = this.cc.subscribeToChanges(() => view.update());
@@ -26,13 +29,17 @@ export class ModalController {
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
-  showModal() {
-    this.showShould = true;
+  showModal(modalType: ModalType) {
+    // Guard
+    if (!validModals.includes(modalType)) {
+      console.warn(`${modalType} is not a valid modal type. Doing nothing.`);
+      return;
+    }
+    this.currentType = modalType;
     this.cc.updateViews();
   }
 
   closeModal() {
-    this.showShould = false;
-    this.cc.updateViews();
+    this.showModal("none");
   }
 }
