@@ -1,36 +1,31 @@
 import "./modal.less";
-import { If } from "..";
 import { Component, jsx } from "#DCGView";
 import window from "#globals";
 
 export default class Modal extends Component<{
   title: string;
-  showModal: boolean;
+  close: () => void;
 }> {
   template() {
     return (
-      <If predicate={() => this.props.showModal()}>
-        {() => (
-          <div role="dialog" class="desom-modal-container">
-            <div class="desom-modal-background" onTap=""></div>
-            <div class="desom-modal">
-              <span
-                role="link"
-                tabindex="0"
-                aria-label={window.DSOM.format("shared-button-close-dialog")}
-                class="close-modal"
-                onTap=""
-              >
-                <i class="dcg-icon-remove"></i>
-              </span>
-              <div class="modal-dialog">
-                <h1>{this.props.title()}</h1>
-                <div class="modal-content">{this.children}</div>
-              </div>
-            </div>
+      <div role="dialog" class="desom-modal-container">
+        <div class="desom-modal-background" onTap={() => this.props.close()}></div>
+        <div class="desom-modal">
+          <span
+            role="link"
+            tabindex="0"
+            aria-label={window.DSOM.format("shared-button-close-dialog")}
+            class="close-modal"
+            onTap={() => this.props.close()}
+          >
+            <i class="dcg-icon-remove"></i>
+          </span>
+          <div class="modal-dialog">
+            <h1>{this.props.title()}</h1>
+            <div class="modal-content">{this.children}</div>
           </div>
-        )}
-      </If>
+        </div>
+      </div>
     );
   }
 }

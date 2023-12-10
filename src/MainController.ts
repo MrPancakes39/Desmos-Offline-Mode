@@ -1,42 +1,27 @@
 import { type Calc, Fragile } from "#globals";
 import Header from "./components/headerComponent";
-import Modal from "./components/modalComponent/modal";
 import { select } from "#utils";
+import { ModalController } from "./components";
 
 // Desmos Offline Mode
 export default class DesmosOfflineMode {
-  cc: Calc["controller"];
-  private DCGView = Fragile.DCGView;
+  cc;
+  modalController;
 
   constructor(readonly calc: Calc) {
     this.calc = calc;
     this.cc = calc._calc.controller;
+    this.modalController = new ModalController(this.cc);
   }
 
   init() {
     this.initHeader();
-    this.initModelContainer();
+    this.modalController.init();
   }
 
   private initHeader() {
     const HeaderContainer = select<HTMLDivElement>("#dcg-header-container");
-    this.DCGView.mountToNode(Header, HeaderContainer, {});
-  }
-
-  private initModelContainer() {
-    let foo = false;
-
-    setTimeout(() => {
-      foo = true;
-      console.log("It's set");
-      this.cc.updateViews();
-    }, 3000);
-
-    const view = Fragile.DCGView.mountToNode(Modal, select<HTMLDivElement>("#dcg-modal-container"), {
-      title: () => "Title Here",
-      showModal: () => foo,
-    });
-    this.cc.subscribeToChanges(() => view.update());
+    Fragile.DCGView.mountToNode(Header, HeaderContainer, {});
   }
 
   /**
