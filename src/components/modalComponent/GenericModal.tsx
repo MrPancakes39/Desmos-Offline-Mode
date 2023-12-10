@@ -2,11 +2,15 @@ import "./modal.less";
 import { jsx } from "#DCGView";
 import window from "#globals";
 import { Modal } from "./modal";
+import { mergeClass, MaybeClassDict } from "#utils";
 
-export default class GenericModal extends Modal {
+export default class GenericModal extends Modal<{
+  title: string;
+  class?: MaybeClassDict;
+}> {
   template() {
     return (
-      <div role="dialog" class="desom-modal-container">
+      <div role="dialog" class={mergeClass("desom-modal-container", this.props.class?.())}>
         <div class="desom-modal-background" onTap={() => this.props.close()}></div>
         <div class="desom-modal">
           <span

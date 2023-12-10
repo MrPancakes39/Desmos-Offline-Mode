@@ -11,7 +11,7 @@ export default class LeftContainer extends Component<{}> {
           <div class="center-container">
             <DCGButton
               color="invisible"
-              onTap={() => console.log("new graph")}
+              onTap={() => window.DSOM.modalController.showModal("new-graph")}
               class="desom-icons-file-plus desom-icon-inline"
             ></DCGButton>
           </div>

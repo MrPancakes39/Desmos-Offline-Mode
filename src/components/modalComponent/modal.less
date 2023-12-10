@@ -64,8 +64,8 @@
   position: absolute;
   top: 10vh;
   left: 50%;
-  width: 486px;
-  margin-left: -243px;
+  width: 500px;
+  margin-left: -240px;
   max-height: 85vh;
   overflow: auto;
   z-index: 100;
@@ -93,5 +93,23 @@
     padding-bottom: 5px;
     text-align: center;
     margin-bottom: 8px;
+  }
+
+  .modal-content {
+    color: #444;
+    font-size: 1.25rem;
+    font-family: Arial, sans-serif;
+  }
+}
+
+.desom-modal-container {
+  &.new-graph-modal {
+    .btn-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      margin-top: 1.75rem;
+    }
   }
 }

@@ -51,3 +51,18 @@
   color: #88888880;
   cursor: default;
 }
+
+.dcg-calculator-api-container .dcg-dark-gray-link {
+  color: #666;
+  cursor: pointer;
+  text-decoration: underline;
+  background-color: rgba(0, 0, 0, 0);
+  border: 0;
+  font-size: 1.2rem;
+  font-family: Arial, sans-serif;
+}
+
+.dcg-calculator-api-container .dcg-dark-gray-link:hover,
+.dcg-calculator-api-container .dcg-dark-gray-link:focus {
+  color: #444;
+}
