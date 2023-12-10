@@ -1,5 +1,5 @@
 import "./modal.less";
-import { If } from ".";
+import { If } from "..";
 import { Component, jsx } from "#DCGView";
 import window from "#globals";
 

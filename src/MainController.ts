@@ -1,6 +1,6 @@
 import { type Calc, Fragile } from "#globals";
 import Header from "./components/headerComponent";
-import Modal from "./components/modal";
+import Modal from "./components/modalComponent/modal";
 
 function select<E extends Element>(selector: string): E {
   const tmp = document.querySelector<E>(selector);
@@ -57,6 +57,3 @@ export default class DesmosOfflineMode {
     return this.cc.s(id, args);
   }
 }
-
-//
-// export const DesmosOM = window.DesmosOM;
