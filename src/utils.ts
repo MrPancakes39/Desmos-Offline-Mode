@@ -21,3 +21,11 @@ export function mergeClass(c1: MaybeClassDict, c2: MaybeClassDict) {
   updateClass(out, c2);
   return out;
 }
+
+export function select<E extends Element>(selector: string): E {
+  const tmp = document.querySelector<E>(selector);
+  if (tmp == null) {
+    throw new Error(`'${selector}' couldn't be found.`);
+  }
+  return tmp;
+}
