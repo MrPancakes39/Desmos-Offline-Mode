@@ -1,5 +1,5 @@
 import { Component, jsx } from "#DCGView";
-import { If } from "..";
+import { Switch } from "..";
 import GenericModal from "./GenericModal";
 import { type ModalType } from "./modal";
 
@@ -9,11 +9,16 @@ export default class ModalContainer extends Component<{
 }> {
   template() {
     return (
-      <If predicate={() => this.props.modalType() !== "none"}>
-        {() => {
-          return <GenericModal title={"Test Title"} close={this.props.closeModal} />;
+      <Switch key={() => this.props.modalType()}>
+        {(type: ModalType) => {
+          switch (type) {
+            case "show":
+              return <GenericModal title={"Test Title"} close={this.props.closeModal} />;
+            case "none":
+              return null;
+          }
         }}
-      </If>
+      </Switch>
     );
   }
 }
