@@ -1,4 +1,4 @@
-import { type Calc, Fragile } from "#globals";
+import { Fragile, type CalcController } from "#globals";
 import { select } from "#utils";
 import ModalContainer from "./ModalContainer";
 import { type ModalType, validModals } from "./modal";
@@ -8,7 +8,7 @@ export class ModalController {
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
 
-  constructor(readonly cc: Calc["controller"]) {
+  constructor(readonly cc: CalcController) {
     this.cc = cc;
     this.currentType = "none";
   }
