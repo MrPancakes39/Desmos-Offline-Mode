@@ -8,7 +8,7 @@ export default class LeftContainer extends Component<{}> {
     return (
       <div class="left-container">
         <Tooltip tooltip={window.DSOM.format("account-shell-text-mygraphs-new-blank-graph")} gravity="s">
-          <div class="center-container">
+          <div class="center-div">
             <DCGButton
               color="invisible"
               onTap={() => window.DSOM.modalController.showModal("new-graph")}
@@ -18,7 +18,7 @@ export default class LeftContainer extends Component<{}> {
         </Tooltip>
         <h1 class="graph-title">Untitled Graph</h1>
         <Tooltip tooltip={window.DSOM.format("account-shell-button-open-graph")} gravity="s">
-          <div class="center-container">
+          <div class="center-div">
             <DCGButton
               color="primary"
               onTap={() => console.log("open")}
@@ -27,7 +27,7 @@ export default class LeftContainer extends Component<{}> {
           </div>
         </Tooltip>
         <Tooltip tooltip={window.DSOM.format("account-shell-button-mygraphs-save")} gravity="s">
-          <div class="center-container">
+          <div class="center-div">
             <DCGButton
               color="primary"
               onTap={() => console.log("save")}

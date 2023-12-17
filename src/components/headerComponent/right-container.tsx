@@ -7,7 +7,7 @@ export default class RightContainer extends Component<{}> {
     return (
       <div class="right-container">
         <Tooltip tooltip={window.DSOM.format("account-shell-label-help")}>
-          <div class="center-container">
+          <div class="center-div">
             <span class="dcg-icon-question-sign desom-icon-inline"></span>
           </div>
         </Tooltip>
