@@ -1,6 +1,7 @@
 import "./sidebar.less";
 import { Component, jsx } from "#DCGView";
 import DCGButton from "../Button";
+import Fragment from "../Fragment";
 import type DesmosOfflineMode from "#DSOM";
 
 export default class SideBarContainer extends Component<{
@@ -16,7 +17,7 @@ export default class SideBarContainer extends Component<{
 
   template() {
     return (
-      <div>
+      <Fragment>
         <DCGButton color="invisible" onTap={this.props.toggleSideBar} class="desom-icon-btn sidebar-menu-btn">
           <i class="dcg-icon-hamburger" aria-hidden="true"></i>
         </DCGButton>
@@ -41,7 +42,7 @@ export default class SideBarContainer extends Component<{
         </div>
 
         <div class="side-bar-cover" onTap={this.props.closeSideBar}></div>
-      </div>
+      </Fragment>
     );
   }
 }
