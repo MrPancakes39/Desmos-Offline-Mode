@@ -18,7 +18,7 @@ export default class DesmosOfflineMode {
   constructor(readonly calc: Calc) {
     this.calc = calc;
     this.cc = calc._calc.controller;
-    this.modalController = new ModalController(this.cc);
+    this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
   }
 

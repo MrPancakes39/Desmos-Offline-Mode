@@ -1,15 +1,16 @@
-import { Fragile, type CalcController } from "#globals";
+import { Fragile } from "#globals";
 import { select } from "#utils";
 import ModalContainer from "./ModalContainer";
 import { type ModalType, validModals } from "./modal";
+import type DesmosOfflineMode from "#DSOM";
 
 export class ModalController {
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
 
-  constructor(readonly cc: CalcController) {
-    this.cc = cc;
+  constructor(readonly dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
     this.currentType = "none";
   }
 
@@ -19,7 +20,7 @@ export class ModalController {
       modalType: () => this.currentType,
       closeModal: () => this.closeModal(),
     });
-    this.unsub = this.cc.subscribeToChanges(() => view.update());
+    this.unsub = this.dsom.cc.subscribeToChanges(() => view.update());
   }
 
   destroy() {
@@ -34,7 +35,7 @@ export class ModalController {
       return;
     }
     this.currentType = modalType;
-    this.cc.updateViews();
+    this.dsom.cc.updateViews();
   }
 
   closeModal() {
