@@ -8,10 +8,14 @@ export class ModalController {
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
+  listener: (ev: KeyboardEvent) => void;
+  accElts: { first: HTMLElement; last: HTMLElement } | null;
 
   constructor(readonly dsom: DesmosOfflineMode) {
     this.dsom = dsom;
     this.currentType = "none";
+    this.listener = this.handleKeyDown.bind(this);
+    this.accElts = null;
   }
 
   init() {
@@ -36,9 +40,40 @@ export class ModalController {
     }
     this.currentType = modalType;
     this.dsom.cc.updateViews();
+
+    if (modalType == "none") {
+      this.accElts = null;
+      document.removeEventListener("keydown", this.listener);
+    } else {
+      const spans = this.divContainer?.querySelectorAll<HTMLSpanElement>("span");
+      if (!spans) return;
+      this.accElts = {
+        first: spans[0],
+        last: spans[spans.length - 1],
+      };
+      this.accElts.first.focus();
+      document.addEventListener("keydown", this.listener);
+    }
   }
 
   closeModal() {
     this.showModal("none");
+  }
+
+  handleKeyDown(ev: KeyboardEvent) {
+    if (!this.accElts) return;
+    if (ev.key === "Tab" || ev.keyCode === 9) {
+      if (ev.shiftKey) {
+        /* shift + tab */ if (document.activeElement === this.accElts.first) {
+          this.accElts.last.focus();
+          ev.preventDefault();
+        }
+      } /* tab */ else {
+        if (document.activeElement === this.accElts.last) {
+          this.accElts.first.focus();
+          ev.preventDefault();
+        }
+      }
+    }
   }
 }

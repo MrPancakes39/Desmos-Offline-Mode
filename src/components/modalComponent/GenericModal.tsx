@@ -10,7 +10,7 @@ export default class GenericModal extends Modal<{
 }> {
   template() {
     return (
-      <div role="dialog" class={mergeClass("desom-modal-container", this.props.class?.())}>
+      <div role="dialog" aria-modal="true" class={mergeClass("desom-modal-container", this.props.class?.())}>
         <div class="desom-modal-background" onTap={() => this.props.close()}></div>
         <div class="desom-modal">
           <span
