@@ -18,11 +18,13 @@ export default class DCGButton extends Component<{
   class?: MaybeClassDict;
   onTap: (e: Event) => void;
   disabled?: boolean;
+  "aria-label"?: string;
 }> {
   template() {
     return (
       <span
         role="button"
+        tabindex="0"
         class={() =>
           mergeClass(
             {
@@ -32,6 +34,7 @@ export default class DCGButton extends Component<{
             this.props.class?.()
           )
         }
+        {...(this.props["aria-label"] ? { "aria-label": this.props["aria-label"]() } : null)}
         onTap={(e: Event) => !this.props.disabled?.() && this.props.onTap(e)}
       >
         {this.children}

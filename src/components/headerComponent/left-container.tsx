@@ -13,6 +13,7 @@ export default class LeftContainer extends Component<{}> {
               color="invisible"
               onTap={() => window.DSOM.modalController.showModal("new-graph")}
               class="desom-icons-file-plus desom-icon-inline"
+              aria-label={window.DSOM.format("account-shell-text-mygraphs-new-blank-graph")}
             ></DCGButton>
           </div>
         </Tooltip>
@@ -23,6 +24,7 @@ export default class LeftContainer extends Component<{}> {
               color="primary"
               onTap={() => console.log("open")}
               class="dcg-btn-primary desom-icon-btn desom-icons-folder-open"
+              aria-label={window.DSOM.format("account-shell-button-open-graph")}
             ></DCGButton>
           </div>
         </Tooltip>
@@ -32,6 +34,7 @@ export default class LeftContainer extends Component<{}> {
               color="primary"
               onTap={() => console.log("save")}
               class="desom-icon-btn desom-icons-save"
+              aria-label={window.DSOM.format("account-shell-button-mygraphs-save")}
             ></DCGButton>
           </div>
         </Tooltip>

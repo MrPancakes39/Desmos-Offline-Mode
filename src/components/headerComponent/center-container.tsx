@@ -5,7 +5,7 @@ export default class CenterContainer extends Component<{}> {
   template() {
     return (
       <div class="center-container">
-        <a href="https://www.desmos.com/" target="_blank" class="dcg-home-link">
+        <a href="https://www.desmos.com/" target="_blank" class="dcg-home-link" rel="noopener">
           <DesmosLogo />
         </a>
       </div>
