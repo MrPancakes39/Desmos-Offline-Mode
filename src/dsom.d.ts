@@ -6,3 +6,8 @@ declare namespace Desmos {
    */
   export function Graphing3DCalculator(...params: Parameters<(typeof Desmos)["GraphingCalculator"]>): Desmos.Calculator;
 }
+
+interface TransparentController {
+  init: () => void;
+  destroy: () => void;
+}

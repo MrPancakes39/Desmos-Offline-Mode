@@ -11,7 +11,7 @@ function createElt<T extends HTMLElement>(html: string): T {
 }
 
 // Desmos Offline Mode
-export default class DesmosOfflineMode {
+export default class DesmosOfflineMode implements TransparentController {
   cc;
   modalController;
   sidebarController;
@@ -30,6 +30,12 @@ export default class DesmosOfflineMode {
     this.modalController.init();
     this.sidebarController.init();
     this.hotkeysController.init();
+  }
+
+  destroy() {
+    this.modalController.destroy();
+    this.sidebarController.destroy();
+    this.hotkeysController.destroy();
   }
 
   private initHeader() {

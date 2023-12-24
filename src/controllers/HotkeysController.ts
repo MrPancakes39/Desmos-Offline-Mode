@@ -1,6 +1,6 @@
 import type DesmosOfflineMode from "#DSOM";
 
-export default class HotkeysController {
+export default class HotkeysController implements TransparentController {
   isListening: boolean;
   listener: ((ev: KeyboardEvent) => void) | undefined;
 

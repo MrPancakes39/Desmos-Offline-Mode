@@ -3,7 +3,7 @@ import { select } from "#utils";
 import type DesmosOfflineMode from "#DSOM";
 import SideBarContainer from "./SideBarContainer";
 
-export class SideBarController {
+export class SideBarController implements TransparentController {
   #removeExtras: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   #slidingInterior: HTMLDivElement | undefined;
