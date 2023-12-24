@@ -1,3 +1,7 @@
+// Ensure Desmos API is loaded first
+import "../desmos/preload_desmos";
+import "../desmos/calculator_api";
+
 import type DesmosType from "./Desmos";
 import { CalcWithPatches, applyPatches } from "./patches";
 import type DesmosOfflineMode from "#DSOM";
@@ -31,7 +35,8 @@ const graphContainer = document.getElementById("graph-container");
 if (graphContainer === null) {
   throw new Error("Graph Container couldn't be found!");
 }
-export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcWithPatches;
+// export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcWithPatches;
+export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
 applyPatches(Calc);
 window.Calc = Calc;
 

@@ -20,6 +20,7 @@ type DesmosType = typeof Desmos & {
   Private: {
     Fragile: FragileType;
   };
+  Graphing3DCalculator: (typeof Desmos)["GraphingCalculator"];
 };
 
 type FragileType = {

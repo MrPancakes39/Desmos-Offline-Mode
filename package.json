@@ -14,8 +14,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "fetch_desmos": "node ./fetch_desmos_res/fetch_desmos.mjs",
-    "fetch_desmos_debug": "node ./fetch_desmos_res/fetch_desmos.mjs --debug"
+    "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs",
+    "fetch_desmos_3d": "node ./fetch_desmos_res/fetch_desmos.mjs --use-3d"
   },
   "devDependencies": {
     "fetch_desmos_resources": "file:./fetch_desmos_res",
