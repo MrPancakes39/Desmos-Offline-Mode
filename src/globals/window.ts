@@ -35,8 +35,14 @@ const graphContainer = document.getElementById("graph-container");
 if (graphContainer === null) {
   throw new Error("Graph Container couldn't be found!");
 }
-// export const Calc = window.Desmos.GraphingCalculator(graphContainer) as CalcWithPatches;
-export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
+const initSettings = {
+  advancedStyling: true,
+  border: false,
+  showKeyboardShortcutsInTooltips: true,
+  pasteGraphLink: true,
+};
+export const Calc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as CalcWithPatches;
+// export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
 applyPatches(Calc);
 window.Calc = Calc;
 
