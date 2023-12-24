@@ -1,7 +1,8 @@
 import { type Calc, Fragile } from "#globals";
-import Header from "./components/headerComponent";
+import Header from "../components/headerComponent";
 import { select } from "#utils";
-import { ModalController, SideBarController } from "./components";
+import { ModalController, SideBarController } from "../components";
+import HotkeysController from "./HotkeysController";
 
 function createElt<T extends HTMLElement>(html: string): T {
   let tmp = document.createElement("div");
@@ -14,18 +15,21 @@ export default class DesmosOfflineMode {
   cc;
   modalController;
   sidebarController;
+  hotkeysController;
 
   constructor(readonly calc: Calc) {
     this.calc = calc;
     this.cc = calc._calc.controller;
     this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
+    this.hotkeysController = new HotkeysController(this);
   }
 
   init() {
     this.initHeader();
     this.modalController.init();
     this.sidebarController.init();
+    this.hotkeysController.init();
   }
 
   private initHeader() {
