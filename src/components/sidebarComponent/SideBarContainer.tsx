@@ -39,6 +39,30 @@ export default class SideBarContainer extends Component<{
             <span class="icon desom-icons-save"></span>
             <span class="label">{this.dsom.format("account-shell-button-mygraphs-save")}</span>
           </div>
+          <div class="side-bar-item">
+            <span class="icon dcg-icon-share"></span>
+            <span class="label">{"Import/Export Graph"}</span>
+          </div>
+          <div class="side-bar-item">
+            <span class="icon dcg-icon-export"></span>
+            <span class="label">{this.dsom.format("account-shell-button-export-image")}</span>
+          </div>
+          <div class="side-bar-item">
+            <span class="icon dcg-icon-print"></span>
+            <span class="label">{this.dsom.format("account-shell-button-print")}</span>
+          </div>
+          <div class="side-bar-item seperator">
+            <span class="icon dcg-icon-world"></span>
+            <span class="label">{this.dsom.format("shared-title-language-menu")}</span>
+          </div>
+          <div class="side-bar-item">
+            <span class="icon dcg-icon-rocket"></span>
+            <span class="label">{"Switch Calculators"}</span>
+          </div>
+          <div class="side-bar-item">
+            <span class="icon dcg-icon-book"></span>
+            <span class="label">{"About"}</span>
+          </div>
         </div>
 
         <div class="side-bar-cover" onTap={this.props.closeSideBar}></div>

@@ -30,16 +30,8 @@ export class SideBarController implements TransparentController {
     emptySpaceDiv.className = "side-bar-empty-space";
     expressionTopBar.prepend(emptySpaceDiv);
 
-    // If the hamburger menu goes away (screen width > 450px) then we should hide the sidebar.
-    const handleResize = () => {
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
-      if (windowWidth > 450 && this.shouldShow) this.hideSideBar();
-    };
-    window.addEventListener("resize", handleResize);
-
     this.#removeExtras = () => {
       expressionTopBar.removeChild(emptySpaceDiv);
-      window.removeEventListener("resize", handleResize);
     };
   }
 
