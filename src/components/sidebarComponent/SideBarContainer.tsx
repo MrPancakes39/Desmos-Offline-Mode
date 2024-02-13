@@ -56,11 +56,11 @@ export default class SideBarContainer extends Component<{
             <span class="label">{this.dsom.format("shared-title-language-menu")}</span>
           </div>
           <div class="side-bar-item">
-            <span class="icon dcg-icon-rocket"></span>
+            <span class="icon desom-icons-calc"></span>
             <span class="label">{"Switch Calculators"}</span>
           </div>
           <div class="side-bar-item">
-            <span class="icon dcg-icon-book"></span>
+            <span class="icon desom-icons-info"></span>
             <span class="label">{"About"}</span>
           </div>
         </div>

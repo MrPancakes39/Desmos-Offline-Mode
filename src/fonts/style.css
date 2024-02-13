@@ -1,6 +1,6 @@
 @font-face {
   font-family: "desom-icons";
-  src: url("./desom-icons.woff?763xno") format("woff");
+  src: url("./desom-icons.woff?25ksiv") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -22,12 +22,15 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.desom-icons-folder-open:before {
-  content: "\e930";
+.desom-icons-info:before {
+  content: "\e901";
+}
+.desom-icons-calc:before {
+  content: "\e902";
 }
 .desom-icons-save:before {
-  content: "\e962";
+  content: "\e904";
 }
-.desom-icons-file-plus:before {
-  content: "\e903";
+.desom-icons-folder-open:before {
+  content: "\e905";
 }
