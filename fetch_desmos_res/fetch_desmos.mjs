@@ -149,7 +149,8 @@ if (window.location.protocol === "file:") {
     const old_bugsnag = js.match(/Bugsnag JavaScript.*?.default=.*?,/g)[0];
     const at_export = old_bugsnag.indexOf(".default=");
     // const bugsnag_function_name = old_bugsnag.slice(at_export, -1);
-    const new_bugsnag = old_bugsnag.slice(0, at_export) + `={start:()=>({leaveBreadcrumb:function(){}})},`;
+    const new_bugsnag =
+      old_bugsnag.slice(0, at_export) + `={start:()=>({leaveBreadcrumb:function(){},notify:function(){}})},`;
     js = js.replace(old_bugsnag, new_bugsnag);
 
     // Creates a copy of end of file
