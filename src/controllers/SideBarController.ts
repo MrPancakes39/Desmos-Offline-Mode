@@ -47,17 +47,21 @@ class SideBarController implements TransparentController {
   }
 
   showSideBar() {
-    this.shouldShow = true;
-    this.divContainer?.classList.add("open-side-bar");
-    this.#slidingInterior?.classList.add("open-side-bar");
-    this.#appnameItem?.focus();
+    if (!this.shouldShow) {
+      this.shouldShow = true;
+      this.divContainer?.classList.add("open-side-bar");
+      this.#slidingInterior?.classList.add("open-side-bar");
+      this.#appnameItem?.focus();
+    }
   }
 
   hideSideBar() {
-    this.shouldShow = false;
-    this.divContainer?.classList.remove("open-side-bar");
-    this.#slidingInterior?.classList.remove("open-side-bar");
-    this.#hamburgerBtn?.focus();
+    if (this.shouldShow) {
+      this.shouldShow = false;
+      this.divContainer?.classList.remove("open-side-bar");
+      this.#slidingInterior?.classList.remove("open-side-bar");
+      this.#hamburgerBtn?.focus();
+    }
   }
 
   toggleSideBar() {

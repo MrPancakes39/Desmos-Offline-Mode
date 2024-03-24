@@ -58,7 +58,9 @@ class ModalController implements TransparentController {
   }
 
   closeModal() {
-    this.showModal("none");
+    if (this.currentType !== "none") {
+      this.showModal("none");
+    }
   }
 
   handleKeyDown(ev: KeyboardEvent) {
