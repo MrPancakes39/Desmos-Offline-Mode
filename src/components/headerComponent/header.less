@@ -23,8 +23,17 @@
     font-size: 1.25rem;
     line-height: 1.25rem;
 
+    &::before {
+      padding: 5px;
+    }
+
     &:hover {
       color: #fff;
+    }
+
+    &.dcg-focus-visible::before {
+      outline: auto;
+      outline-offset: 3px;
     }
   }
 
@@ -89,5 +98,49 @@
     align-items: stretch;
     justify-content: right;
     gap: 5px;
+  }
+
+  .dsm-help-container {
+    max-width: 250px;
+    position: absolute;
+    top: 51px;
+    right: 6px;
+
+    & .dcg-arrow {
+      right: 5px;
+    }
+  }
+}
+
+.dcg-header .dsm-help-container .dcg-popover-interior {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+
+  & .message-container {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin: 10px 0;
+    padding-bottom: 10px;
+
+    & .message {
+      line-height: 1.3em;
+      color: #333;
+      max-width: 210px;
+    }
+  }
+
+  & .dcg-link {
+    margin: 6px 0 10px;
+    color: #333;
+    text-decoration: none;
+
+    &.dcg-hovered span {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    & i {
+      margin-right: 10px;
+    }
   }
 }

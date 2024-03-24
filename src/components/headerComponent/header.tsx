@@ -8,6 +8,8 @@ import type DesmosOfflineMode from "#DSOM";
 
 export class Header extends Component<{
   dsom: DesmosOfflineMode;
+  showHelpMenu: boolean;
+  toggleHelpMenu: () => void;
 }> {
   dsom!: DesmosOfflineMode;
 
@@ -20,7 +22,11 @@ export class Header extends Component<{
       <div class="dcg-header">
         <LeftContainer dsom={this.dsom} />
         <CenterContainer dsom={this.dsom} />
-        <RightContainer dsom={this.dsom} />
+        <RightContainer
+          dsom={this.dsom}
+          showHelpMenu={this.props.showHelpMenu}
+          toggleHelpMenu={this.props.toggleHelpMenu}
+        />
       </div>
     );
   }
