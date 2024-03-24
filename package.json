@@ -13,23 +13,20 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
     "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs",
     "fetch_desmos_3d": "node ./fetch_desmos_res/fetch_desmos.mjs --use-3d"
   },
   "devDependencies": {
-    "fetch_desmos_resources": "file:./fetch_desmos_res",
     "@desmodder/graph-state": "^0.2.3",
-    "@types/jquery": "^3.5.27",
-    "@types/node": "^20.9.1",
-    "@types/underscore": "^1.11.14",
+    "@types/jquery": "^3.5.29",
+    "@types/node": "^20.11.30",
+    "@types/underscore": "^1.11.15",
+    "fetch_desmos_resources": "file:./fetch_desmos_res",
     "less": "^4.2.0",
-    "typescript": "^5.2.2",
-    "vite": "^5.0.0",
-    "@tauri-apps/cli": "^1.5.6"
+    "typescript": "^5.4.3",
+    "vite": "^5.2.4"
   },
   "dependencies": {
-    "@types/desmos": "^1.6.3",
-    "@tauri-apps/api": "^1.5.1"
+    "@types/desmos": "^1.6.3"
   }
 }

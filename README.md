@@ -5,5 +5,4 @@
 ```console
 $ npm install
 $ npm run fetch_desmos
-$ npm run build
 ```
