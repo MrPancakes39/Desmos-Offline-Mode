@@ -70,12 +70,9 @@ export default class HotkeysController implements TransparentController {
   }
 
   handleEscape(ev: KeyboardEvent) {
-    if (this.dsom.modalController.currentType !== "none") {
-      this.dsom.modalController.closeModal();
-    }
-    if (this.dsom.sidebarController.shouldShow) {
-      this.dsom.sidebarController.hideSideBar();
-    }
+    this.dsom.modalController.closeModal();
+    this.dsom.sidebarController.hideSideBar();
+    this.dsom.headerController.closeHelpMenu();
     // Menu to be done
     ev.preventDefault();
     ev.stopPropagation();
