@@ -41,8 +41,9 @@ const initSettings = {
   showKeyboardShortcutsInTooltips: true,
   pasteGraphLink: true,
 };
-export const Calc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as CalcWithPatches;
+// export const Calc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as CalcWithPatches;
 // export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
+export const Calc = window.Desmos.Geometry(graphContainer, initSettings) as CalcWithPatches;
 applyPatches(Calc);
 window.Calc = Calc;
 
