@@ -1,4 +1,4 @@
-import "./dcgappicon.css";
+import "./dcgappicon.less";
 import { Component, jsx } from "#DCGView";
 
 type DCGProduct = "graphing" | "geometry" | "3d" | "scientific" | "four-function" | "test-mode" | "matrix";
