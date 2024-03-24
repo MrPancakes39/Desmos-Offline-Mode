@@ -41,6 +41,7 @@ class SideBarController implements TransparentController {
   }
 
   destroy() {
+    this.hideSideBar();
     this.#removeExtras?.();
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }

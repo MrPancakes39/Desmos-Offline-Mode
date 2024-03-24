@@ -28,6 +28,7 @@ class ModalController implements TransparentController {
   }
 
   destroy() {
+    this.closeModal();
     this.unsub?.();
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
