@@ -1,25 +1,24 @@
 import { Tooltip } from "..";
-import { Component, jsx } from "../../DCGView";
-import window from "../../globals";
-import DCGAppIcon from "../DCGAppIcon";
+import { Component, jsx } from "#DCGView";
+import type DesmosOfflineMode from "#DSOM";
 
-export default class RightContainer extends Component<{}> {
+export default class RightContainer extends Component<{
+  dsom: DesmosOfflineMode;
+}> {
+  dsom!: DesmosOfflineMode;
+
+  init() {
+    this.dsom = this.props.dsom();
+  }
+
   template() {
     return (
       <div class="right-container">
-        <Tooltip tooltip={window.DSOM.format("account-shell-label-help")}>
+        <Tooltip tooltip={this.dsom.format("account-shell-label-help")}>
           <div class="center-div">
             <span class="dcg-icon-question-sign desom-icon-inline" onTap={() => console.log("help")}></span>
           </div>
         </Tooltip>
-        <span style="margin-left: 30px;"></span>
-        <DCGAppIcon product="graphing" size="40px" />
-        <DCGAppIcon product="scientific" />
-        <DCGAppIcon product="four-function" />
-        <DCGAppIcon product="test-mode" />
-        <DCGAppIcon product="matrix" />
-        <DCGAppIcon product="geometry" />
-        <DCGAppIcon product="3d" />
       </div>
     );
   }

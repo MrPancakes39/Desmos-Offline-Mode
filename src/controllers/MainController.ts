@@ -1,10 +1,9 @@
-import { type Calc, Fragile } from "#globals";
-import Header from "../components/headerComponent";
-import { select } from "#utils";
+import { type Calc } from "#globals";
 
 import ModalController from "./ModalController";
 import SideBarController from "./SideBarController";
 import HotkeysController from "./HotkeysController";
+import HeaderController from "./HeaderController";
 
 function createElt<T extends HTMLElement>(html: string): T {
   let tmp = document.createElement("div");
@@ -18,6 +17,7 @@ export default class DesmosOfflineMode implements TransparentController {
   modalController;
   sidebarController;
   hotkeysController;
+  headerController;
 
   constructor(readonly calc: Calc) {
     this.calc = calc;
@@ -25,24 +25,21 @@ export default class DesmosOfflineMode implements TransparentController {
     this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
     this.hotkeysController = new HotkeysController(this);
+    this.headerController = new HeaderController(this);
   }
 
   init() {
-    this.initHeader();
+    this.headerController.init();
     this.modalController.init();
     this.sidebarController.init();
     this.hotkeysController.init();
   }
 
   destroy() {
+    this.headerController.destroy();
     this.modalController.destroy();
     this.sidebarController.destroy();
     this.hotkeysController.destroy();
-  }
-
-  private initHeader() {
-    const HeaderContainer = select<HTMLDivElement>("#dcg-header-container");
-    Fragile.DCGView.mountToNode(Header, HeaderContainer, {});
   }
 
   /**
