@@ -17,7 +17,7 @@ async function getFile(url, errMsg, filePath) {
 }
 
 async function main() {
-  const TESTED_COMMIT = "d90afa0b53e414465eb5b8290fee3828fd397717";
+  const TESTED_COMMIT = "6ab02099004882261b727c62135dc1e7afa1291a";
   let USE_3D_API = false;
 
   // Check if in debug mode enabled
@@ -146,19 +146,19 @@ if (window.location.protocol === "file:") {
     let js = fs.readFileSync(`${PARENT_DIR}/src/desmos/${JS_FILENAME}`, { encoding: "utf-8" });
 
     // Removing bugsnag
-    const old_bugsnag = js.match(/\.Bugsnag={.*?\.default=.*?,/g)[0];
-    const at_export = old_bugsnag.indexOf("default=") + "default=".length;
-    const bugsnag_function_name = old_bugsnag.slice(at_export, -1);
-    const new_bugsnag = old_bugsnag + `${bugsnag_function_name}=function(){},`;
+    const old_bugsnag = js.match(/Bugsnag JavaScript.*?.default=.*?,/g)[0];
+    const at_export = old_bugsnag.indexOf(".default=");
+    // const bugsnag_function_name = old_bugsnag.slice(at_export, -1);
+    const new_bugsnag = old_bugsnag.slice(0, at_export) + `={start:()=>({leaveBreadcrumb:function(){}})},`;
     js = js.replace(old_bugsnag, new_bugsnag);
 
     // Creates a copy of end of file
-    const end_of_js = js.slice(-11000); // Calculator 3D's loader is in last 11000 instead of 2000.
-    let new_end_js = end_of_js;
+    let endIndex = -11000;
+    let new_end_js = js.slice(endIndex); // Calculator 3D's loader is in last 11000 instead of 2000.
 
     const old_load_search =
       /}async function (.+?)\(\){.+?(calcConstructor.+?),.+?(product.+?),.+?(var.+;.+?;typeof Desmos=="undefined"&&\(Desmos={}\));/g.exec(
-        end_of_js
+        new_end_js
       );
     if (old_load_search == null) throw Error("Expected load Desmos to exist.");
 
@@ -175,17 +175,17 @@ if (window.location.protocol === "file:") {
     new_end_js = new_end_js.replace(line_load, new_line_load);
 
     // Removes window.Calc assignment
-    const old_calc = end_of_js.match(/,window.Calc=.*?}\)/g)[0];
+    const old_calc = new_end_js.match(/,window.Calc=.*?}\)/g)[0];
     const new_calc = ";})";
     new_end_js = new_end_js.replace(old_calc, new_calc);
 
     // Removes hiding of loader
-    const old_loader = end_of_js.match(/\.dcg-loading-div-container.+?\.style\.display="none"/g)[0];
+    const old_loader = new_end_js.match(/\.dcg-loading-div-container.+?\.style\.display="none"/g)[0];
     const new_loader = old_loader.slice(0, old_loader.indexOf(")") + 1);
     new_end_js = new_end_js.replace(old_loader, new_loader);
 
     // Final Replacement
-    js = js.replace(end_of_js, new_end_js);
+    js = js.slice(0, endIndex) + new_end_js;
 
     logger.debug("\nBeautifying js for debugging...");
     fs.writeFileSync(`${PARENT_DIR}/src/desmos/calculator_api.js`, jsb.js_beautify(js), { encoding: "utf-8" });
