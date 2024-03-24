@@ -7,6 +7,8 @@ class SideBarController implements TransparentController {
   #removeExtras: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   #slidingInterior: HTMLDivElement | undefined;
+  #hamburgerBtn: HTMLElement | undefined;
+  #appnameItem: HTMLElement | undefined;
   shouldShow: boolean;
 
   constructor(readonly dsom: DesmosOfflineMode) {
@@ -33,6 +35,9 @@ class SideBarController implements TransparentController {
     this.#removeExtras = () => {
       expressionTopBar.removeChild(emptySpaceDiv);
     };
+
+    this.#hamburgerBtn = select<HTMLElement>(":has(>.dcg-icon-hamburger)");
+    this.#appnameItem = select<HTMLElement>(".side-bar-content .app-name");
   }
 
   destroy() {
@@ -44,12 +49,14 @@ class SideBarController implements TransparentController {
     this.shouldShow = true;
     this.divContainer?.classList.add("open-side-bar");
     this.#slidingInterior?.classList.add("open-side-bar");
+    this.#appnameItem?.focus();
   }
 
   hideSideBar() {
     this.shouldShow = false;
     this.divContainer?.classList.remove("open-side-bar");
     this.#slidingInterior?.classList.remove("open-side-bar");
+    this.#hamburgerBtn?.focus();
   }
 
   toggleSideBar() {

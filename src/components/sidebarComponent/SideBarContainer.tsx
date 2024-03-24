@@ -23,43 +23,45 @@ export class SideBarContainer extends Component<{
         </DCGButton>
 
         <div class="side-bar-content">
-          <div class="app-name">Desmos Offline Mode</div>
-          <div class="new-blank-graph">
+          <div class="app-name" tabindex="0">
+            Desmos Offline Mode
+          </div>
+          <div class="new-blank-graph" tabindex="0">
             <span class="dcg-add-blank">
               <i class="dcg-icon-plus" aria-hidden="true"></i>
             </span>
             <span class="new-graph-title">{this.dsom.format("account-shell-text-mygraphs-new-blank-graph")}</span>
           </div>
           {/* <div>Placeholder</div> */}
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-folder-open"></span>
             <span class="label">{this.dsom.format("account-shell-button-open-graph")}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-save"></span>
             <span class="label">{this.dsom.format("account-shell-button-mygraphs-save")}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-share"></span>
             <span class="label">{"Import/Export Graph"}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-export"></span>
             <span class="label">{this.dsom.format("account-shell-button-export-image")}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-print"></span>
             <span class="label">{this.dsom.format("account-shell-button-print")}</span>
           </div>
-          <div class="side-bar-item seperator">
+          <div class="side-bar-item seperator" tabindex="0">
             <span class="icon dcg-icon-world"></span>
             <span class="label">{this.dsom.format("shared-title-language-menu")}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-calc"></span>
             <span class="label">{"Switch Calculators"}</span>
           </div>
-          <div class="side-bar-item">
+          <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-info"></span>
             <span class="label">{"About"}</span>
           </div>
