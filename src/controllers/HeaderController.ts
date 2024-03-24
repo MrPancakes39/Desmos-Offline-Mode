@@ -43,6 +43,8 @@ class HeaderController implements TransparentController {
       this.#helpMenu = select<HTMLElement>(".dsm-help-container");
       document.addEventListener("click", this.listenerTap);
       document.addEventListener("keydown", this.listenerEscape);
+      // Focus on keyboard dcg-link
+      this.#helpMenu.querySelector<HTMLAnchorElement>(".dcg-link")?.focus();
     }
   }
 
