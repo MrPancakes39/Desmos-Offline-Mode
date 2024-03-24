@@ -53,9 +53,9 @@ export default class HotkeysController implements TransparentController {
         }
         if (key === "H") {
           // Help Menu (Ctrl + Alt/Cmd + H)
-          console.log("Help Menu");
           ev.preventDefault();
           ev.stopPropagation();
+          this.dsom.headerController.openHelpMenu();
         }
         if (key === "S") {
           // Share Menu (Ctrl + Alt/Cmd + S)

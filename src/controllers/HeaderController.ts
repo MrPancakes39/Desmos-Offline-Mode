@@ -36,21 +36,25 @@ class HeaderController implements TransparentController {
   }
 
   openHelpMenu() {
-    this.showHelpMenu = true;
-    this.dsom.cc.updateViews();
-    this.#helpBtn = select<HTMLElement>(".dcg-icon-question-sign");
-    this.#helpMenu = select<HTMLElement>(".dsm-help-container");
-    document.addEventListener("click", this.listenerTap);
-    document.addEventListener("keydown", this.listenerEscape);
+    if (!this.showHelpMenu) {
+      this.showHelpMenu = true;
+      this.dsom.cc.updateViews();
+      this.#helpBtn = select<HTMLElement>(".dcg-icon-question-sign");
+      this.#helpMenu = select<HTMLElement>(".dsm-help-container");
+      document.addEventListener("click", this.listenerTap);
+      document.addEventListener("keydown", this.listenerEscape);
+    }
   }
 
   closeHelpMenu() {
-    this.showHelpMenu = false;
-    this.#helpBtn = undefined;
-    this.#helpMenu = undefined;
-    document.removeEventListener("click", this.listenerTap);
-    document.removeEventListener("keydown", this.listenerEscape);
-    this.dsom.cc.updateViews();
+    if (this.showHelpMenu) {
+      this.showHelpMenu = false;
+      this.#helpBtn = undefined;
+      this.#helpMenu = undefined;
+      document.removeEventListener("click", this.listenerTap);
+      document.removeEventListener("keydown", this.listenerEscape);
+      this.dsom.cc.updateViews();
+    }
   }
 
   toggleHelpMenu() {
