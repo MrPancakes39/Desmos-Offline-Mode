@@ -1,6 +1,6 @@
 import "./sidebar.less";
 import { Component, jsx } from "#DCGView";
-import DCGButton from "../Button";
+import DCGButton from "../common/Button";
 import Fragment from "../Fragment";
 import type DesmosOfflineMode from "#DSOM";
 

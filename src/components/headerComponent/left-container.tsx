@@ -1,5 +1,5 @@
 import { Tooltip } from "..";
-import DCGButton from "../Button";
+import DCGButton from "../common/Button";
 import { Component, jsx } from "#DCGView";
 import type DesmosOfflineMode from "#DSOM";
 

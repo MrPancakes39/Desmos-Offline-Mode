@@ -1,7 +1,7 @@
 import { jsx } from "#DCGView";
 import { Modal } from "./modal";
 import GenericModal from "./GenericModal";
-import DCGButton from "../Button";
+import DCGButton from "../common/Button";
 
 export default class NewGraphModal extends Modal<{}> {
   template() {
