@@ -1,9 +1,9 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
 import type DesmosOfflineMode from "#DSOM";
-import SideBarContainer from "./SideBarContainer";
+import { SideBarContainer } from "../components";
 
-export class SideBarController implements TransparentController {
+class SideBarController implements TransparentController {
   #removeExtras: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   #slidingInterior: HTMLDivElement | undefined;
@@ -56,3 +56,5 @@ export class SideBarController implements TransparentController {
     this.shouldShow ? this.hideSideBar() : this.showSideBar();
   }
 }
+
+export default SideBarController;

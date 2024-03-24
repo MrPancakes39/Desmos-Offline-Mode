@@ -1,10 +1,10 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
-import ModalContainer from "./ModalContainer";
-import { type ModalType, validModals } from "./modal";
+import { ModalContainer } from "../components";
+import { type ModalType, validModals } from "../components/modalComponent/modal";
 import type DesmosOfflineMode from "#DSOM";
 
-export class ModalController implements TransparentController {
+class ModalController implements TransparentController {
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
@@ -77,3 +77,5 @@ export class ModalController implements TransparentController {
     }
   }
 }
+
+export default ModalController;

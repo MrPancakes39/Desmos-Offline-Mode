@@ -3,7 +3,7 @@ import { Switch } from "..";
 import NewGraphModal from "./NewGraphModal";
 import { type ModalType } from "./modal";
 
-export default class ModalContainer extends Component<{
+export class ModalContainer extends Component<{
   modalType: ModalType;
   closeModal: () => void;
 }> {

@@ -1,3 +1,3 @@
 export * from "./desmosComponents";
-export * from "./modalComponent/ModalController";
-export * from "./sidebarComponent/SideBarController";
+export * from "./modalComponent/ModalContainer";
+export * from "./sidebarComponent/SideBarContainer";

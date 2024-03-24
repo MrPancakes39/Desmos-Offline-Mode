@@ -44,9 +44,6 @@ export default class HotkeysController implements TransparentController {
         ev.stopPropagation();
       } else if (ev.ctrlKey && (ev.altKey || ev.metaKey) && !ev.shiftKey) {
         // open menus
-        // if (ev.key === "L") {
-        //   console.log("L");
-        // }
         const key = ev.key.toUpperCase();
         if (key === "L") {
           // Language menu (Ctrl + Alt/Cmd + L)

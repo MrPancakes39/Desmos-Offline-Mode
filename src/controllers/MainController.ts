@@ -1,7 +1,9 @@
 import { type Calc, Fragile } from "#globals";
 import Header from "../components/headerComponent";
 import { select } from "#utils";
-import { ModalController, SideBarController } from "../components";
+
+import ModalController from "./ModalController";
+import SideBarController from "./SideBarController";
 import HotkeysController from "./HotkeysController";
 
 function createElt<T extends HTMLElement>(html: string): T {

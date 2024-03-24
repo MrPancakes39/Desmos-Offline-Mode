@@ -4,7 +4,7 @@ import DCGButton from "../Button";
 import Fragment from "../Fragment";
 import type DesmosOfflineMode from "#DSOM";
 
-export default class SideBarContainer extends Component<{
+export class SideBarContainer extends Component<{
   dsom: DesmosOfflineMode;
   toggleSideBar: () => void;
   closeSideBar: () => void;
