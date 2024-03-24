@@ -8,8 +8,8 @@ class HeaderController implements TransparentController {
   divContainer: HTMLDivElement | undefined;
   showHelpMenu: boolean;
   listenerTap: (ev: MouseEvent) => void;
-  helpBtn: HTMLElement | undefined;
-  helpMenu: HTMLElement | undefined;
+  #helpBtn: HTMLElement | undefined;
+  #helpMenu: HTMLElement | undefined;
   listenerEscape: (ev: KeyboardEvent) => void;
 
   constructor(readonly dsom: DesmosOfflineMode) {
@@ -38,16 +38,16 @@ class HeaderController implements TransparentController {
   openHelpMenu() {
     this.showHelpMenu = true;
     this.dsom.cc.updateViews();
-    this.helpBtn = select<HTMLElement>(".dcg-icon-question-sign");
-    this.helpMenu = select<HTMLElement>(".dsm-help-container");
+    this.#helpBtn = select<HTMLElement>(".dcg-icon-question-sign");
+    this.#helpMenu = select<HTMLElement>(".dsm-help-container");
     document.addEventListener("click", this.listenerTap);
     document.addEventListener("keydown", this.listenerEscape);
   }
 
   closeHelpMenu() {
     this.showHelpMenu = false;
-    this.helpBtn = undefined;
-    this.helpMenu = undefined;
+    this.#helpBtn = undefined;
+    this.#helpMenu = undefined;
     document.removeEventListener("click", this.listenerTap);
     document.removeEventListener("keydown", this.listenerEscape);
     this.dsom.cc.updateViews();
@@ -63,7 +63,7 @@ class HeaderController implements TransparentController {
 
   handleTap(ev: MouseEvent) {
     const target = ev.target as Node | null;
-    const clickIsInside = this.helpMenu!.contains(target) || this.helpBtn!.contains(target);
+    const clickIsInside = this.#helpMenu!.contains(target) || this.#helpBtn!.contains(target);
     console.log(clickIsInside);
     if (!clickIsInside) {
       this.closeHelpMenu();
