@@ -7,16 +7,14 @@ class HeaderController implements TransparentController {
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   showHelpMenu: boolean;
-  listenerTap: (ev: MouseEvent) => void;
+  listener: (ev: MouseEvent) => void;
   #helpBtn: HTMLElement | undefined;
   #helpMenu: HTMLElement | undefined;
-  listenerEscape: (ev: KeyboardEvent) => void;
 
   constructor(readonly dsom: DesmosOfflineMode) {
     this.dsom = dsom;
     this.showHelpMenu = false;
-    this.listenerTap = this.handleTap.bind(this);
-    this.listenerEscape = this.handleEscape.bind(this);
+    this.listener = this.handleTap.bind(this);
   }
 
   init() {
@@ -41,8 +39,7 @@ class HeaderController implements TransparentController {
       this.dsom.cc.updateViews();
       this.#helpBtn = select<HTMLElement>(".dcg-icon-question-sign");
       this.#helpMenu = select<HTMLElement>(".dsm-help-container");
-      document.addEventListener("click", this.listenerTap);
-      document.addEventListener("keydown", this.listenerEscape);
+      document.addEventListener("click", this.listener);
       // Focus on keyboard dcg-link
       this.#helpMenu.querySelector<HTMLAnchorElement>(".dcg-link")?.focus();
     }
@@ -53,8 +50,7 @@ class HeaderController implements TransparentController {
       this.showHelpMenu = false;
       this.#helpBtn = undefined;
       this.#helpMenu = undefined;
-      document.removeEventListener("click", this.listenerTap);
-      document.removeEventListener("keydown", this.listenerEscape);
+      document.removeEventListener("click", this.listener);
       this.dsom.cc.updateViews();
     }
   }
@@ -70,14 +66,7 @@ class HeaderController implements TransparentController {
   handleTap(ev: MouseEvent) {
     const target = ev.target as Node | null;
     const clickIsInside = this.#helpMenu!.contains(target) || this.#helpBtn!.contains(target);
-    console.log(clickIsInside);
     if (!clickIsInside) {
-      this.closeHelpMenu();
-    }
-  }
-
-  handleEscape(ev: KeyboardEvent) {
-    if (ev.key === "Escape") {
       this.closeHelpMenu();
     }
   }
