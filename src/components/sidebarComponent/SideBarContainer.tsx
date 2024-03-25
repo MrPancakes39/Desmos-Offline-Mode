@@ -1,7 +1,7 @@
 import "./sidebar.less";
 import { Component, jsx } from "#DCGView";
 import DCGButton from "../common/Button";
-import Fragment from "../Fragment";
+import Fragment from "../common/Fragment";
 import type DesmosOfflineMode from "#DSOM";
 
 export class SideBarContainer extends Component<{
