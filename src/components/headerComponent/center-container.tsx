@@ -64,6 +64,6 @@ class DesmosLogo extends Component<{
       `;
   }
   template() {
-    return <span onMount={this.addSVGLogo.bind(this)}></span>;
+    return <span onMount={(e: HTMLElement) => this.addSVGLogo(e)}></span>;
   }
 }
