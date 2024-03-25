@@ -9,13 +9,13 @@ class ModalController implements TransparentController {
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
   listener: (ev: KeyboardEvent) => void;
-  accElts: { first: HTMLElement; last: HTMLElement } | null;
+  tabbable: HTMLElement[] | null;
 
   constructor(readonly dsom: DesmosOfflineMode) {
     this.dsom = dsom;
     this.currentType = "none";
     this.listener = this.handleKeyDown.bind(this);
-    this.accElts = null;
+    this.tabbable = null;
   }
 
   init() {
@@ -43,16 +43,13 @@ class ModalController implements TransparentController {
     this.dsom.cc.updateViews();
 
     if (modalType == "none") {
-      this.accElts = null;
+      this.tabbable = null;
       document.removeEventListener("keydown", this.listener);
     } else {
-      const spans = this.divContainer?.querySelectorAll<HTMLSpanElement>("span");
-      if (!spans) return;
-      this.accElts = {
-        first: spans[0],
-        last: spans[spans.length - 1],
-      };
-      this.accElts.first.focus();
+      const tabbable = this.divContainer?.querySelectorAll<HTMLElement>("[tabindex]");
+      if (!tabbable) return;
+      this.tabbable = [...tabbable];
+      this.tabbable[0].focus();
       document.addEventListener("keydown", this.listener);
     }
   }
@@ -64,16 +61,21 @@ class ModalController implements TransparentController {
   }
 
   handleKeyDown(ev: KeyboardEvent) {
-    if (!this.accElts) return;
+    if (!this.tabbable) return;
     if (ev.key === "Tab" || ev.keyCode === 9) {
+      // If activeElement not in the modal
+      if (this.tabbable.filter((e) => e == document.activeElement).length == 0) {
+        this.tabbable[0].focus();
+        ev.preventDefault();
+      }
       if (ev.shiftKey) {
-        /* shift + tab */ if (document.activeElement === this.accElts.first) {
-          this.accElts.last.focus();
+        /* shift + tab */ if (document.activeElement === this.tabbable[0]) {
+          this.tabbable[this.tabbable.length - 1].focus();
           ev.preventDefault();
         }
       } /* tab */ else {
-        if (document.activeElement === this.accElts.last) {
-          this.accElts.first.focus();
+        if (document.activeElement === this.tabbable[this.tabbable.length - 1]) {
+          this.tabbable[0].focus();
           ev.preventDefault();
         }
       }
