@@ -7,7 +7,14 @@ import { mergeClass, MaybeClassDict } from "#utils";
 export default class GenericModal extends Modal<{
   title: string;
   class?: MaybeClassDict;
+  useWrapper?: boolean;
 }> {
+  useWrapper!: boolean;
+
+  init() {
+    this.useWrapper = this.props.useWrapper?.() ?? true;
+  }
+
   template() {
     return (
       <div role="dialog" aria-modal="true" class={mergeClass("desom-modal-container", this.props.class?.())}>
@@ -24,7 +31,7 @@ export default class GenericModal extends Modal<{
           </span>
           <div class="modal-dialog">
             <h1>{this.props.title()}</h1>
-            <div class="modal-content">{this.children}</div>
+            {this.useWrapper ? <div class="modal-content">{this.children}</div> : this.children}
           </div>
         </div>
       </div>

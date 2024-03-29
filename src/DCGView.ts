@@ -128,12 +128,15 @@ declare global {
       ol: any;
       li: any;
       table: any;
+      thead: any;
+      tbody: any;
       tr: any;
       th: any;
       td: any;
       button: any;
       br: any;
       h1: any;
+      h2: any;
     }
   }
 }

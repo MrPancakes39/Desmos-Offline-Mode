@@ -83,11 +83,16 @@
     right: 2px;
     cursor: pointer;
     color: #0000004d;
-    font-size: 150%;
+    font-size: 130%;
     padding: 15px;
 
     &.dcg-hovered {
       color: #0009;
+    }
+
+    &:focus {
+      color: #000000bf;
+      outline: none;
     }
   }
 
@@ -114,6 +119,111 @@
       align-items: center;
       gap: 10px;
       margin-top: 1.75rem;
+    }
+  }
+
+  &.hotkeys-modal {
+    .desom-modal {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      bottom: 25px;
+      left: 25px;
+      color: #444;
+      font-size: 100%;
+      padding: 20px 40px 0;
+
+      width: unset;
+      margin-left: unset;
+      max-height: unset;
+      overflow: unset;
+
+      .modal-dialog {
+        position: relative;
+        // For overflow
+        height: calc(100% - 20px);
+      }
+
+      .modal-content {
+        // For overflow
+        height: 100%;
+      }
+
+      h1 {
+        color: #666;
+        text-align: left;
+        font-size: 170%;
+        font-weight: normal;
+        margin-top: 13px;
+        margin-bottom: 8px;
+      }
+
+      .dcg-hotkeys-toggle-container {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 500px;
+        margin-left: -250px;
+        font-size: 15px;
+      }
+
+      .dcg-hotkey-container {
+        position: absolute;
+        top: 40px;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        flex-flow: row wrap;
+        overflow: auto;
+
+        .dcg-hotkey-section {
+          width: 50%;
+          padding-bottom: 20px;
+
+          .dcg-hotkey-section-header {
+            display: block;
+            font-size: 20px;
+            font-weight: 500;
+            margin: 45px 25px 15px 0;
+
+            &:first-of-type {
+              margin-top: 10px;
+            }
+          }
+        }
+
+        .dcg-shortcuts-table {
+          font-size: 13.5px;
+
+          .dcg-key-command {
+            margin: 0 3px;
+          }
+        }
+
+        table {
+          border-collapse: collapse;
+          width: calc(100% - 25px);
+        }
+
+        tr {
+          border-bottom: 1px solid #eee;
+          text-align: left;
+        }
+
+        tr td {
+          width: 30%;
+          line-height: 1.2em;
+        }
+
+        tr td:not(:last-of-type) {
+          padding: 10px 20px 10px 0;
+        }
+
+        tr td:last-of-type {
+          padding: 10px 0;
+        }
+      }
     }
   }
 }

@@ -39,7 +39,7 @@ export default class HotkeysController implements TransparentController {
     } else if (ev.ctrlKey || ev.shiftKey || ev.altKey || ev.metaKey || ev.key !== "Escape") {
       if (this.isHelp(ev)) {
         // show keyboard hotkeys modal
-        console.log("Keyboard Modal");
+        this.dsom.modalController.showModal("hotkeys");
         ev.preventDefault();
         ev.stopPropagation();
       } else if (ev.ctrlKey && (ev.altKey || ev.metaKey) && !ev.shiftKey) {

@@ -35,7 +35,12 @@ export default class RightContainer extends Component<{
                     visit www.desmos.com/calculator
                   </div>
                 </div>
-                <a role="link" tabindex="0" class="dcg-link">
+                <a
+                  role="link"
+                  tabindex="0"
+                  class="dcg-link"
+                  onTap={() => this.dsom.modalController.showModal("hotkeys")}
+                >
                   <i class="dcg-icon-keyboard"></i>
                   <span class="dcg-link-text">Keyboard Shortcuts</span>
                 </a>
