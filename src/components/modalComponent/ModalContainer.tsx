@@ -2,6 +2,8 @@ import { Component, jsx } from "#DCGView";
 import { Switch } from "..";
 import HotkeysModal from "./HotKeysModal/HotkeysModal";
 import NewGraphModal from "./NewGraphModal";
+import SwitcherModal from "./SwitcherModal";
+
 import { type ModalType } from "./modal";
 import type DesmosOfflineMode from "#DSOM";
 
@@ -29,6 +31,8 @@ export class ModalContainer extends Component<{
                   product={"graphing"}
                 />
               );
+            case "switcher":
+              return <SwitcherModal close={this.props.closeModal} />;
           }
         }}
       </Switch>

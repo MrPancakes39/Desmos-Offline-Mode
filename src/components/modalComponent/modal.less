@@ -61,11 +61,12 @@
 }
 
 .desom-modal {
+  --modal-width: 500px;
   position: absolute;
   top: 10vh;
   left: 50%;
-  width: 500px;
-  margin-left: -240px;
+  width: var(--modal-width);
+  margin-left: calc(-1 * var(--modal-width) / 2 + 10px);
   max-height: 85vh;
   overflow: auto;
   z-index: 100;
@@ -223,6 +224,59 @@
         tr td:last-of-type {
           padding: 10px 0;
         }
+      }
+    }
+  }
+
+  &.switcher-modal {
+    .desom-modal {
+      --modal-width: 600px;
+    }
+
+    .modal-content {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+    }
+
+    .desom-calc-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 16px;
+      cursor: pointer;
+
+      &[aria-disabled] {
+        // pointer-events: none;
+        filter: grayscale(1);
+        cursor: not-allowed;
+      }
+
+      .product-icon {
+        display: flex;
+        background-color: #f3f2f7;
+        border-radius: 50%;
+
+        &.selected {
+          background-color: #f0fff7;
+        }
+
+        .desom-dcg-product {
+          transform: scale(60%);
+        }
+      }
+
+      .product-label {
+        text-align: center;
+        margin-top: 4px;
+        min-height: 24px;
+        height: fit-content;
+        line-height: 150%;
+        font-weight: 500;
+        font-size: 16px;
+        white-space: nowrap;
       }
     }
   }
