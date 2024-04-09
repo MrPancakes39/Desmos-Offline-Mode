@@ -33,7 +33,7 @@ export class ModalContainer extends Component<{
                   close={this.props.closeModal}
                   format={(...args) => this.dsom.format(...args)}
                   updateViews={() => this.dsom.cc.updateViews()}
-                  product={"graphing"}
+                  product={() => this.dsom.switcherController.selected!.type}
                 />
               );
             case "switcher":

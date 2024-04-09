@@ -9,7 +9,7 @@ const initSettings = {
   pasteGraphLink: true,
 };
 
-const CALC_TYPES = ["graph", "geometry"] as const;
+const CALC_TYPES = ["graphing", "geometry"] as const;
 
 type MountedCalculator = {
   type: (typeof CALC_TYPES)[number];
@@ -33,7 +33,7 @@ export default class SwitcherController implements TransparentController {
 
     this.calculators = [
       {
-        type: "graph",
+        type: "graphing",
         calc: graphCalc,
         container: graphContainer,
       },
@@ -44,7 +44,7 @@ export default class SwitcherController implements TransparentController {
       },
     ];
 
-    this.selectCalculator("graph");
+    this.selectCalculator("graphing");
     // export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
   }
 

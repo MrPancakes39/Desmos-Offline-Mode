@@ -26,9 +26,9 @@ export default class SwitcherModal extends Modal<{
       <GenericModal title={"Choose Desmos Calculator"} close={this.props.close} class="switcher-modal">
         <CalculatorButton
           product="graphing"
-          selected={() => this.switcher.selected!.type === "graph"}
+          selected={() => this.switcher.selected!.type === "graphing"}
           onTap={() => {
-            this.switcher.selectCalculator("graph");
+            this.switcher.selectCalculator("graphing");
             this.props.close();
           }}
         />
