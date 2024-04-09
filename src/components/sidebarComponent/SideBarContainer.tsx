@@ -26,7 +26,14 @@ export class SideBarContainer extends Component<{
           <div class="app-name" tabindex="0">
             Desmos Offline Mode
           </div>
-          <div class="new-blank-graph" tabindex="0" onTap={() => this.dsom.modalController.showModal("new-graph")}>
+          <div
+            class="new-blank-graph"
+            tabindex="0"
+            onTap={() => {
+              this.dsom.modalController.showModal("new-graph");
+              this.dsom.sidebarController.hideSideBar();
+            }}
+          >
             <span class="dcg-add-blank">
               <i class="dcg-icon-plus" aria-hidden="true"></i>
             </span>
