@@ -31,7 +31,7 @@ export class ModalContainer extends Component<{
               return (
                 <HotkeysModal
                   close={this.props.closeModal}
-                  format={this.dsom.format}
+                  format={(...args) => this.dsom.format(...args)}
                   updateViews={() => this.dsom.cc.updateViews()}
                   product={"graphing"}
                 />
