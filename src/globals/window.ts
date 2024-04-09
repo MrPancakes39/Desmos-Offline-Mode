@@ -22,23 +22,6 @@ export default window;
 export const Desmos = window.Desmos;
 export const Fragile = Desmos.Private.Fragile;
 
-// Creating Calc object
-const graphContainer = document.getElementById("graph-container");
-if (graphContainer === null) {
-  throw new Error("Graph Container couldn't be found!");
-}
-const initSettings = {
-  advancedStyling: true,
-  border: false,
-  showKeyboardShortcutsInTooltips: true,
-  pasteGraphLink: true,
-};
-export const Calc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as CalcWithPatches;
-// export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
-// export const Calc = window.Desmos.Geometry(graphContainer, initSettings) as CalcWithPatches;
-applyPatches(Calc);
-window.Calc = Calc;
-
 // Fix missing globals
 window.$ = window.Desmos.$;
 window.jQuery = window.Desmos.$; // Is this right?

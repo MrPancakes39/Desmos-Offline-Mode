@@ -1,9 +1,9 @@
-import { type Calc } from "#globals";
-
+import SwitcherController from "./SwitcherController";
 import ModalController from "./ModalController";
 import SideBarController from "./SideBarController";
 import HotkeysController from "./HotkeysController";
 import HeaderController from "./HeaderController";
+import { type CalcController } from "#globals";
 
 function createElt<T extends HTMLElement>(html: string): T {
   let tmp = document.createElement("div");
@@ -13,15 +13,15 @@ function createElt<T extends HTMLElement>(html: string): T {
 
 // Desmos Offline Mode
 export default class DesmosOfflineMode implements TransparentController {
-  cc;
+  cc!: CalcController;
+  switcherController;
   modalController;
   sidebarController;
   hotkeysController;
   headerController;
 
-  constructor(readonly calc: Calc) {
-    this.calc = calc;
-    this.cc = calc._calc.controller;
+  constructor() {
+    this.switcherController = new SwitcherController();
     this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
     this.hotkeysController = new HotkeysController(this);
@@ -29,6 +29,9 @@ export default class DesmosOfflineMode implements TransparentController {
   }
 
   init() {
+    this.switcherController.init();
+    this.cc = this.switcherController.calculators[0].calc._calc.controller;
+
     this.headerController.init();
     this.modalController.init();
     this.sidebarController.init();
@@ -54,7 +57,7 @@ export default class DesmosOfflineMode implements TransparentController {
   }
 
   async openOnWeb() {
-    const calc = this.calc._calc;
+    const calc = this.switcherController.calculators[0].calc._calc;
     const state = JSON.stringify(calc.getState()),
       thumbnail = calc.grapher.screenshot({ width: 100, height: 100 }),
       url = "https://www.desmos.com/api/v1/calculator/cross_origin_save";
