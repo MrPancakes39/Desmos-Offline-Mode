@@ -57,7 +57,14 @@ export class SideBarContainer extends Component<{
             <span class="icon dcg-icon-world"></span>
             <span class="label">{this.dsom.format("shared-title-language-menu")}</span>
           </div>
-          <div class="side-bar-item" tabindex="0">
+          <div
+            class="side-bar-item"
+            tabindex="0"
+            onTap={() => {
+              this.dsom.modalController.showModal("switcher");
+              this.dsom.sidebarController.hideSideBar();
+            }}
+          >
             <span class="icon desom-icons-calc"></span>
             <span class="label">{"Switch Calculators"}</span>
           </div>
