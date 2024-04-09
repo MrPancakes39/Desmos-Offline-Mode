@@ -23,8 +23,7 @@ class ModalController implements TransparentController {
     const view = Fragile.DCGView.mountToNode(ModalContainer, this.divContainer, {
       modalType: () => this.currentType,
       closeModal: () => this.closeModal(),
-      format: (...args: Parameters<DesmosOfflineMode["format"]>) => this.dsom.format(...args),
-      updateViews: () => this.dsom.cc.updateViews(),
+      dsom: () => this.dsom,
     });
     this.unsub = this.dsom.cc.subscribeToChanges(() => view.update());
   }

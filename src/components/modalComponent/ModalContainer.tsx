@@ -10,9 +10,14 @@ import type DesmosOfflineMode from "#DSOM";
 export class ModalContainer extends Component<{
   modalType: ModalType;
   closeModal: () => void;
-  format: DesmosOfflineMode["format"];
-  updateViews: () => void;
+  dsom: DesmosOfflineMode;
 }> {
+  dsom!: DesmosOfflineMode;
+
+  init() {
+    this.dsom = this.props.dsom();
+  }
+
   template() {
     return (
       <Switch key={() => this.props.modalType()}>
@@ -26,13 +31,13 @@ export class ModalContainer extends Component<{
               return (
                 <HotkeysModal
                   close={this.props.closeModal}
-                  format={this.props.format}
-                  updateViews={this.props.updateViews}
+                  format={this.dsom.format}
+                  updateViews={() => this.dsom.cc.updateViews()}
                   product={"graphing"}
                 />
               );
             case "switcher":
-              return <SwitcherModal close={this.props.closeModal} />;
+              return <SwitcherModal close={this.props.closeModal} switcher={this.dsom.switcherController} />;
           }
         }}
       </Switch>

@@ -2,6 +2,7 @@ import { Component, jsx } from "#DCGView";
 import { Modal } from "./modal";
 import GenericModal from "./GenericModal";
 import DCGAppIcon, { type DCGProduct } from "../common/DCGAppIcon";
+import type DesmosOfflineMode from "#DSOM";
 
 type SwitcherProduct = Extract<DCGProduct, "graphing" | "geometry" | "3d">;
 
@@ -11,12 +12,34 @@ const ProductName: Record<SwitcherProduct, string> = {
   "3d": "3D Calculator",
 };
 
-export default class SwitcherModal extends Modal<{}> {
+export default class SwitcherModal extends Modal<{
+  switcher: DesmosOfflineMode["switcherController"];
+}> {
+  switcher!: DesmosOfflineMode["switcherController"];
+
+  init() {
+    this.switcher = this.props.switcher();
+  }
+
   template(): unknown {
     return (
       <GenericModal title={"Choose Desmos Calculator"} close={this.props.close} class="switcher-modal">
-        <CalculatorButton product="graphing" selected={true} onTap={() => console.log("Graphing")} />
-        <CalculatorButton product="geometry" onTap={() => console.log("Geometry")} />
+        <CalculatorButton
+          product="graphing"
+          selected={() => this.switcher.selected!.type === "graph"}
+          onTap={() => {
+            this.switcher.selectCalculator("graph");
+            this.props.close();
+          }}
+        />
+        <CalculatorButton
+          product="geometry"
+          selected={() => this.switcher.selected!.type === "geometry"}
+          onTap={() => {
+            this.switcher.selectCalculator("geometry");
+            this.props.close();
+          }}
+        />
         <CalculatorButton product="3d" disabled={true} onTap={() => console.log("3d")} />
       </GenericModal>
     );

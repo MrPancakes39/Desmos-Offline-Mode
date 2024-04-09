@@ -254,14 +254,25 @@
         cursor: not-allowed;
       }
 
+      &.selected {
+        .product-icon {
+          background-color: #f0fff7;
+        }
+      }
+
+      &:not(.selected) {
+        .product-icon {
+          &:hover,
+          &:focus {
+            background-color: #e6e6eb;
+          }
+        }
+      }
+
       .product-icon {
         display: flex;
         background-color: #f3f2f7;
         border-radius: 50%;
-
-        &.selected {
-          background-color: #f0fff7;
-        }
 
         .desom-dcg-product {
           transform: scale(60%);

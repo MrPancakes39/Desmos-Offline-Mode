@@ -19,7 +19,7 @@ type MountedCalculator = {
 
 export default class SwitcherController implements TransparentController {
   calculators: MountedCalculator[] = [];
-  selected: CalcWithPatches | undefined;
+  selected: MountedCalculator | undefined;
 
   init() {
     const graphContainer = select<HTMLDivElement>("#graph-container");
@@ -65,7 +65,7 @@ export default class SwitcherController implements TransparentController {
       } else {
         mc.container.style.display = "block";
         window.Calc = mc.calc;
-        this.selected = mc.calc;
+        this.selected = mc;
       }
     });
   }
