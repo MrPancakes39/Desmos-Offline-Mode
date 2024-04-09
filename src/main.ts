@@ -7,5 +7,5 @@ window.DSOM = dsom;
 dsom.init();
 
 // Last in loading
-dsom.switcherController.selected?.focusFirstExpression();
+dsom.switcherController.selected!.calc.focusFirstExpression();
 document.querySelector<HTMLDivElement>(".dcg-loading-div-container")!.style.display = "none";

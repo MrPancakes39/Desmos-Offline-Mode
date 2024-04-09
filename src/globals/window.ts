@@ -3,7 +3,7 @@ import "../desmos/preload_desmos";
 import "../desmos/calculator_api";
 
 import type DesmosType from "./Desmos";
-import { CalcWithPatches, applyPatches } from "./patches";
+import { type CalcWithPatches } from "./patches";
 import type DesmosOfflineMode from "#DSOM";
 
 interface windowConfig extends Window {
