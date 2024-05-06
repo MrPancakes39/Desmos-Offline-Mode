@@ -19,12 +19,12 @@
   "devDependencies": {
     "@desmodder/graph-state": "^0.2.3",
     "@types/jquery": "^3.5.29",
-    "@types/node": "^20.11.30",
+    "@types/node": "^20.12.10",
     "@types/underscore": "^1.11.15",
     "fetch_desmos_resources": "file:./fetch_desmos_res",
     "less": "^4.2.0",
-    "typescript": "^5.4.3",
-    "vite": "^5.2.4"
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11"
   },
   "dependencies": {
     "@types/desmos": "^1.6.3"
