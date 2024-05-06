@@ -26,7 +26,7 @@ export class ModalContainer extends Component<{
             case "none":
               return null;
             case "new-graph":
-              return <NewGraphModal close={this.props.closeModal} />;
+              return <NewGraphModal close={this.props.closeModal} format={(...args) => this.dsom.format(...args)} />;
             case "hotkeys":
               return (
                 <HotkeysModal
@@ -37,7 +37,13 @@ export class ModalContainer extends Component<{
                 />
               );
             case "switcher":
-              return <SwitcherModal close={this.props.closeModal} switcher={this.dsom.switcherController} />;
+              return (
+                <SwitcherModal
+                  close={this.props.closeModal}
+                  switcher={this.dsom.switcherController}
+                  format={(...args) => this.dsom.format(...args)}
+                />
+              );
           }
         }}
       </Switch>

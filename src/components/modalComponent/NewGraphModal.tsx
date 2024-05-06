@@ -3,11 +3,19 @@ import { Modal } from "./modal";
 import GenericModal from "./GenericModal";
 import DCGButton from "../common/Button";
 
-export default class NewGraphModal extends Modal<{}> {
+import type DesmosOfflineMode from "#DSOM";
+
+export default class NewGraphModal extends Modal<{
+  format: DesmosOfflineMode["format"];
+}> {
   template() {
     return (
-      <GenericModal title="Create New Graph" close={this.props.close} class="new-graph-modal">
-        <p>Are you sure you want to create a new graph? This graph will be lost</p>
+      <GenericModal
+        title={this.props.format("dsom-modal-new-graph-title")}
+        close={this.props.close}
+        class="new-graph-modal"
+      >
+        <p>{this.props.format("dsom-modal-new-graph-message")}</p>
         <div class="btn-container">
           <DCGButton color="invisible" class="dcg-dark-gray-link" onTap={() => ""}>
             Cancel

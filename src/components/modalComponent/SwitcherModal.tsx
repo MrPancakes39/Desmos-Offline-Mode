@@ -6,14 +6,9 @@ import type DesmosOfflineMode from "#DSOM";
 
 type SwitcherProduct = Extract<DCGProduct, "graphing" | "geometry" | "3d">;
 
-const ProductName: Record<SwitcherProduct, string> = {
-  graphing: "Graphing Calculator",
-  geometry: "Geometry Tool",
-  "3d": "3D Calculator",
-};
-
 export default class SwitcherModal extends Modal<{
   switcher: DesmosOfflineMode["switcherController"];
+  format: DesmosOfflineMode["format"];
 }> {
   switcher!: DesmosOfflineMode["switcherController"];
 
@@ -23,9 +18,14 @@ export default class SwitcherModal extends Modal<{
 
   template(): unknown {
     return (
-      <GenericModal title={"Choose Desmos Calculator"} close={this.props.close} class="switcher-modal">
+      <GenericModal
+        title={this.props.format("dsom-modal-switcher-title")}
+        close={this.props.close}
+        class="switcher-modal"
+      >
         <CalculatorButton
           product="graphing"
+          label={this.props.format("dsom-modal-switcher-product-graphing")}
           selected={() => this.switcher.selected!.type === "graphing"}
           onTap={() => {
             this.switcher.selectCalculator("graphing");
@@ -34,13 +34,19 @@ export default class SwitcherModal extends Modal<{
         />
         <CalculatorButton
           product="geometry"
+          label={this.props.format("dsom-modal-switcher-product-geometry")}
           selected={() => this.switcher.selected!.type === "geometry"}
           onTap={() => {
             this.switcher.selectCalculator("geometry");
             this.props.close();
           }}
         />
-        <CalculatorButton product="3d" disabled={true} onTap={() => console.log("3d")} />
+        <CalculatorButton
+          product="3d"
+          label={this.props.format("dsom-modal-switcher-product-3d")}
+          disabled={true}
+          onTap={() => console.log("3d")}
+        />
       </GenericModal>
     );
   }
@@ -48,6 +54,7 @@ export default class SwitcherModal extends Modal<{
 
 class CalculatorButton extends Component<{
   product: SwitcherProduct;
+  label: string;
   selected?: boolean;
   disabled?: boolean;
   onTap?: (e: Event) => void;
@@ -76,7 +83,7 @@ class CalculatorButton extends Component<{
         <span class="product-icon">
           <DCGAppIcon product={this.props.product()} size="90px" />
         </span>
-        <span class="product-label">{ProductName[this.props.product()]}</span>
+        <span class="product-label">{this.props.label}</span>
       </span>
     );
   }

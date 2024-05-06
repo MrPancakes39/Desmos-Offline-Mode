@@ -30,10 +30,7 @@ export default class RightContainer extends Component<{
             <div class="dsm-help-container dcg-popover dcg-bottom">
               <div class="dcg-popover-interior">
                 <div class="message-container">
-                  <div class="message">
-                    You are using Desmos Offline Mode. As a result, some features may be missing. To use online version,
-                    visit www.desmos.com/calculator
-                  </div>
+                  <div class="message">{this.dsom.format("dsom-shell-help-message")}</div>
                 </div>
                 <a
                   role="link"
@@ -42,7 +39,7 @@ export default class RightContainer extends Component<{
                   onTap={() => this.dsom.modalController.showModal("hotkeys")}
                 >
                   <i class="dcg-icon-keyboard"></i>
-                  <span class="dcg-link-text">Keyboard Shortcuts</span>
+                  <span class="dcg-link-text">{this.dsom.format("account-shell-link-keyboard-shortcuts")}</span>
                 </a>
               </div>
               <span class="dcg-arrow"></span>

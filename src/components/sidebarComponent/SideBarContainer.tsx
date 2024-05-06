@@ -24,7 +24,7 @@ export class SideBarContainer extends Component<{
 
         <div class="side-bar-content">
           <div class="app-name" tabindex="0">
-            Desmos Offline Mode
+            {this.dsom.format("dsom-app-name")}
           </div>
           <div
             class="new-blank-graph"
@@ -50,7 +50,7 @@ export class SideBarContainer extends Component<{
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-share"></span>
-            <span class="label">{"Import/Export Graph"}</span>
+            <span class="label">{this.dsom.format("dsom-sidebar-import-export-graph")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-export"></span>
@@ -73,11 +73,11 @@ export class SideBarContainer extends Component<{
             }}
           >
             <span class="icon desom-icons-calc"></span>
-            <span class="label">{"Switch Calculators"}</span>
+            <span class="label">{this.dsom.format("dsom-sidebar-switch-calculators")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-info"></span>
-            <span class="label">{"About"}</span>
+            <span class="label">{this.dsom.format("dsom-sidebar-about")}</span>
           </div>
         </div>
 

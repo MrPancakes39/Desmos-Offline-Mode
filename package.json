@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "imports": {
+    "#i18n": "./src/i18n/index.ts",
     "#globals": "./src/globals/index.ts",
     "#DCGView": "./src/DCGView.ts",
     "#DSOM": "./src/controllers/MainController.ts",
@@ -27,6 +28,7 @@
     "vite": "^5.2.11"
   },
   "dependencies": {
+    "@fluent/bundle": "^0.18.0",
     "@types/desmos": "^1.6.3"
   }
 }

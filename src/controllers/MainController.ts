@@ -5,6 +5,9 @@ import HotkeysController from "./HotkeysController";
 import HeaderController from "./HeaderController";
 import { type CalcController } from "#globals";
 
+import { type FluentVariable } from "@fluent/bundle";
+import { dsomFluent } from "#i18n";
+
 function createElt<T extends HTMLElement>(html: string): T {
   let tmp = document.createElement("div");
   tmp.innerHTML = html;
@@ -20,7 +23,10 @@ export default class DesmosOfflineMode implements TransparentController {
   hotkeysController;
   headerController;
 
-  constructor() {
+  #currentLang: string;
+
+  constructor(currentLang = "en") {
+    this.#currentLang = currentLang;
     this.switcherController = new SwitcherController();
     this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
@@ -45,6 +51,10 @@ export default class DesmosOfflineMode implements TransparentController {
     this.hotkeysController.destroy();
   }
 
+  currentLanguage(): string {
+    return this.#currentLang;
+  }
+
   /**
    * Returns a formatted string from the desmos's own fluent bundle.
    *
@@ -52,8 +62,8 @@ export default class DesmosOfflineMode implements TransparentController {
    * @param args An object to resolve references to variables passed as arguments to the translation.
    * @returns A formatted string.
    */
-  format(id: string, args: Record<string, any> | null = null): string {
-    return this.cc.s(id, args);
+  format(key: string, args: Record<string, FluentVariable> | null | undefined = null): string {
+    return dsomFluent.format(key, args) ?? this.cc.s(key, args);
   }
 
   async openOnWeb() {
