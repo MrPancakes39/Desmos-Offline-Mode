@@ -63,7 +63,8 @@ export default class DesmosOfflineMode implements TransparentController {
    * @returns A formatted string.
    */
   format(key: string, args: Record<string, FluentVariable> | null | undefined = null): string {
-    return dsomFluent.format(key, args) ?? this.cc.s(key, args);
+    const result = dsomFluent.format(key, args) ?? this.cc.s(key, args);
+    return this.#currentLang === "xx-XX" ? result.replace(/[a-z]/gi, "\u2666") : result;
   }
 
   async openOnWeb() {

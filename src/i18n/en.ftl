@@ -15,6 +15,6 @@ dsom-modal-switcher-product-geometry = Geometry Tool
 dsom-modal-switcher-product-3d = 3D Calculator
 
 ## Sidebar
-dsom-sidebar-import-export-graph = Import/Export Graph
+dsom-sidebar-import-export-graph = Import / Export Graph
 dsom-sidebar-switch-calculators = Switch Calculators
 dsom-sidebar-about = About
