@@ -17,14 +17,9 @@ async function getFile(url, errMsg, filePath) {
 }
 
 async function main() {
-  const TESTED_COMMIT = "6ab02099004882261b727c62135dc1e7afa1291a";
-  let USE_3D_API = false;
+  const TESTED_COMMIT = "34c3b720bf1448e81ad6be7f67f7e6c239f6fd52";
+  const USE_3D_API = false;
 
-  // Check if in debug mode enabled
-  if (process.argv.length > 2) {
-    const arg = process.argv[2];
-    USE_3D_API = arg === "--use-3d";
-  }
   const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
   const JS_FILENAME = USE_3D_API ? "calculator_3d.js" : "calculator.js";
 
@@ -52,13 +47,15 @@ async function main() {
   }
 
   // Ensure directories exists
-  await Promise.all([`${PARENT_DIR}/src/desmos`, `${PARENT_DIR}/public/assets/font`].map((dir) => fs.ensureDir(dir)));
+  await Promise.all(
+    [`${PARENT_DIR}/public/desmos`, `${PARENT_DIR}/public/assets/font`].map((dir) => fs.ensureDir(dir))
+  );
 
   // Create Preload Script
   {
     logger.info("[2/6] Creating Preload Script");
     fs.writeFileSync(
-      `${PARENT_DIR}/src/desmos/preload_desmos.js`,
+      `${PARENT_DIR}/public/desmos/preload_desmos.js`,
       `// catches errors within iframe and promotes them to qunit during tests
 try {
   if (window !== window.top) {
@@ -96,7 +93,7 @@ if (window.location.protocol === "file:") {
     await Promise.all(
       api_files.map(async (file) => {
         const ext = path.extname(file);
-        await getFile(URL + file, `Couldn't get ${ext} of desmos.`, `${PARENT_DIR}/src/desmos/calculator${ext}`);
+        await getFile(URL + file, `Couldn't get ${ext} of desmos.`, `${PARENT_DIR}/public/desmos/calculator${ext}`);
       })
     );
 
@@ -110,14 +107,18 @@ if (window.location.protocol === "file:") {
       if (api_3d_js.length != 1) {
         throw Error("Couldn't find 3D API file endpoint.");
       }
-      await getFile(URL + api_3d_js[0], `Couldn't get 3d api of desmos.`, `${PARENT_DIR}/src/desmos/calculator_3d.js`);
+      await getFile(
+        URL + api_3d_js[0],
+        `Couldn't get 3d api of desmos.`,
+        `${PARENT_DIR}/public/desmos/calculator_3d.js`
+      );
     }
   }
 
   // Fetch desmos font files
   {
     logger.info("[4/6] Downloading Desmos Fonts");
-    const css = fs.readFileSync(`${PARENT_DIR}/src/desmos/calculator.css`, { encoding: "utf-8" });
+    const css = fs.readFileSync(`${PARENT_DIR}/public/desmos/calculator.css`, { encoding: "utf-8" });
     await Promise.all(
       css.match(/\/assets\/font\/.+?woff2/g).map(async (endpoint) => {
         const font_fname = path.basename(endpoint);
@@ -137,13 +138,13 @@ if (window.location.protocol === "file:") {
     if (loading === null) {
       throw Error("Expected to have loading as internal css.");
     }
-    fs.writeFileSync(`${PARENT_DIR}/src/desmos/loading.css`, loading[1].trim(), { encoding: "utf-8" });
+    fs.writeFileSync(`${PARENT_DIR}/public/desmos/loading.css`, loading[1].trim(), { encoding: "utf-8" });
   }
 
   // Fix calculator api file
   {
     logger.info("[6/6] Fixing files");
-    let js = fs.readFileSync(`${PARENT_DIR}/src/desmos/${JS_FILENAME}`, { encoding: "utf-8" });
+    let js = fs.readFileSync(`${PARENT_DIR}/public/desmos/${JS_FILENAME}`, { encoding: "utf-8" });
 
     // Removing bugsnag
     const old_bugsnag = js.match(/Bugsnag JavaScript.*?.default=.*?,/g)[0];
@@ -189,7 +190,7 @@ if (window.location.protocol === "file:") {
     js = js.slice(0, endIndex) + new_end_js;
 
     logger.debug("\nBeautifying js for debugging...");
-    fs.writeFileSync(`${PARENT_DIR}/src/desmos/calculator_api.js`, jsb.js_beautify(js), { encoding: "utf-8" });
+    fs.writeFileSync(`${PARENT_DIR}/public/desmos/calculator_api.js`, jsb.js_beautify(js), { encoding: "utf-8" });
   }
 }
 

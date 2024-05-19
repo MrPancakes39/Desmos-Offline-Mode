@@ -14,8 +14,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs",
-    "fetch_desmos_3d": "node ./fetch_desmos_res/fetch_desmos.mjs --use-3d"
+    "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs"
   },
   "devDependencies": {
     "@desmodder/graph-state": "^0.2.3",
@@ -29,6 +28,7 @@
   },
   "dependencies": {
     "@fluent/bundle": "^0.18.0",
-    "@types/desmos": "^1.6.3"
+    "@types/desmos": "^1.6.3",
+    "valibot": "^0.30.0"
   }
 }

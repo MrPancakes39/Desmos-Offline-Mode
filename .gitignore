@@ -26,3 +26,4 @@ dist-ssr
 # Desmos from Website
 src/desmos
 public/assets
+public/desmos
