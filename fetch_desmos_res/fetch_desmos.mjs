@@ -16,6 +16,41 @@ async function getFile(url, errMsg, filePath) {
   return streamPipeline(response.body, fs.createWriteStream(filePath));
 }
 
+const LTR_LANGS = /** @type const */ ([
+  "en",
+  "es",
+  "et",
+  "ru",
+  "da",
+  "de",
+  "pt-BR",
+  "pt-PT",
+  "ca",
+  "fr",
+  "fr-CA",
+  "it",
+  "is",
+  "nl",
+  "no",
+  "sv-SE",
+  "hu",
+  "cs",
+  "pl",
+  "id",
+  "vi",
+  "el",
+  "uk",
+  "ka",
+  "th",
+  "tr",
+  "zh-CN",
+  "zh-TW",
+  "ko",
+  "ja",
+]);
+const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
+const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
+
 async function main() {
   const TESTED_COMMIT = "34c3b720bf1448e81ad6be7f67f7e6c239f6fd52";
   const USE_3D_API = false;
@@ -24,7 +59,7 @@ async function main() {
   const JS_FILENAME = USE_3D_API ? "calculator_3d.js" : "calculator.js";
 
   // Get HTML Page
-  logger.info("[1/5] Getting HTML Page");
+  logger.info("[1/7] Getting HTML Page");
   const URL = "https://www.desmos.com";
   const response = await fetch(URL + "/calculator");
   if (!response.ok) {
@@ -48,12 +83,12 @@ async function main() {
 
   // Ensure directories exists
   await Promise.all(
-    [`${PARENT_DIR}/public/desmos`, `${PARENT_DIR}/public/assets/font`].map((dir) => fs.ensureDir(dir))
+    [`${PARENT_DIR}/public/desmos/lang`, `${PARENT_DIR}/public/assets/font`].map((dir) => fs.ensureDir(dir))
   );
 
   // Create Preload Script
   {
-    logger.info("[2/6] Creating Preload Script");
+    logger.info("[2/7] Creating Preload Script");
     fs.writeFileSync(
       `${PARENT_DIR}/public/desmos/preload_desmos.js`,
       `// catches errors within iframe and promotes them to qunit during tests
@@ -85,7 +120,7 @@ if (window.location.protocol === "file:") {
 
   // Fetch the calculator CSS and JS
   {
-    logger.info("[3/6] Getting Calculator API");
+    logger.info("[3/7] Getting Calculator API");
     const api_files = html.match(/\/assets\/build\/calculator_desktop.*?\.(?:js|css)/g);
     if (api_files.length != 2) {
       throw Error("Couldn't get API files.");
@@ -117,7 +152,7 @@ if (window.location.protocol === "file:") {
 
   // Fetch desmos font files
   {
-    logger.info("[4/6] Downloading Desmos Fonts");
+    logger.info("[4/7] Downloading Desmos Fonts");
     const css = fs.readFileSync(`${PARENT_DIR}/public/desmos/calculator.css`, { encoding: "utf-8" });
     await Promise.all(
       css.match(/\/assets\/font\/.+?woff2/g).map(async (endpoint) => {
@@ -133,7 +168,7 @@ if (window.location.protocol === "file:") {
 
   // Move internal css to loading.css file
   {
-    logger.info("[5/6] Extracting additional assets");
+    logger.info("[5/7] Extracting additional assets");
     const loading = /<style type='text\/css'>(.+)<\/style>/gs.exec(html);
     if (loading === null) {
       throw Error("Expected to have loading as internal css.");
@@ -141,9 +176,21 @@ if (window.location.protocol === "file:") {
     fs.writeFileSync(`${PARENT_DIR}/public/desmos/loading.css`, loading[1].trim(), { encoding: "utf-8" });
   }
 
+  // Fetch desmos lang files
+  {
+    logger.info("[6/7] Downloading Desmos Language Files");
+    for (let lang of SUPPORTED_LANGS) {
+      if (lang === "en" || lang === "xx-XX") continue;
+      const endpoint = `${URL}/api/v1/calculator/language/${lang}.ftl`;
+      logger.log(`Fetching lang: ${endpoint}`);
+      await getFile(endpoint, `Couldn't get lang ${lang} of desmos.`, `${PARENT_DIR}/public/desmos/lang/${lang}.ftl`);
+    }
+    logger.success("Fetched all language files.");
+  }
+
   // Fix calculator api file
   {
-    logger.info("[6/6] Fixing files");
+    logger.info("[7/7] Fixing files");
     let js = fs.readFileSync(`${PARENT_DIR}/public/desmos/${JS_FILENAME}`, { encoding: "utf-8" });
 
     // Removing bugsnag
