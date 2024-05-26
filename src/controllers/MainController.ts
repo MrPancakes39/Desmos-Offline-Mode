@@ -3,10 +3,10 @@ import ModalController from "./ModalController";
 import SideBarController from "./SideBarController";
 import HotkeysController from "./HotkeysController";
 import HeaderController from "./HeaderController";
-import { type CalcController } from "#globals";
+import LanguageController from "./LanguageController";
 
+import { type CalcController } from "#globals";
 import { type FluentVariable } from "@fluent/bundle";
-import { dsomFluent } from "#i18n";
 
 function createElt<T extends HTMLElement>(html: string): T {
   let tmp = document.createElement("div");
@@ -22,12 +22,11 @@ export default class DesmosOfflineMode implements TransparentController {
   sidebarController;
   hotkeysController;
   headerController;
+  languageController;
 
-  #currentLang: string;
-
-  constructor(currentLang = "en") {
-    this.#currentLang = currentLang;
+  constructor() {
     this.switcherController = new SwitcherController();
+    this.languageController = new LanguageController(this);
     this.modalController = new ModalController(this);
     this.sidebarController = new SideBarController(this);
     this.hotkeysController = new HotkeysController(this);
@@ -37,6 +36,7 @@ export default class DesmosOfflineMode implements TransparentController {
   init() {
     this.switcherController.init();
     this.cc = this.switcherController.calculators[0].calc._calc.controller;
+    this.languageController.init();
 
     this.headerController.init();
     this.modalController.init();
@@ -49,10 +49,8 @@ export default class DesmosOfflineMode implements TransparentController {
     this.modalController.destroy();
     this.sidebarController.destroy();
     this.hotkeysController.destroy();
-  }
-
-  currentLanguage(): string {
-    return this.#currentLang;
+    this.languageController.destroy();
+    this.switcherController.destroy();
   }
 
   /**
@@ -63,8 +61,7 @@ export default class DesmosOfflineMode implements TransparentController {
    * @returns A formatted string.
    */
   format(key: string, args: Record<string, FluentVariable> | null | undefined = null): string {
-    const result = dsomFluent.format(key, args) ?? this.cc.s(key, args);
-    return this.#currentLang === "xx-XX" ? result.replace(/[a-z]/gi, "\u2666") : result;
+    return this.languageController.format(key, args);
   }
 
   async openOnWeb() {
