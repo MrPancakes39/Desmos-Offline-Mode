@@ -13,7 +13,7 @@ export default class CenterContainer extends Component<{
   template() {
     return (
       <div class="center-container">
-        <a href="https://www.desmos.com/" target="_blank" class="dcg-home-link" rel="noopener">
+        <a aria-label="Desmos Home" href="https://www.desmos.com/" target="_blank" class="dcg-home-link" rel="noopener">
           <DesmosLogo title={() => this.dsom.format("frontpage-narration-shared-desmos-logo")} />
         </a>
       </div>
