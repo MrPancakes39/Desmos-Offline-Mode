@@ -16,10 +16,10 @@ export default class LanguageController implements TransparentController {
     this.dsom = dsom;
   }
 
-  init(language: SUPPORTED_LANG_TYPE = "en") {
+  async init(language: SUPPORTED_LANG_TYPE = "en") {
     this.#currentLang = language;
     this.desmosEnglishFormat = this.dsom.switcherController.selected!.calc.controller.s;
-    this.fetchLanguage(this.#currentLang);
+    await this.fetchLanguage(this.#currentLang);
 
     const callsFormat = (...args: Parameters<LanguageController["format"]>) => {
       if (args[0] === "graphing-calculator-narration-audio-trace-traceable-curves") {
