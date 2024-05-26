@@ -26,7 +26,7 @@ export default class LeftContainer extends Component<{
             </DCGButton>
           </div>
         </Tooltip>
-        <h1 class="graph-title">{this.dsom.format("account-shell-text-untitled-graph")}</h1>
+        <h1 class="graph-title">{() => this.dsom.format("account-shell-text-untitled-graph")}</h1>
       </div>
     );
   }
