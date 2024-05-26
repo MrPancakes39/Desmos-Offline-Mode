@@ -34,7 +34,7 @@ export default class HotkeysModal extends Modal<{
   template() {
     return (
       <GenericModal
-        title={this.props.format("account-shell-link-keyboard-shortcuts")}
+        title={() => this.props.format("account-shell-link-keyboard-shortcuts")}
         close={this.props.close}
         class="hotkeys-modal"
         useWrapper={false}

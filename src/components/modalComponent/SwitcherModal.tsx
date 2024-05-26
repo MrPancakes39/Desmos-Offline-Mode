@@ -19,13 +19,13 @@ export default class SwitcherModal extends Modal<{
   template(): unknown {
     return (
       <GenericModal
-        title={this.props.format("dsom-modal-switcher-title")}
+        title={() => this.props.format("dsom-modal-switcher-title")}
         close={this.props.close}
         class="switcher-modal"
       >
         <CalculatorButton
           product="graphing"
-          label={this.props.format("dsom-modal-switcher-product-graphing")}
+          label={() => this.props.format("dsom-modal-switcher-product-graphing")}
           selected={() => this.switcher.selected!.type === "graphing"}
           onTap={() => {
             this.switcher.selectCalculator("graphing");
@@ -34,7 +34,7 @@ export default class SwitcherModal extends Modal<{
         />
         <CalculatorButton
           product="geometry"
-          label={this.props.format("dsom-modal-switcher-product-geometry")}
+          label={() => this.props.format("dsom-modal-switcher-product-geometry")}
           selected={() => this.switcher.selected!.type === "geometry"}
           onTap={() => {
             this.switcher.selectCalculator("geometry");
@@ -43,7 +43,7 @@ export default class SwitcherModal extends Modal<{
         />
         <CalculatorButton
           product="3d"
-          label={this.props.format("dsom-modal-switcher-product-3d")}
+          label={() => this.props.format("dsom-modal-switcher-product-3d")}
           disabled={true}
           onTap={() => console.log("3d")}
         />

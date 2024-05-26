@@ -14,7 +14,7 @@ export default class CenterContainer extends Component<{
     return (
       <div class="center-container">
         <a href="https://www.desmos.com/" target="_blank" class="dcg-home-link" rel="noopener">
-          <DesmosLogo title={this.dsom.format("frontpage-narration-shared-desmos-logo")} />
+          <DesmosLogo title={() => this.dsom.format("frontpage-narration-shared-desmos-logo")} />
         </a>
       </div>
     );

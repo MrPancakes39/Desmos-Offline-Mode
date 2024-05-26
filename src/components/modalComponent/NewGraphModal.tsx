@@ -11,11 +11,11 @@ export default class NewGraphModal extends Modal<{
   template() {
     return (
       <GenericModal
-        title={this.props.format("dsom-modal-new-graph-title")}
+        title={() => this.props.format("dsom-modal-new-graph-title")}
         close={this.props.close}
         class="new-graph-modal"
       >
-        <p>{this.props.format("dsom-modal-new-graph-message")}</p>
+        <p>{() => this.props.format("dsom-modal-new-graph-message")}</p>
         <div class="btn-container">
           <DCGButton color="invisible" class="dcg-dark-gray-link" onTap={() => ""}>
             Cancel

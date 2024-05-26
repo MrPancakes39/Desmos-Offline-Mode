@@ -24,7 +24,7 @@ export class SideBarContainer extends Component<{
 
         <div class="side-bar-content">
           <div class="app-name" tabindex="0">
-            {this.dsom.format("dsom-app-name")}
+            {() => this.dsom.format("dsom-app-name")}
           </div>
           <div
             class="new-blank-graph"
@@ -37,32 +37,32 @@ export class SideBarContainer extends Component<{
             <span class="dcg-add-blank">
               <i class="dcg-icon-plus" aria-hidden="true"></i>
             </span>
-            <span class="new-graph-title">{this.dsom.format("account-shell-text-mygraphs-new-blank-graph")}</span>
+            <span class="new-graph-title">{() => this.dsom.format("account-shell-text-mygraphs-new-blank-graph")}</span>
           </div>
           {/* <div>Placeholder</div> */}
           <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-folder-open"></span>
-            <span class="label">{this.dsom.format("account-shell-button-open-graph")}</span>
+            <span class="label">{() => this.dsom.format("account-shell-button-open-graph")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-save"></span>
-            <span class="label">{this.dsom.format("account-shell-button-mygraphs-save")}</span>
+            <span class="label">{() => this.dsom.format("account-shell-button-mygraphs-save")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-share"></span>
-            <span class="label">{this.dsom.format("dsom-sidebar-import-export-graph")}</span>
+            <span class="label">{() => this.dsom.format("dsom-sidebar-import-export-graph")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-export"></span>
-            <span class="label">{this.dsom.format("account-shell-button-export-image")}</span>
+            <span class="label">{() => this.dsom.format("account-shell-button-export-image")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon dcg-icon-print"></span>
-            <span class="label">{this.dsom.format("account-shell-button-print")}</span>
+            <span class="label">{() => this.dsom.format("account-shell-button-print")}</span>
           </div>
           <div class="side-bar-item seperator" tabindex="0">
             <span class="icon dcg-icon-world"></span>
-            <span class="label">{this.dsom.format("shared-title-language-menu")}</span>
+            <span class="label">{() => this.dsom.format("shared-title-language-menu")}</span>
           </div>
           <div
             class="side-bar-item"
@@ -73,11 +73,11 @@ export class SideBarContainer extends Component<{
             }}
           >
             <span class="icon desom-icons-calc"></span>
-            <span class="label">{this.dsom.format("dsom-sidebar-switch-calculators")}</span>
+            <span class="label">{() => this.dsom.format("dsom-sidebar-switch-calculators")}</span>
           </div>
           <div class="side-bar-item" tabindex="0">
             <span class="icon desom-icons-info"></span>
-            <span class="label">{this.dsom.format("dsom-sidebar-about")}</span>
+            <span class="label">{() => this.dsom.format("dsom-sidebar-about")}</span>
           </div>
         </div>
 
