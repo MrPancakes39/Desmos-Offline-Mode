@@ -34,10 +34,10 @@ export default class ShortcutTable extends Component<{
           </tr>
         </thead>
         <For each={() => this.shortcutList} key={(s) => ("latex" in s ? s.latex : s.i18nKey)}>
-          <tbody>
-            {(shortcut: Shortcut) => (
-              <For each={() => this.getCols(this.props.os())} key={(col) => col}>
-                <tr>
+          {(shortcut: Shortcut) => (
+            <tbody>
+              <tr>
+                <For each={() => this.getCols(this.props.os())} key={(col) => col}>
                   {(col: "heading" | shortcutOS) => (
                     <td didMount={(e: HTMLElement) => this.populateContent(e, col, shortcut)}>
                       <If predicate={() => "latex" in shortcut && col === "heading"}>
@@ -46,10 +46,10 @@ export default class ShortcutTable extends Component<{
                       </If>
                     </td>
                   )}
-                </tr>
-              </For>
-            )}
-          </tbody>
+                </For>
+              </tr>
+            </tbody>
+          )}
         </For>
       </table>
     );
