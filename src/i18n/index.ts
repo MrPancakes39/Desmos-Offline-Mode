@@ -1,1 +1,1 @@
-export { locales as dsomLocales } from "./i18n-app";
+export * as dsomFluent from "./i18n-app";
