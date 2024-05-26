@@ -4,6 +4,7 @@ import type DesmosOfflineMode from "#DSOM";
 import { SideBarContainer } from "../components";
 
 class SideBarController implements TransparentController {
+  unsub: (() => void) | undefined;
   #removeExtras: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   #slidingInterior: HTMLDivElement | undefined;
@@ -19,11 +20,12 @@ class SideBarController implements TransparentController {
   init() {
     this.divContainer = select<HTMLDivElement>("#side-bar-container");
     this.#slidingInterior = select<HTMLDivElement>(".dcg-sliding-interior");
-    Fragile.DCGView.mountToNode(SideBarContainer, this.divContainer, {
+    const view = Fragile.DCGView.mountToNode(SideBarContainer, this.divContainer, {
       dsom: () => this.dsom,
       closeSideBar: this.hideSideBar.bind(this),
       toggleSideBar: this.toggleSideBar.bind(this),
     });
+    this.unsub = this.dsom.cc.subscribeToChanges(() => view.update());
 
     // Adds an empty div as first child of expressionTopBar.
     // This is so when the screen width is 450px the hamburger menu looks like it's in the expression bar.
@@ -43,6 +45,7 @@ class SideBarController implements TransparentController {
   destroy() {
     this.hideSideBar();
     this.#removeExtras?.();
+    this.unsub?.();
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
