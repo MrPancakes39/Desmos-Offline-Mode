@@ -22,6 +22,7 @@ export default class SwitcherModal extends Modal<{
         title={() => this.props.format("dsom-modal-switcher-title")}
         close={this.props.close}
         class="switcher-modal"
+        format={this.props.format}
       >
         <CalculatorButton
           product="graphing"

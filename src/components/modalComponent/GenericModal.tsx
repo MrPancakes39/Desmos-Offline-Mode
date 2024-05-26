@@ -1,13 +1,15 @@
 import "./modal.less";
 import { jsx } from "#DCGView";
-import window from "#globals";
 import { Modal } from "./modal";
 import { mergeClass, MaybeClassDict } from "#utils";
+
+import type DesmosOfflineMode from "#DSOM";
 
 export default class GenericModal extends Modal<{
   title: string;
   class?: MaybeClassDict;
   useWrapper?: boolean;
+  format: DesmosOfflineMode["format"];
 }> {
   useWrapper!: boolean;
 
@@ -23,7 +25,7 @@ export default class GenericModal extends Modal<{
           <span
             role="link"
             tabindex="0"
-            aria-label={window.DSOM.format("shared-button-close-dialog")}
+            aria-label={() => this.props.format("shared-button-close-dialog")}
             class="close-modal"
             onTap={() => this.props.close()}
           >

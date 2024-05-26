@@ -38,6 +38,7 @@ export default class HotkeysModal extends Modal<{
         close={this.props.close}
         class="hotkeys-modal"
         useWrapper={false}
+        format={this.props.format}
       >
         <div class="dcg-hotkeys-toggle-container">
           <SegmentedControl

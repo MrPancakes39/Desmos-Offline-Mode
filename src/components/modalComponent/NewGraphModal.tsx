@@ -14,6 +14,7 @@ export default class NewGraphModal extends Modal<{
         title={() => this.props.format("dsom-modal-new-graph-title")}
         close={this.props.close}
         class="new-graph-modal"
+        format={this.props.format}
       >
         <p>{() => this.props.format("dsom-modal-new-graph-message")}</p>
         <div class="btn-container">
