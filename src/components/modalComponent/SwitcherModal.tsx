@@ -9,6 +9,7 @@ type SwitcherProduct = Extract<DCGProduct, "graphing" | "geometry" | "3d">;
 export default class SwitcherModal extends Modal<{
   switcher: DesmosOfflineMode["switcherController"];
   format: DesmosOfflineMode["format"];
+  currentLanguage: DesmosOfflineMode["currentLanguage"];
 }> {
   switcher!: DesmosOfflineMode["switcherController"];
 
@@ -26,7 +27,11 @@ export default class SwitcherModal extends Modal<{
       >
         <CalculatorButton
           product="graphing"
-          label={() => this.props.format("dsom-modal-switcher-product-graphing")}
+          label={() =>
+            this.props.currentLanguage() === "en"
+              ? "Graphing Calculator"
+              : this.props.format("frontpage-link-shared-graphing-calculator")
+          }
           selected={() => this.switcher.selected!.type === "graphing"}
           onTap={() => {
             this.switcher.selectCalculator("graphing");
@@ -35,7 +40,11 @@ export default class SwitcherModal extends Modal<{
         />
         <CalculatorButton
           product="geometry"
-          label={() => this.props.format("dsom-modal-switcher-product-geometry")}
+          label={() =>
+            this.props.currentLanguage() === "en"
+              ? "Geometry Tool"
+              : this.props.format("frontpage-link-shared-geometry-tool")
+          }
           selected={() => this.switcher.selected!.type === "geometry"}
           onTap={() => {
             this.switcher.selectCalculator("geometry");
@@ -44,7 +53,11 @@ export default class SwitcherModal extends Modal<{
         />
         <CalculatorButton
           product="3d"
-          label={() => this.props.format("dsom-modal-switcher-product-3d")}
+          label={() =>
+            this.props.currentLanguage() === "en"
+              ? "3D Calculator"
+              : this.props.format("frontpage-link-shared-3d-calculator")
+          }
           disabled={true}
           onTap={() => console.log("3d")}
         />

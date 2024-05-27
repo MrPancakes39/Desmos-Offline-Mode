@@ -10,9 +10,6 @@ dsom-modal-new-graph-message = Are you sure you want to create a new graph? This
 
 # Switcher Modal
 dsom-modal-switcher-title = Choose Desmos Calculator
-dsom-modal-switcher-product-graphing = Graphing Calculator
-dsom-modal-switcher-product-geometry = Geometry Tool
-dsom-modal-switcher-product-3d = 3D Calculator
 
 ## Sidebar
 dsom-sidebar-import-export-graph = Import / Export Graph

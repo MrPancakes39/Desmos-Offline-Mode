@@ -64,6 +64,11 @@ export default class DesmosOfflineMode implements TransparentController {
     return this.languageController.format(key, args);
   }
 
+  /** Returns the current language. */
+  currentLanguage() {
+    return this.languageController.currentLanguage();
+  }
+
   async openOnWeb() {
     const calc = this.switcherController.calculators[0].calc._calc;
     const state = JSON.stringify(calc.getState()),

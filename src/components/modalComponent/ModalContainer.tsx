@@ -42,6 +42,7 @@ export class ModalContainer extends Component<{
                   close={this.props.closeModal}
                   switcher={this.dsom.switcherController}
                   format={(...args) => this.dsom.format(...args)}
+                  currentLanguage={() => this.dsom.currentLanguage()}
                 />
               );
           }
