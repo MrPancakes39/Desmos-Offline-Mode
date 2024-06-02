@@ -12,6 +12,7 @@
   },
   "scripts": {
     "dev": "vite",
+    "dev:browser": "vite --mode browser",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs"

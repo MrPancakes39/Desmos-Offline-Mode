@@ -1,4 +1,5 @@
 import type DesmosOfflineMode from "#DSOM";
+const URL_PREFIX = import.meta.env.VITE_DESMOS_PROTOCOL;
 
 import { FluentBundle, type FluentVariable } from "@fluent/bundle";
 import { dsomFluent } from "#i18n";
@@ -54,7 +55,7 @@ export default class LanguageController implements TransparentController {
     }
     if (!this.cachedBundles.has(lang)) {
       const langJSON: Record<typeof lang, string> = JSON.parse(
-        await fetch(`/desmos/lang/${lang}.ftl`).then((res) => res.text())
+        await fetch(`${URL_PREFIX}/lang/${lang}.ftl`).then((res) => res.text())
       );
       dsomFluent.addLanguage(this.cachedBundles, lang, langJSON[lang]);
     }
