@@ -4,10 +4,14 @@ import { Header } from "../components";
 import type DesmosOfflineMode from "#DSOM";
 
 const VALID_HEADER_MENUS = ["help"] as const;
+const POPOVER_TRIGGER_SELECTORS = {
+  help: ".dcg-icon-question-sign",
+} as const satisfies Record<HeaderPopoverMenu, string>;
+
 type HeaderPopoverMenu = (typeof VALID_HEADER_MENUS)[number];
 export type HeaderMenuProp = {
   current: () => HeaderPopoverMenu | "closed";
-  open: (menu: HeaderPopoverMenu, selector?: string) => void;
+  open: (menu: HeaderPopoverMenu) => void;
   close: () => void;
 };
 
@@ -31,7 +35,7 @@ class HeaderController implements TransparentController {
       dsom: () => this.dsom,
       menu: () => ({
         current: () => this.currentMenu(),
-        open: (menu: HeaderPopoverMenu, selector?: string) => this.openMenu(menu, selector),
+        open: (menu: HeaderPopoverMenu) => this.openMenu(menu),
         close: () => this.closeMenu(),
       }),
     });
@@ -44,7 +48,7 @@ class HeaderController implements TransparentController {
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
-  openMenu(menu: unknown, selector?: string) {
+  openMenu(menu: unknown) {
     if (!VALID_HEADER_MENUS.includes(menu as Exclude<HeaderPopoverMenu, "closed">)) {
       throw new Error(`Invalid header menu: ${menu}`);
     }
@@ -54,9 +58,8 @@ class HeaderController implements TransparentController {
     this.dsom.cc.updateViews();
 
     document.addEventListener("pointerdown", this.listener);
-    if (selector) {
-      this.popoverTrigger = this.divContainer!.querySelector<HTMLElement>(selector) ?? undefined;
-    }
+    this.popoverTrigger =
+      this.divContainer!.querySelector<HTMLElement>(POPOVER_TRIGGER_SELECTORS[this.#currentMenu]) ?? undefined;
     this.popoverMenu = select<HTMLElement>(".desom-popover-container");
     this.popoverMenu.querySelector<HTMLAnchorElement>(".dcg-link")?.focus();
     //   ^^^ Focus on first selectable element

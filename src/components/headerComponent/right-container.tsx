@@ -19,7 +19,7 @@ export default class RightContainer extends Component<{
       if (this.menu.current() === "help") {
         this.menu.close();
       } else {
-        this.menu.open("help", ".dcg-icon-question-sign");
+        this.menu.open("help");
       }
     };
   }
