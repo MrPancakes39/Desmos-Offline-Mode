@@ -49,7 +49,7 @@ class HeaderController implements TransparentController {
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
-  openMenu(menu: unknown) {
+  openMenu(menu: HeaderPopoverMenu) {
     if (!VALID_HEADER_MENUS.includes(menu as Exclude<HeaderPopoverMenu, "closed">)) {
       throw new Error(`Invalid header menu: ${menu}`);
     }

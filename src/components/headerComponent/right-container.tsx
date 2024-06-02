@@ -1,4 +1,4 @@
-import { For, If, Tooltip } from "..";
+import { For, If, Switch, Tooltip } from "..";
 import { Component, jsx } from "#DCGView";
 import { LANG_DISPLAY_NAMES, type LANG_MAP } from "#DSOM";
 
@@ -54,17 +54,21 @@ export default class RightContainer extends Component<{
           </div>
         </Tooltip>
         {/* Popover Menu */}
-        <If predicate={() => this.menu.current() !== "closed"}>
-          {() => {
-            const currentMenu = this.menu.current() as HeaderPopoverMenu;
-            return (
-              <div class={`desom-popover-container menu-${currentMenu} dcg-popover dcg-bottom`}>
-                <div class="dcg-popover-interior">{this.popoverProps[currentMenu]()}</div>
-                <span class="dcg-arrow"></span>
-              </div>
-            );
+        <Switch key={() => this.menu.current()}>
+          {(menu: ReturnType<typeof this.menu.current>) => {
+            switch (menu) {
+              case "closed":
+                return null;
+              default:
+                return (
+                  <div class={`desom-popover-container menu-${menu} dcg-popover dcg-bottom`}>
+                    <div class="dcg-popover-interior">{this.popoverProps[menu]()}</div>
+                    <span class="dcg-arrow"></span>
+                  </div>
+                );
+            }
           }}
-        </If>
+        </Switch>
       </div>
     );
   }

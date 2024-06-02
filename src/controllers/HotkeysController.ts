@@ -47,7 +47,7 @@ export default class HotkeysController implements TransparentController {
         const key = ev.key.toUpperCase();
         if (key === "L") {
           // Language menu (Ctrl + Alt/Cmd + L)
-          console.log("Language Menu");
+          this.dsom.headerController.openMenu("lang");
           ev.preventDefault();
           ev.stopPropagation();
         }
