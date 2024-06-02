@@ -25,25 +25,28 @@ export default class RightContainer extends Component<{
             ></span>
           </div>
         </Tooltip>
-        <If predicate={() => this.props.showHelpMenu()}>{HelpMenu.bind(this)}</If>
+        <If predicate={() => this.props.showHelpMenu()}>
+          {() => (
+            <div class="dsm-help-container dcg-popover dcg-bottom">
+              <div class="dcg-popover-interior">
+                <div class="message-container">
+                  <div class="message">{() => this.dsom.format("dsom-shell-help-message")}</div>
+                </div>
+                <a
+                  role="link"
+                  tabindex="0"
+                  class="dcg-link"
+                  onTap={() => this.dsom.modalController.showModal("hotkeys")}
+                >
+                  <i class="dcg-icon-keyboard"></i>
+                  <span class="dcg-link-text">{() => this.dsom.format("account-shell-link-keyboard-shortcuts")}</span>
+                </a>
+              </div>
+              <span class="dcg-arrow"></span>
+            </div>
+          )}
+        </If>
       </div>
     );
   }
-}
-
-function HelpMenu(this: RightContainer) {
-  return (
-    <div class="dsm-help-container dcg-popover dcg-bottom">
-      <div class="dcg-popover-interior">
-        <div class="message-container">
-          <div class="message">{() => this.dsom.format("dsom-shell-help-message")}</div>
-        </div>
-        <a role="link" tabindex="0" class="dcg-link" onTap={() => this.dsom.modalController.showModal("hotkeys")}>
-          <i class="dcg-icon-keyboard"></i>
-          <span class="dcg-link-text">{() => this.dsom.format("account-shell-link-keyboard-shortcuts")}</span>
-        </a>
-      </div>
-      <span class="dcg-arrow"></span>
-    </div>
-  );
 }
