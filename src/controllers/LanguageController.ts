@@ -3,9 +3,10 @@ const URL_PREFIX = import.meta.env.VITE_DESMOS_PROTOCOL;
 
 import { FluentBundle, type FluentVariable } from "@fluent/bundle";
 import { dsomFluent } from "#i18n";
+import { localDorage } from "#utils";
 
 type FormatFunction = (key: string, args?: Record<string, FluentVariable> | null | undefined) => string;
-type SUPPORTED_LANG_TYPE = (typeof SUPPORTED_LANGS)[number];
+export type SUPPORTED_LANG_TYPE = (typeof SUPPORTED_LANGS)[number];
 
 export default class LanguageController implements TransparentController {
   #currentLang: SUPPORTED_LANG_TYPE = "en";
@@ -17,8 +18,10 @@ export default class LanguageController implements TransparentController {
     this.dsom = dsom;
   }
 
-  async init(language: SUPPORTED_LANG_TYPE = "en") {
-    this.#currentLang = language;
+  async init() {
+    const { lang } = localDorage.getItem("saveLangPrefs", { lang: "en", toggleState: false });
+
+    this.#currentLang = lang;
     this.desmosEnglishFormat = this.dsom.switcherController.selected!.calc.controller.s;
     await this.fetchLanguage(this.#currentLang);
 

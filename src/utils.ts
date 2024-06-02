@@ -29,3 +29,5 @@ export function select<E extends Element>(selector: string): E {
   }
   return tmp;
 }
+
+export { localDorage } from "./localDorage";

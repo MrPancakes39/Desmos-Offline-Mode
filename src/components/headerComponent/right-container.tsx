@@ -1,10 +1,12 @@
-import { For, If, Switch, Tooltip } from "..";
+import { For, Switch, Tooltip } from "..";
 import { Component, jsx } from "#DCGView";
+import Toggle from "../common/Toggle";
+
 import { LANG_DISPLAY_NAMES, type LANG_MAP } from "#DSOM";
+import { localDorage } from "#utils";
 
 import type DesmosOfflineMode from "#DSOM";
 import type { HeaderMenuProp, HeaderPopoverMenu } from "../../controllers/HeaderController";
-import Fragment from "../common/Fragment";
 
 type PopoverProps = () => void;
 
@@ -89,6 +91,8 @@ function HelpMenu(dsom: DesmosOfflineMode) {
 }
 
 function LanguageMenu(dsom: DesmosOfflineMode) {
+  const saveLangPrefs = localDorage.getItem("saveLangPrefs", { lang: "en", toggleState: false });
+
   return (
     <div class="dcg-language-picker dcg-two-columns">
       <div class="dcg-popover-title" role="heading" aria-level="2">
@@ -101,25 +105,42 @@ function LanguageMenu(dsom: DesmosOfflineMode) {
             if (lang === dsom.currentLanguage()) className += " dcg-selected";
 
             return (
-              <Fragment>
-                <If predicate={() => lang === "ar"}>{() => <hr />}</If>
-                <li
-                  class={className}
-                  lang={lang}
-                  role="menuitem"
-                  tabIndex="0"
-                  onTap={() => {
-                    dsom.languageController.fetchAndSetLanguage(lang);
-                    dsom.headerController.closeMenu();
-                  }}
-                >
-                  {displayName}
-                </li>
-              </Fragment>
+              <li
+                class={className}
+                lang={lang}
+                role="menuitem"
+                tabIndex="0"
+                onTap={() => {
+                  dsom.languageController.fetchAndSetLanguage(lang);
+                  if (saveLangPrefs.toggleState) {
+                    localDorage.setItem("saveLangPrefs", { lang, toggleState: true });
+                  }
+                  dsom.headerController.closeMenu();
+                }}
+              >
+                {displayName}
+              </li>
             );
           }}
         </For>
       </ul>
+      <hr />
+      <div class="desom-save-language-preference-container">
+        <span>{() => dsom.format("dsom-shell-save-language-preference-toggle")}</span>
+        <Toggle
+          toggled={() => saveLangPrefs.toggleState}
+          onChange={() => {
+            saveLangPrefs.toggleState = !saveLangPrefs.toggleState;
+            if (saveLangPrefs.toggleState) {
+              localDorage.setItem("saveLangPrefs", { lang: dsom.currentLanguage(), toggleState: true });
+            } else {
+              localDorage.removeItem("saveLangPrefs");
+            }
+            dsom.cc.updateViews();
+          }}
+          disabled={() => false}
+        />
+      </div>
     </div>
   );
 }
