@@ -105,7 +105,7 @@ function LanguageMenu(dsom: DesmosOfflineMode) {
                   role="menuitem"
                   tabIndex="0"
                   onTap={() => {
-                    dsom.languageController.fetchLanguage(lang);
+                    dsom.languageController.fetchAndSetLanguage(lang);
                     dsom.headerController.closeMenu();
                   }}
                 >

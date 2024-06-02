@@ -57,7 +57,7 @@ export default class LanguageController implements TransparentController {
       const langJSON: Record<typeof lang, string> = JSON.parse(
         await fetch(`${URL_PREFIX}/lang/${lang}.ftl`).then((res) => res.text())
       );
-      dsomFluent.addLanguage(this.cachedBundles, lang, langJSON[lang]);
+      dsomFluent.addLanguage(this.cachedBundles, lang, langJSON[lang], true);
     }
     const bundle = this.cachedBundles.get(lang)!;
     this.desmosCurrentFormat = (key: string, args?: Record<string, FluentVariable> | null | undefined) => {
@@ -72,6 +72,16 @@ export default class LanguageController implements TransparentController {
 
   validateLanguage(lang: unknown): lang is SUPPORTED_LANG_TYPE {
     return typeof lang === "string" && SUPPORTED_LANGS.includes(lang as SUPPORTED_LANG_TYPE);
+  }
+
+  fetchAndSetLanguage(lang: SUPPORTED_LANG_TYPE) {
+    this.fetchLanguage(lang).then(() => {
+      this.dsom.switcherController.calculators.forEach((calc) => {
+        calc.calc.updateSettings({
+          language: lang,
+        });
+      });
+    });
   }
 
   format(key: string, args: Record<string, FluentVariable> | null | undefined = null): string {
@@ -93,7 +103,7 @@ export default class LanguageController implements TransparentController {
   }
 }
 
-export type LANG_MAP = [Exclude<SUPPORTED_LANG_TYPE, "xx-XX">, string];
+export type LANG_MAP = [Exclude<SUPPORTED_LANG_TYPE, "hi" | "xx-XX">, string];
 export const LANG_DISPLAY_NAMES: Map<LANG_MAP[0], LANG_MAP[1]> = new Map([
   ["en", "English (US)"],
   ["es", "Español (LATAM)"],
@@ -128,7 +138,7 @@ export const LANG_DISPLAY_NAMES: Map<LANG_MAP[0], LANG_MAP[1]> = new Map([
   // RTL languages
   ["ar", "العربية"],
   ["hy-AM", "Հայերեն"],
-  ["hi", "हिन्दी"],
+  // ["hi", "हिन्दी"],
   // ["xx-XX", "♦♦♦♦♦♦♦"],
 ]);
 
