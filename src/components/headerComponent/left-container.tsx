@@ -15,7 +15,7 @@ export default class LeftContainer extends Component<{
   template() {
     return (
       <div class="left-container">
-        <Tooltip tooltip={""} gravity="s">
+        <Tooltip tooltip={() => this.dsom.format("dsom-label-main-menu")} gravity="s">
           <div class="center-div sidebar-fix">
             <DCGButton
               color="invisible"

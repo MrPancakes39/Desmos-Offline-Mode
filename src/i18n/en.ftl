@@ -3,6 +3,7 @@ dsom-app-name = Desmos Offline Mode
 
 ## Header
 dsom-shell-help-message = You are using { dsom-app-name }. As a result, some features may be missing. To use online version, visit www.desmos.com/calculator.
+dsom-label-main-menu = Main Menu
 
 ## NewGraph Modal
 dsom-modal-new-graph-title = Create New Graph
