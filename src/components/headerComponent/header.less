@@ -22,6 +22,7 @@
     all: unset;
     font-size: 1.25rem;
     line-height: 1.25rem;
+    display: inline-flex;
 
     &::before {
       padding: 5px;
@@ -100,11 +101,11 @@
     gap: 5px;
   }
 
-  .dsm-help-container {
+  .desom-popover-container {
     max-width: 250px;
     position: absolute;
     top: 51px;
-    right: 6px;
+    right: var(--desom-pop-right, 6px);
 
     & .dcg-arrow {
       right: 5px;
@@ -112,11 +113,13 @@
   }
 }
 
-.dcg-header .dsm-help-container .dcg-popover-interior {
+.dcg-header .desom-popover-container .dcg-popover-interior {
   display: flex;
   flex-direction: column;
   padding: 10px 20px;
+}
 
+.dcg-header .desom-popover-container .desom-help-menu {
   & .message-container {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     margin: 10px 0;

@@ -6,6 +6,14 @@ declare namespace Desmos {
    */
   export function Graphing3DCalculator(...params: Parameters<(typeof Desmos)["GraphingCalculator"]>): Desmos.Calculator;
   export function Geometry(...params: Parameters<(typeof Desmos)["GraphingCalculator"]>): Desmos.Calculator;
+
+  interface TapEvent extends JQuery.TriggeredEvent {
+    type: "dcg-tap";
+    preventTap: () => void;
+    wasLongheld: () => boolean;
+    isDefaultPrevented: () => boolean;
+    originalEvent: JQuery.Event;
+  }
 }
 
 interface TransparentController {

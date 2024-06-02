@@ -55,7 +55,7 @@ export default class HotkeysController implements TransparentController {
           // Help Menu (Ctrl + Alt/Cmd + H)
           ev.preventDefault();
           ev.stopPropagation();
-          this.dsom.headerController.openHelpMenu();
+          this.dsom.headerController.openMenu("help");
         }
         if (key === "S") {
           // Share Menu (Ctrl + Alt/Cmd + S)
@@ -72,7 +72,7 @@ export default class HotkeysController implements TransparentController {
   handleEscape(ev: KeyboardEvent) {
     this.dsom.modalController.closeModal();
     this.dsom.sidebarController.hideSideBar();
-    this.dsom.headerController.closeHelpMenu();
+    this.dsom.headerController.closeMenu();
     // Menu to be done
     ev.preventDefault();
     ev.stopPropagation();
