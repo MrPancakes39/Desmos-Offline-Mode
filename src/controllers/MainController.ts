@@ -14,6 +14,9 @@ function createElt<T extends HTMLElement>(html: string): T {
   return tmp.firstElementChild as T;
 }
 
+// Exporting the language names for the language selector
+export { LANG_DISPLAY_NAMES, type LANG_MAP } from "./LanguageController";
+
 // Desmos Offline Mode
 export default class DesmosOfflineMode implements TransparentController {
   cc!: CalcController;

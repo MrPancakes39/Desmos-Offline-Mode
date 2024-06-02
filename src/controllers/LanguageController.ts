@@ -93,6 +93,45 @@ export default class LanguageController implements TransparentController {
   }
 }
 
+export type LANG_MAP = [Exclude<SUPPORTED_LANG_TYPE, "xx-XX">, string];
+export const LANG_DISPLAY_NAMES: Map<LANG_MAP[0], LANG_MAP[1]> = new Map([
+  ["en", "English (US)"],
+  ["es", "Español (LATAM)"],
+  ["et", "Eesti"],
+  ["ru", "Русский"],
+  ["da", "Dansk"],
+  ["de", "Deutsch"],
+  ["pt-BR", "Português (Brasil)"],
+  ["pt-PT", "Português (Portugal)"],
+  ["ca", "Català"],
+  ["fr", "Français"],
+  ["fr-CA", "Français (Canada)"],
+  ["it", "Italiano"],
+  ["is", "Íslenska"],
+  ["nl", "Nederlands"],
+  ["no", "Norsk"],
+  ["sv-SE", "Svenska"],
+  ["hu", "Magyar"],
+  ["cs", "Čeština"],
+  ["pl", "Polski"],
+  ["id", "Bahasa Indonesia"],
+  ["vi", "Tiếng Việt"],
+  ["el", "Ελληνικά"],
+  ["uk", "Українська"],
+  ["ka", "ქართული"],
+  ["th", "ภาษาไทย"],
+  ["tr", "Türkçe"],
+  ["zh-CN", "简体中文"],
+  ["zh-TW", "繁體中文"],
+  ["ko", "한국어"],
+  ["ja", "日本語"],
+  // RTL languages
+  ["ar", "العربية"],
+  ["hy-AM", "Հայերեն"],
+  ["hi", "हिन्दी"],
+  // ["xx-XX", "♦♦♦♦♦♦♦"],
+]);
+
 const LTR_LANGS = [
   "en",
   "es",
@@ -125,5 +164,5 @@ const LTR_LANGS = [
   "ko",
   "ja",
 ] as const;
-const RTL_LANGS = ["ar", "hy-AM", "hi", "tr"] as const;
+const RTL_LANGS = ["ar", "hy-AM", "hi"] as const;
 const SUPPORTED_LANGS = [...LTR_LANGS, ...RTL_LANGS, "xx-XX"] as const;

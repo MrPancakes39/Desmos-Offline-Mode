@@ -137,6 +137,7 @@ declare global {
       br: any;
       h1: any;
       h2: any;
+      hr: any;
     }
   }
 }

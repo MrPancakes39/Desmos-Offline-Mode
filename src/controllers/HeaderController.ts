@@ -3,12 +3,13 @@ import { select } from "#utils";
 import { Header } from "../components";
 import type DesmosOfflineMode from "#DSOM";
 
-const VALID_HEADER_MENUS = ["help"] as const;
+const VALID_HEADER_MENUS = ["help", "lang"] as const;
 const POPOVER_TRIGGER_SELECTORS = {
   help: ".dcg-icon-question-sign",
+  lang: ".dcg-icon-world",
 } as const satisfies Record<HeaderPopoverMenu, string>;
 
-type HeaderPopoverMenu = (typeof VALID_HEADER_MENUS)[number];
+export type HeaderPopoverMenu = (typeof VALID_HEADER_MENUS)[number];
 export type HeaderMenuProp = {
   current: () => HeaderPopoverMenu | "closed";
   open: (menu: HeaderPopoverMenu) => void;
@@ -53,6 +54,8 @@ class HeaderController implements TransparentController {
       throw new Error(`Invalid header menu: ${menu}`);
     }
     if (this.#currentMenu === menu) return;
+    // Just in case
+    document.removeEventListener("pointerdown", this.listener);
 
     this.#currentMenu = menu as HeaderPopoverMenu;
     this.dsom.cc.updateViews();
