@@ -30,4 +30,10 @@ export function select<E extends Element>(selector: string): E {
   return tmp;
 }
 
+export function createElt<T extends HTMLElement>(html: string): T {
+  let tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  return tmp.firstElementChild as T;
+}
+
 export { localDorage } from "./localDorage";

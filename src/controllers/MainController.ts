@@ -5,14 +5,13 @@ import HotkeysController from "./HotkeysController";
 import HeaderController from "./HeaderController";
 import LanguageController from "./LanguageController";
 
-import { type CalcController } from "#globals";
+import window, { type CalcController } from "#globals";
 import { type FluentVariable } from "@fluent/bundle";
 
-function createElt<T extends HTMLElement>(html: string): T {
-  let tmp = document.createElement("div");
-  tmp.innerHTML = html;
-  return tmp.firstElementChild as T;
-}
+import { WebFileHandler, DesktopFileHandler } from "../interfaces/FileHandlers";
+import type { FileHandler } from "../interfaces/DesmosFileFormat";
+
+import { createElt } from "#utils";
 
 // Exporting the language names for the language selector
 export { LANG_DISPLAY_NAMES, type LANG_MAP, type SUPPORTED_LANG_TYPE } from "./LanguageController";
@@ -26,6 +25,7 @@ export default class DesmosOfflineMode implements TransparentController {
   hotkeysController;
   headerController;
   languageController;
+  fileHandler: FileHandler;
 
   constructor() {
     this.switcherController = new SwitcherController();
@@ -34,6 +34,8 @@ export default class DesmosOfflineMode implements TransparentController {
     this.sidebarController = new SideBarController(this);
     this.hotkeysController = new HotkeysController(this);
     this.headerController = new HeaderController(this);
+
+    this.fileHandler = window.IS_BROWSER ? new WebFileHandler() : new DesktopFileHandler();
   }
 
   async init() {
