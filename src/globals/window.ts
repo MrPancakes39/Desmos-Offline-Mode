@@ -28,7 +28,7 @@ if (!checkDesmosSchema.success) {
   htmlString += "</ul></code></div>";
 
   document.body.innerHTML = htmlString;
-  throw new Error();
+  throw new Error("Couldn't load Desmos");
 }
 // ===============================================================================================
 
@@ -43,6 +43,7 @@ interface windowConfig extends Window {
   MathQuill: unknown;
   jQuery: JQueryStatic;
   DSOM: DesmosOfflineMode;
+  readonly IS_BROWSER: boolean;
 }
 
 declare const window: windowConfig;
@@ -61,3 +62,11 @@ export type Calc = CalcWithPatches;
 export type CalcController = Calc["controller"];
 
 export const DSOM = window.DSOM;
+
+// Check if we're in a browser
+Object.defineProperty(window, "IS_BROWSER", {
+  value: import.meta.env.VITE_DESMOS_PROTOCOL !== "desmos:/",
+  configurable: false,
+  enumerable: true,
+  writable: false,
+});
