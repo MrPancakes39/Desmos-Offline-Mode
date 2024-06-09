@@ -1,30 +1,31 @@
 // Ensure Desmos API is available
 // ===============================================================================================
-import * as v from "valibot";
+import { z } from "zod";
 
-const DesmosApiSchema = v.object(
+const DesmosApiSchema = z.object(
   {
-    GraphingCalculator: v.instance(Function, "Desmos.GraphingCalculator is not available"),
-    Geometry: v.instance(Function, "Desmos.Geometry is not available"),
-    Graphing3DCalculator: v.instance(Function, "Desmos.Graphing3DCalculator is not available"),
-    Private: v.object(
-      {
-        Fragile: v.unknown(),
-      },
-      "Desmos.Private is not available"
-    ),
+    GraphingCalculator: z.function(),
+    Geometry: z.function(),
+    Graphing3DCalculator: z.function(),
+    Private: z.object({
+      Fragile: z.object({}),
+    }),
   },
-  "Couldn't find Desmos in the window object or it's not an object."
+  { message: "Couldn't find Desmos in the window object or it's not an object." }
 );
 
-const checkDesmosSchema = v.safeParse(DesmosApiSchema, window.Desmos);
+const checkDesmosSchema = DesmosApiSchema.safeParse(window.Desmos);
 if (!checkDesmosSchema.success) {
-  console.log(checkDesmosSchema);
-
   let htmlString =
     "<div id='desmos_load_errors'><h1>Couldn't Load Desmos.</h1><h2>We Ran Into The Following Errors:</h2>";
   htmlString += "<code><ul>";
-  htmlString += checkDesmosSchema.issues.map((issue) => `<li>${issue.message}</li>`).join("");
+  htmlString += checkDesmosSchema.error.issues
+    .map((issue) =>
+      issue.path.length === 0
+        ? `<li>${issue.message}</li>`
+        : `<li>Desmos.${issue.path.join(".")} is ${issue.message}</li>`
+    )
+    .join("");
   htmlString += "</ul></code></div>";
 
   document.body.innerHTML = htmlString;

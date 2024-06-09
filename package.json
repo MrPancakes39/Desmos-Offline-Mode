@@ -30,6 +30,6 @@
   "dependencies": {
     "@fluent/bundle": "^0.18.0",
     "@types/desmos": "^1.6.3",
-    "valibot": "^0.30.0"
+    "zod": "^3.23.8"
   }
 }
