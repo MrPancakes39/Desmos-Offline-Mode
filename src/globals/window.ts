@@ -10,6 +10,7 @@ const DesmosApiSchema = z.object(
     Private: z.object({
       Fragile: z.object({}),
     }),
+    locales: z.object({}),
   },
   { message: "Couldn't find Desmos in the window object or it's not an object." }
 );
@@ -33,9 +34,14 @@ if (!checkDesmosSchema.success) {
 }
 // ===============================================================================================
 
-import type DesmosType from "./Desmos";
+import type DesmosTypeWithoutLocales from "./Desmos";
 import { type CalcWithPatches } from "./patches";
 import type DesmosOfflineMode from "#DSOM";
+import { SUPPORTED_LANG_TYPE } from "#DSOM";
+
+type DesmosType = DesmosTypeWithoutLocales & {
+  locales: Record<Exclude<SUPPORTED_LANG_TYPE, "en" | "xx-XX">, string>;
+};
 
 interface windowConfig extends Window {
   Desmos: DesmosType;

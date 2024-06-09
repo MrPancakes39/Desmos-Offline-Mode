@@ -41,7 +41,7 @@ export default class DesmosOfflineMode implements TransparentController {
   async init() {
     this.switcherController.init();
     this.cc = this.switcherController.calculators[0].calc._calc.controller;
-    await this.languageController.init();
+    this.languageController.init();
 
     this.headerController.init();
     this.modalController.init();

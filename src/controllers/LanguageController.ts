@@ -1,14 +1,15 @@
 import type DesmosOfflineMode from "#DSOM";
-const URL_PREFIX = import.meta.env.VITE_DESMOS_PROTOCOL;
 
 import { FluentBundle, type FluentVariable } from "@fluent/bundle";
 import { dsomFluent } from "#i18n";
 import { localDorage } from "#utils";
+import window from "#globals";
 
 type FormatFunction = (key: string, args?: Record<string, FluentVariable> | null | undefined) => string;
 export type SUPPORTED_LANG_TYPE = (typeof SUPPORTED_LANGS)[number];
 
 export default class LanguageController implements TransparentController {
+  readonly Desmos: typeof window.Desmos;
   #currentLang: SUPPORTED_LANG_TYPE = "en";
   desmosEnglishFormat!: FormatFunction;
   desmosCurrentFormat: FormatFunction = () => "";
@@ -16,14 +17,15 @@ export default class LanguageController implements TransparentController {
 
   constructor(readonly dsom: DesmosOfflineMode) {
     this.dsom = dsom;
+    this.Desmos = window.Desmos;
   }
 
-  async init() {
+  init() {
     const { lang } = localDorage.getItem("saveLangPrefs", { lang: "en", toggleState: false });
 
     this.#currentLang = lang;
     this.desmosEnglishFormat = this.dsom.switcherController.selected!.calc.controller.s;
-    await this.fetchLanguage(this.#currentLang);
+    this.fetchLanguage(this.#currentLang);
 
     const callsFormat = (...args: Parameters<LanguageController["format"]>) => {
       if (args[0] === "graphing-calculator-narration-audio-trace-traceable-curves") {
@@ -47,7 +49,7 @@ export default class LanguageController implements TransparentController {
     return this.#currentLang;
   }
 
-  async fetchLanguage(lang: SUPPORTED_LANG_TYPE) {
+  fetchLanguage(lang: SUPPORTED_LANG_TYPE) {
     if (!this.validateLanguage(lang)) {
       throw new Error(`Invalid language: ${lang}`);
     }
@@ -57,10 +59,7 @@ export default class LanguageController implements TransparentController {
       return;
     }
     if (!this.cachedBundles.has(lang)) {
-      const langJSON: Record<typeof lang, string> = JSON.parse(
-        await fetch(`${URL_PREFIX}/lang/${lang}.ftl`).then((res) => res.text())
-      );
-      dsomFluent.addLanguage(this.cachedBundles, lang, langJSON[lang], true);
+      dsomFluent.addLanguage(this.cachedBundles, lang, this.Desmos.locales[lang], true);
     }
     const bundle = this.cachedBundles.get(lang)!;
     this.desmosCurrentFormat = (key: string, args?: Record<string, FluentVariable> | null | undefined) => {
@@ -78,11 +77,10 @@ export default class LanguageController implements TransparentController {
   }
 
   fetchAndSetLanguage(lang: SUPPORTED_LANG_TYPE) {
-    this.fetchLanguage(lang).then(() => {
-      this.dsom.switcherController.calculators.forEach((calc) => {
-        calc.calc.updateSettings({
-          language: lang,
-        });
+    this.fetchLanguage(lang);
+    this.dsom.switcherController.calculators.forEach((calc) => {
+      calc.calc.updateSettings({
+        language: lang,
       });
     });
   }

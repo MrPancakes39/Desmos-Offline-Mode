@@ -85,9 +85,7 @@ async function main() {
   const html_class = JSON.stringify(/<html.+?class=["'](.+?)["'].*?>/.exec(html)?.[1] ?? "");
 
   // Ensure directories exists
-  await Promise.all(
-    [`${PARENT_DIR}/public/desmos/lang`, `${PARENT_DIR}/public/desmos/fonts`].map((dir) => fs.ensureDir(dir))
-  );
+  await Promise.all([`${PARENT_DIR}/public/desmos/fonts`].map((dir) => fs.ensureDir(dir)));
 
   // Create Preload Script
   {
@@ -187,13 +185,23 @@ document.documentElement.classList.add(${html_class});`
 
   // Fetch desmos lang files
   {
+    let locales = {};
     logger.info("[6/7] Downloading Desmos Language Files");
     for (let lang of SUPPORTED_LANGS) {
       if (lang === "en" || lang === "xx-XX") continue;
       const endpoint = `${URL}/api/v1/calculator/language/${lang}.ftl`;
       logger.log(`Fetching lang: ${endpoint}`);
-      await getFile(endpoint, `Couldn't get lang ${lang} of desmos.`, `${PARENT_DIR}/public/desmos/lang/${lang}.ftl`);
+      const response = await fetch(endpoint);
+      if (!response.ok) {
+        throw Error(`Couldn't get lang ${lang} of desmos.`);
+      }
+      const lang_file = JSON.parse(await response.text());
+      locales = { ...locales, ...lang_file };
     }
+    fs.writeFileSync(
+      `${PARENT_DIR}/public/desmos/locales.js`,
+      `"undefined" == typeof Desmos && (Desmos = {}), Desmos.locales = ${JSON.stringify(locales)};`
+    );
     logger.success("Fetched all language files.");
   }
 
