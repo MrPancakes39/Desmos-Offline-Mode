@@ -82,7 +82,13 @@ async function main() {
   }
 
   // Gets the class of the html element
-  const html_class = JSON.stringify(/<html.+?class=["'](.+?)["'].*?>/.exec(html)?.[1] ?? "");
+  const html_class = JSON.stringify(
+    (() => {
+      const html_class = /<html.+?class=["'](.+?)["'].*?>/.exec(html)?.[1];
+      if (html_class === undefined || html_class === "dcg-calculator-api-container") return "";
+      return html_class;
+    })()
+  );
 
   // Ensure directories exists
   await Promise.all([`${PARENT_DIR}/public/desmos/fonts`].map((dir) => fs.ensureDir(dir)));
