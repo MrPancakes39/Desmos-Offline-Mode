@@ -52,7 +52,7 @@ const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
 const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 
 async function main() {
-  const TESTED_COMMIT = "c7f28fe4de495c925409bea9d933617aceba9112";
+  const TESTED_COMMIT = "4f3b2693c90caae249fa98fcad920c4721087982";
   const USE_3D_API = false;
 
   const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
@@ -80,6 +80,9 @@ async function main() {
       `\nWARN: The app was tested and built on COMMIT '${TESTED_COMMIT}' but the website has a newer COMMIT '${website_commit}'.`
     );
   }
+
+  // Gets the class of the html element
+  const html_class = JSON.stringify(/<html.+?class=["'](.+?)["'].*?>/.exec(html)?.[1] ?? "");
 
   // Ensure directories exists
   await Promise.all(
@@ -114,7 +117,10 @@ if (!window.console.log) window.console.log = function () {};
 if (window.location.protocol === "file:") {
   window.history.pushState = function () {};
   window.history.replaceState = function () {};
-}`
+}
+
+// Sometimes desmos changes the class of the html element
+document.documentElement.classList.add(${html_class});`
     );
   }
 
