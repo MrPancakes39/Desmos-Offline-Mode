@@ -6,10 +6,6 @@ dsom-shell-help-message = You are using { dsom-app-name }. As a result, some fea
 dsom-label-main-menu = Main Menu
 dsom-shell-save-language-preference-toggle = Save Language Preference
 
-## NewGraph Modal
-dsom-modal-new-graph-title = Create New Graph
-dsom-modal-new-graph-message = Are you sure you want to create a new graph? This graph will be lost.
-
 # Switcher Modal
 dsom-modal-switcher-title = Choose Desmos Calculator
 

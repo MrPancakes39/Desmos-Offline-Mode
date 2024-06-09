@@ -26,14 +26,7 @@ export class SideBarContainer extends Component<{
           <div class="app-name" tabindex="0">
             {() => this.dsom.format("dsom-app-name")}
           </div>
-          <div
-            class="new-blank-graph"
-            tabindex="0"
-            onTap={() => {
-              this.dsom.modalController.showModal("new-graph");
-              this.dsom.sidebarController.hideSideBar();
-            }}
-          >
+          <div class="new-blank-graph" tabindex="0" onTap="">
             <span class="dcg-add-blank">
               <i class="dcg-icon-plus" aria-hidden="true"></i>
             </span>

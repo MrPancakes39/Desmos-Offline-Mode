@@ -1,7 +1,6 @@
 import { Component, jsx } from "#DCGView";
 import { Switch } from "..";
 import HotkeysModal from "./HotKeysModal/HotkeysModal";
-import NewGraphModal from "./NewGraphModal";
 import SwitcherModal from "./SwitcherModal";
 
 import { type ModalType } from "./modal";
@@ -25,8 +24,6 @@ export class ModalContainer extends Component<{
           switch (type) {
             case "none":
               return null;
-            case "new-graph":
-              return <NewGraphModal close={this.props.closeModal} format={(...args) => this.dsom.format(...args)} />;
             case "hotkeys":
               return (
                 <HotkeysModal
