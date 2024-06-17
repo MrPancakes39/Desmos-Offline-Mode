@@ -16,7 +16,7 @@ export abstract class ClassComponent<PropsType extends GenericProps = Record<str
   update!: () => void;
   props!: ToFunc<PropsType>;
   children!: unknown;
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  // eslint-disable-next-line @typescript-eslint/no-useless-constructor, @typescript-eslint/no-empty-function
   constructor(_props: OrConst<PropsType>) {}
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   init(): void {}
@@ -176,7 +176,7 @@ export function jsx<Props extends GenericProps>(
   }
   // "Text should be a const or a getter:"
   children = children.map((e) => (typeof e === "string" ? DCGView.const(e) : e));
-  const fnProps = {} as Record<string, unknown>;
+  const fnProps: Record<string, unknown> = {};
   for (const k in props) {
     // DCGView.createElement also expects 0-argument functions
     if (typeof props[k] !== "function") {

@@ -43,14 +43,14 @@ class ModalController implements TransparentController {
     this.currentType = modalType;
     this.dsom.cc.updateViews();
 
-    if (modalType == "none") {
+    if (modalType === "none") {
       this.tabbable = null;
       document.removeEventListener("keydown", this.listener);
     } else {
       const tabbable = this.divContainer?.querySelectorAll<HTMLElement>("[tabindex]");
       if (!tabbable) return;
       this.tabbable = [...tabbable];
-      this.tabbable[0].focus();
+      this.tabbable[0]?.focus();
       document.addEventListener("keydown", this.listener);
     }
   }
@@ -65,18 +65,18 @@ class ModalController implements TransparentController {
     if (!this.tabbable) return;
     if (ev.key === "Tab" || ev.keyCode === 9) {
       // If activeElement not in the modal
-      if (this.tabbable.filter((e) => e == document.activeElement).length == 0) {
-        this.tabbable[0].focus();
+      if (this.tabbable.filter((e) => e === document.activeElement).length === 0) {
+        this.tabbable[0]?.focus();
         ev.preventDefault();
       }
       if (ev.shiftKey) {
         /* shift + tab */ if (document.activeElement === this.tabbable[0]) {
-          this.tabbable[this.tabbable.length - 1].focus();
+          this.tabbable[this.tabbable.length - 1]?.focus();
           ev.preventDefault();
         }
       } /* tab */ else {
         if (document.activeElement === this.tabbable[this.tabbable.length - 1]) {
-          this.tabbable[0].focus();
+          this.tabbable[0]?.focus();
           ev.preventDefault();
         }
       }

@@ -46,7 +46,7 @@ export default class HotkeysModal extends Modal<{
               this.props.format("shared-calculator-button-windows-chrome"),
               this.props.format("shared-calculator-button-mac"),
             ]}
-            selectedIndex={() => +(this.showShortcuts == "mac")}
+            selectedIndex={() => +(this.showShortcuts === "mac")}
             ariaGroupLabel={() => this.props.format("shared-calculator-label-os")}
             setSelectedIndex={(selected) => {
               this.showShortcuts = selected ? "mac" : "pc";

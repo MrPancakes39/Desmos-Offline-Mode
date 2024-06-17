@@ -78,32 +78,32 @@ export default class DesmosOfflineMode implements TransparentController {
 
   async openOnWeb() {
     const calc = this.switcherController.calculators[0]!.calc._calc;
-    const state = JSON.stringify(calc.getState()),
-      thumbnail = calc.grapher.screenshot({ width: 100, height: 100 }),
-      url = "https://www.desmos.com/api/v1/calculator/cross_origin_save";
+    const state = JSON.stringify(calc.getState());
+    const thumbnail = calc.grapher.screenshot({ width: 100, height: 100 });
+    const url = "https://www.desmos.com/api/v1/calculator/cross_origin_save";
 
-    const state_input = createElt<HTMLInputElement>('<input type="text" name="calc_state" />');
-    const thumb_input = createElt<HTMLInputElement>('<input type="text" name="thumb_data" />');
-    const form_submit = createElt<HTMLFormElement>(`
+    const stateInput = createElt<HTMLInputElement>('<input type="text" name="calc_state" />');
+    const thumbInput = createElt<HTMLInputElement>('<input type="text" name="thumb_data" />');
+    const formSubmit = createElt<HTMLFormElement>(`
     <form name="open_graph_on_web" target="_blank" method="POST" action="${url}" style="display: none">
       <input type="text" name="is_open_on_web" value="true" />
       <input type="text" name="my_graphs" value="false" />
       <input type="text" name="is_update" value="false" />
     </form>`);
-    state_input.value = state;
-    thumb_input.value = thumbnail;
-    form_submit.append(state_input, thumb_input);
+    stateInput.value = state;
+    thumbInput.value = thumbnail;
+    formSubmit.append(stateInput, thumbInput);
 
-    const web_url = await fetch(url, {
+    const webUrl = await fetch(url, {
       method: "POST",
       // @ts-expect-error Conversion to FormData works
-      body: new URLSearchParams(new FormData(form_submit)),
+      body: new URLSearchParams(new FormData(formSubmit)),
       headers: {
         Accept: "application/json, text/plain, */*",
       },
     })
       .then((res) => (res.ok ? res.url : null))
       .catch(() => null);
-    return web_url;
+    return webUrl;
   }
 }

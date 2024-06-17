@@ -9,6 +9,7 @@ export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  eslintConfigLove,
   {
     languageOptions: {
       globals: globals.browser,
@@ -25,6 +26,10 @@ export default tseslint.config(
       "linebreak-style": ["error", "unix"],
       // We have to disable this for returning JSX from functions to work
       "@typescript-eslint/no-unsafe-return": "off",
+      // Disable some love eslint rules
+      "@typescript-eslint/explicit-function-return-type": "off",
+      "@typescript-eslint/strict-boolean-expressions": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
       // TS ESLint
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
@@ -58,6 +63,5 @@ export default tseslint.config(
       ],
     },
   },
-  //   eslintConfigLove,
   eslintConfigPrettier
 );

@@ -192,29 +192,32 @@ const sanitizeItem = function (item: ItemModel) {
       })(item);
     case "table":
       return (function (modal) {
-        return {
+        const tmp: SanitizedTableItem = {
           id: modal.id,
           type: modal.type,
           columns: modal.columns.map(tableColumn),
-        } as SanitizedTableItem;
+        };
+        return tmp;
       })(item);
     case "folder":
     case "image":
       return (function (modal) {
-        return {
+        const tmp: SanitizedImageItem | SanitizedFolderItem = {
           id: modal.id,
           type: modal.type,
           hidden: modal.hidden,
           secret: modal.secret,
-        } as SanitizedImageItem | SanitizedFolderItem;
+        };
+        return tmp;
       })(item);
     case "text":
       return (function (modal) {
-        return {
+        const tmp: SanitizedTextItem = {
           id: modal.id,
           type: modal.type,
           secret: modal.secret,
-        } as SanitizedTextItem;
+        };
+        return tmp;
       })(item);
     default:
       return item as never;

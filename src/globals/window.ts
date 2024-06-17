@@ -1,7 +1,28 @@
-// Ensure Desmos API is available
-// ===============================================================================================
+import type DesmosTypeWithoutLocales from "./Desmos";
+import { type CalcWithPatches } from "./patches";
+import type DesmosOfflineMode from "#DSOM";
+import type { SUPPORTED_LANG_TYPE } from "#DSOM";
 import { z } from "zod";
 
+type DesmosType = DesmosTypeWithoutLocales & {
+  locales: Record<Exclude<SUPPORTED_LANG_TYPE, "en" | "xx-XX">, string>;
+};
+
+interface windowConfig extends Window {
+  Desmos: DesmosType;
+  Calc: CalcWithPatches;
+  $: JQueryStatic;
+  MathQuill: unknown;
+  jQuery: JQueryStatic;
+  DSOM: DesmosOfflineMode;
+  readonly IS_BROWSER: boolean;
+}
+
+declare const window: windowConfig;
+export default window;
+
+// Ensure Desmos API is available
+// ===============================================================================================
 const DesmosApiSchema = z.object(
   {
     GraphingCalculator: z.function(),
@@ -33,28 +54,6 @@ if (!checkDesmosSchema.success) {
   throw new Error("Couldn't load Desmos");
 }
 // ===============================================================================================
-
-import type DesmosTypeWithoutLocales from "./Desmos";
-import { type CalcWithPatches } from "./patches";
-import type DesmosOfflineMode from "#DSOM";
-import type { SUPPORTED_LANG_TYPE } from "#DSOM";
-
-type DesmosType = DesmosTypeWithoutLocales & {
-  locales: Record<Exclude<SUPPORTED_LANG_TYPE, "en" | "xx-XX">, string>;
-};
-
-interface windowConfig extends Window {
-  Desmos: DesmosType;
-  Calc: CalcWithPatches;
-  $: JQueryStatic;
-  MathQuill: unknown;
-  jQuery: JQueryStatic;
-  DSOM: DesmosOfflineMode;
-  readonly IS_BROWSER: boolean;
-}
-
-declare const window: windowConfig;
-export default window;
 
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;

@@ -80,7 +80,7 @@ export default class HotkeysController implements TransparentController {
 
   isUndo(e: KeyboardEvent) {
     // Ctrl/Cmd + Z
-    return !e.altKey && !e.shiftKey && (e.ctrlKey || e.metaKey) && e.key == "z";
+    return !e.altKey && !e.shiftKey && (e.ctrlKey || e.metaKey) && e.key === "z";
   }
 
   isRedo(e: KeyboardEvent) {

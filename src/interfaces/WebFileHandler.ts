@@ -17,7 +17,7 @@ export class WebFileHandler implements FileHandler {
   async openFile() {
     try {
       // Get file
-      const selectedFile = await new Promise<File>((resolve, reject) => {
+      const selectedFile = await new Promise<File>((resolve) => {
         const input = createElt<HTMLInputElement>(
           `<input type="file" accept=".desmos,application/x-desmos" style="display: none">`
         );
@@ -26,8 +26,7 @@ export class WebFileHandler implements FileHandler {
           () => {
             const file = input.files?.[0];
             if (file === undefined) {
-              reject("No file selected");
-              return;
+              throw new Error("No file selected");
             }
             resolve(file);
           },
@@ -42,17 +41,16 @@ export class WebFileHandler implements FileHandler {
       });
 
       // Read file
-      const fileContent = await new Promise<string>((resolve, reject) => {
+      const fileContent = await new Promise<string>((resolve) => {
         const reader = new FileReader();
         reader.addEventListener("load", () => {
           if (typeof reader.result !== "string") {
-            reject("Could not read file");
-            return;
+            throw new Error("Could not read file");
           }
           resolve(reader.result);
         });
         reader.addEventListener("error", () => {
-          reject("Could not read file");
+          throw new Error("Could not read file");
         });
         reader.readAsText(selectedFile);
       });

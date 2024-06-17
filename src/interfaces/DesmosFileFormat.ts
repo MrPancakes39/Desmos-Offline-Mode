@@ -11,9 +11,9 @@ type OpenFileResult =
     };
 
 export interface FileHandler {
-  openFile(): Promise<OpenFileResult>;
-  saveFile(fileContent: DesmosFileFormat, filename: string): void;
-  printFile(): void;
+  openFile: () => Promise<OpenFileResult>;
+  saveFile: (fileContent: DesmosFileFormat, filename: string) => void;
+  printFile: () => void;
 }
 
 const CURRENT_FILE_VERSION = "1.0";
