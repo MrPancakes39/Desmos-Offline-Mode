@@ -1,0 +1,159 @@
+// ================[ Default Print Styles for Desmos Calculator ]=====================
+html.print-preview,
+.dcg-calculator-api-container.print-preview body,
+.dcg-calculator-api-container.print-preview .dcg-sliding-interior,
+.dcg-calculator-api-container.print-preview #graph-container,
+.dcg-calculator-api-container.print-preview .dcg-container,
+.dcg-calculator-api-container.print-preview .dcg-exppanel,
+.dcg-calculator-api-container.print-preview .dcg-expressionitem,
+.dcg-calculator-api-container.print-preview .dcg-fade-container {
+  overflow: visible !important;
+  position: relative !important;
+}
+
+.dcg-calculator-api-container.print-preview #graph-container {
+  top: 0 !important;
+  left: 0 !important;
+  width: 700px !important;
+}
+
+.dcg-calculator-api-container.print-preview #graph-container .dcg-grapher {
+  left: 0 !important;
+}
+
+.dcg-calculator-api-container.print-preview #graph-container .dcg-grapher canvas:first-of-type {
+  border: 2px solid #444;
+}
+
+.dcg-calculator-api-container.print-preview #graph-container,
+.dcg-calculator-api-container.print-preview .dcg-grapher,
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer,
+.dcg-calculator-api-container.print-preview .dcg-exppanel-container {
+  transform: translate(0);
+  transition: 0;
+  box-shadow: none !important;
+  width: 100%;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-header,
+.dcg-calculator-api-container.print-preview .dcg-pillbox-container,
+.dcg-calculator-api-container.print-preview .dcg-keys-container,
+.dcg-calculator-api-container.print-preview .dcg-popover,
+.dcg-calculator-api-container.print-preview .dcg-show-keypad,
+.dcg-calculator-api-container.print-preview .dcg-show-expressions-tab,
+.dcg-calculator-api-container.print-preview .dcg-toast,
+.dcg-calculator-api-container.print-preview .trip-block,
+.dcg-calculator-api-container.print-preview .dcg-grapher:before,
+.dcg-calculator-api-container.print-preview .dcg-expression-top-bar,
+.dcg-calculator-api-container.print-preview .dcg-new-expression,
+.dcg-calculator-api-container.print-preview .dcg-icon-remove,
+.dcg-calculator-api-container.print-preview .dcg-fadeout,
+.dcg-calculator-api-container.print-preview .dcg-icon,
+.dcg-calculator-api-container.print-preview .dcg-slider-container,
+.dcg-calculator-api-container.print-preview .dcg-create-sliders,
+.dcg-calculator-api-container.print-preview .dcg-expressions-branding,
+.dcg-calculator-api-container.print-preview .dcg-graphpaper-branding,
+.dcg-calculator-api-container.print-preview .dcg-geometry-toolbar-view,
+.dcg-calculator-api-container.print-preview .dcg-label-container {
+  display: none !important;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-fullscreen .dcg-exppanel-outer {
+  margin-top: 800px;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer {
+  margin-top: 12in;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-exppanel-container {
+  padding-top: 0 !important;
+  width: 100% !important;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-exppanel {
+  border: none;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-expressionitem {
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-expressionitem .dcg-tab {
+  border: 0;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-expressionitem .dcg-variable-index {
+  font-size: 14px;
+  color: #aaa;
+  text-align: center;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer .dcg-expressionitem .dcg-variable-index:after {
+  content: ".";
+}
+
+.dcg-calculator-api-container.print-preview .dcg-background {
+  opacity: 0 !important;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-dot {
+  position: absolute !important;
+  top: -15px !important;
+  left: -15px !important;
+  border-radius: 15px !important;
+  width: 29px !important;
+  height: 29px !important;
+  border: 14px solid #2d70b3;
+}
+// ======================================================================================================================
+
+// ================[ DSOM Custom ]======================
+.dcg-calculator-api-container.print-preview #dcg-header-container,
+.dcg-calculator-api-container.print-preview #side-bar-container,
+.dcg-calculator-api-container.print-preview .sidebar-menu-btn {
+  display: none !important;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-grapher {
+  display: none;
+}
+
+.dcg-calculator-api-container.print-preview .dcg-exppanel-outer {
+  display: none;
+}
+
+#print-preview-container {
+  display: none;
+}
+
+.dcg-calculator-api-container.print-preview #print-preview-container {
+  display: flex;
+  flex-direction: column;
+
+  .dsom-pprint-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    height: 40px;
+    padding: 0 1.5rem;
+    background: #d6d3d1;
+    color: #44403c;
+
+    box-shadow:
+      0 1px 3px 0 rgb(0 0 0 / 0.1),
+      0 1px 2px -1px rgb(0 0 0 / 0.1);
+    z-index: 1;
+
+    .dsom-pprint-close {
+      font-size: 0.9rem;
+    }
+  }
+
+  .dcg-mq-editable-field {
+    border: none;
+  }
+}
+// ======================================================

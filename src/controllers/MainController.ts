@@ -4,6 +4,7 @@ import SideBarController from "./SideBarController";
 import HotkeysController from "./HotkeysController";
 import HeaderController from "./HeaderController";
 import LanguageController from "./LanguageController";
+import PrintPreviewController from "./PrintPreviewController";
 
 import window, { type CalcController } from "#globals";
 import { type FluentVariable } from "@fluent/bundle";
@@ -25,6 +26,7 @@ export default class DesmosOfflineMode implements TransparentController {
   hotkeysController;
   headerController;
   languageController;
+  ppreviewController;
   fileHandler: FileHandler;
 
   constructor() {
@@ -34,6 +36,7 @@ export default class DesmosOfflineMode implements TransparentController {
     this.sidebarController = new SideBarController(this);
     this.hotkeysController = new HotkeysController(this);
     this.headerController = new HeaderController(this);
+    this.ppreviewController = new PrintPreviewController(this);
 
     this.fileHandler = window.IS_BROWSER ? new WebFileHandler() : new DesktopFileHandler();
   }
@@ -49,6 +52,7 @@ export default class DesmosOfflineMode implements TransparentController {
     this.modalController.init();
     this.sidebarController.init();
     this.hotkeysController.init();
+    this.ppreviewController.init();
   }
 
   destroy() {

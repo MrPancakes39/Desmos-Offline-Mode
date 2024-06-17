@@ -11,6 +11,7 @@ dsom
     dsom.switcherController.selected!.calc.focusFirstExpression();
     document.querySelector<HTMLDivElement>(".dcg-loading-div-container")!.style.display = "none";
   })
-  .catch(() => {
-    alert("Error initializing DSOM");
+  .catch((e) => {
+    console.error(e);
+    setTimeout(() => alert("Error initializing DSOM"), 1000);
   });
