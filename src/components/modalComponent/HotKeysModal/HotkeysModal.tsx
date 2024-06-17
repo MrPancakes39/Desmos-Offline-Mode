@@ -24,7 +24,7 @@ export default class HotkeysModal extends Modal<{
   showShortcuts!: shortcutOS;
   currentShortcuts!: GraphingShortcuts | GeoShortcuts;
 
-  init() {
+  override init() {
     const IS_MAC = navigator.platform.match(/(Mac|iPhone|iPod|iPad)/i) !== null;
     this.showShortcuts = IS_MAC ? "mac" : "pc";
     this.currentShortcuts =
@@ -54,7 +54,7 @@ export default class HotkeysModal extends Modal<{
             }}
           />
         </div>
-        <div class="dcg-hotkey-container" tabindex="0">
+        <div class="dcg-hotkey-container" tabindex="0" role="tabpanel">
           <div class="dcg-hotkey-section">
             <If predicate={() => this.showGeoShortcuts()}>
               {() => (

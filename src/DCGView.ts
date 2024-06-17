@@ -4,19 +4,21 @@ import { Desmos } from "#globals";
 export const DCGView = Desmos.Private.Fragile.DCGView;
 
 type OrConst<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? T[K] : T[K] | (() => T[K]);
+  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? T[K] : T[K] | (() => T[K]);
 };
 
 type ToFunc<T> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any ? T[K] : () => T[K];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [K in keyof T]: T[K] extends (...args: any[]) => unknown ? T[K] : () => T[K];
 };
 
 export abstract class ClassComponent<PropsType extends GenericProps = Record<string, unknown>> {
   update!: () => void;
   props!: ToFunc<PropsType>;
   children!: unknown;
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   constructor(_props: OrConst<PropsType>) {}
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   init(): void {}
   abstract template(): unknown;
   _element!:
@@ -59,7 +61,7 @@ abstract class InputComponent extends ClassComponent<{
 
 /** Switch expects one child which is a function returning a component */
 abstract class SwitchComponent extends ClassComponent<{
-  key: () => any;
+  key: () => unknown;
 }> {}
 
 export interface DCGViewModule {
@@ -92,7 +94,7 @@ export interface DCGViewModule {
 
 export type ComponentConstructor<Props extends GenericProps> = string | typeof ClassComponent<Props>;
 // export type GenericProps = Record<string, (...args: any[]) => any>;
-type GenericProps = any;
+type GenericProps = unknown;
 interface CommonProps {
   class?: () => string;
   didMount?: (elem: HTMLElement) => void;
@@ -115,29 +117,29 @@ declare global {
       class?: string | Record<string, boolean>;
     }
     interface IntrinsicElements {
-      div: any;
-      i: any;
-      span: any;
-      img: any;
-      p: any;
-      a: any;
-      input: any;
-      label: any;
-      strong: any;
-      ul: any;
-      ol: any;
-      li: any;
-      table: any;
-      thead: any;
-      tbody: any;
-      tr: any;
-      th: any;
-      td: any;
-      button: any;
-      br: any;
-      h1: any;
-      h2: any;
-      hr: any;
+      div: unknown;
+      i: unknown;
+      span: unknown;
+      img: unknown;
+      p: unknown;
+      a: unknown;
+      input: unknown;
+      label: unknown;
+      strong: unknown;
+      ul: unknown;
+      ol: unknown;
+      li: unknown;
+      table: unknown;
+      thead: unknown;
+      tbody: unknown;
+      tr: unknown;
+      th: unknown;
+      td: unknown;
+      button: unknown;
+      br: unknown;
+      h1: unknown;
+      h2: unknown;
+      hr: unknown;
     }
   }
 }
@@ -174,14 +176,14 @@ export function jsx<Props extends GenericProps>(
   }
   // "Text should be a const or a getter:"
   children = children.map((e) => (typeof e === "string" ? DCGView.const(e) : e));
-  const fnProps = {} as any;
+  const fnProps = {} as Record<string, unknown>;
   for (const k in props) {
     // DCGView.createElement also expects 0-argument functions
     if (typeof props[k] !== "function") {
       fnProps[k] = DCGView.const(props[k]);
     } else {
-      fnProps[k] = props[k] as (...args: any[]) => any;
+      fnProps[k] = props[k] as (...args: unknown[]) => unknown;
     }
   }
-  return DCGView.createElement(el, fnProps, ...children);
+  return DCGView.createElement(el, fnProps as WithCommonProps<ToFunc<Props>>, ...children);
 }

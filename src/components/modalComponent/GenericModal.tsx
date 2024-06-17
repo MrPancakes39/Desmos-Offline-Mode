@@ -1,7 +1,7 @@
 import "./modal.less";
 import { jsx } from "#DCGView";
 import { Modal } from "./modal";
-import { mergeClass, MaybeClassDict } from "#utils";
+import { mergeClass, type MaybeClassDict } from "#utils";
 
 import type DesmosOfflineMode from "#DSOM";
 
@@ -13,7 +13,7 @@ export default class GenericModal extends Modal<{
 }> {
   useWrapper!: boolean;
 
-  init() {
+  override init() {
     this.useWrapper = this.props.useWrapper?.() ?? true;
   }
 

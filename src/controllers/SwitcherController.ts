@@ -56,7 +56,7 @@ export default class SwitcherController implements TransparentController {
 
   selectCalculator(type: MountedCalculator["type"]) {
     if (!CALC_TYPES.includes(type)) {
-      throw Error(`${type} is not a valid calc. valid calc: ${CALC_TYPES}`);
+      throw Error(`${type} is not a valid calc. valid calc: ${CALC_TYPES.join(", ")}`);
     }
 
     this.calculators.forEach((mc) => {

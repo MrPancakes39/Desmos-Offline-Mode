@@ -61,7 +61,7 @@ const brailleShortcuts: Hotkeys = {
 };
 
 function getMathQuillShortcuts(options: { decimalToFraction: boolean }): Hotkeys {
-  let tmp = {
+  const tmp = {
     i18nSectionKey: "shared-calculator-heading-keyboard-shortcuts-expression-entry-and-navigation",
     shortcuts: [
       {
@@ -543,7 +543,7 @@ function getCalcShortcuts(options: { isGeometry: boolean }): GraphingShortcuts {
 }
 
 function getCommonSymbolsShortcuts(options: { isGeometry: boolean }): Hotkeys {
-  let tmp = {
+  const tmp = {
     i18nSectionKey: "shared-calculator-heading-keyboard-shortcuts-common-symbols",
     shortcuts: [
       {
@@ -622,7 +622,7 @@ function getCommonActionsShortcuts(options: {
   images: boolean;
   authorFeatures: boolean;
 }): Hotkeys {
-  let tmp = {
+  const tmp = {
     i18nSectionKey: "shared-calculator-heading-keyboard-shortcuts-common-actions",
     shortcuts: [
       {

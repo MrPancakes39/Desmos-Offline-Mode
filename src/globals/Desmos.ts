@@ -1,7 +1,7 @@
 import "desmos";
-import { DCGViewModule } from "#DCGView";
-import { ItemModel } from "./models";
-import {
+import type { DCGViewModule } from "#DCGView";
+import type { ItemModel } from "./models";
+import type {
   CheckboxComponent,
   DStaticMathquillViewComponent,
   InlineMathInputViewComponent,
@@ -10,7 +10,7 @@ import {
   SegmentedControlComponent,
   TooltipComponent,
 } from "../components/desmosComponents";
-import _ from "underscore";
+import type _ from "underscore";
 
 type DesmosType = typeof Desmos & {
   version: string;
@@ -24,7 +24,7 @@ type DesmosType = typeof Desmos & {
 
 type FragileType = {
   DCGView: DCGViewModule;
-  PromptSliderView: any;
+  PromptSliderView: unknown;
   Checkbox: typeof CheckboxComponent;
   SegmentedControl: typeof SegmentedControlComponent;
   MathquillView: typeof MathQuillViewComponent & {
@@ -59,8 +59,8 @@ type FragileType = {
     fill: boolean;
   };
   List: {
-    removeItemById: (listModel: any, id: string) => void;
-    moveItemsTo: (listModel: any, from: number, to: number, n: number) => void;
+    removeItemById: (listModel: unknown, id: string) => void;
+    moveItemsTo: (listModel: unknown, from: number, to: number, n: number) => void;
   };
   currentLanguage: () => string;
 };

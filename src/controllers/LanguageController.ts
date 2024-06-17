@@ -1,6 +1,6 @@
 import type DesmosOfflineMode from "#DSOM";
 
-import { FluentBundle, type FluentVariable } from "@fluent/bundle";
+import type { FluentBundle, FluentVariable } from "@fluent/bundle";
 import { dsomFluent } from "#i18n";
 import { localDorage } from "#utils";
 import window from "#globals";
@@ -29,7 +29,8 @@ export default class LanguageController implements TransparentController {
 
     const callsFormat = (...args: Parameters<LanguageController["format"]>) => {
       if (args[0] === "graphing-calculator-narration-audio-trace-traceable-curves") {
-        // @ts-ignore
+        // @ts-expect-error At runtime sketchCount doesn't have correct type
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         args[1].sketchCount = args[1].sketchCount.value;
       }
       return this.format(...args);
@@ -51,7 +52,7 @@ export default class LanguageController implements TransparentController {
 
   fetchLanguage(lang: SUPPORTED_LANG_TYPE) {
     if (!this.validateLanguage(lang)) {
-      throw new Error(`Invalid language: ${lang}`);
+      throw new Error(`Invalid language: ${lang as string}`);
     }
     if (lang === "en" || lang === "xx-XX") {
       this.desmosCurrentFormat = this.desmosEnglishFormat;
@@ -105,7 +106,7 @@ export default class LanguageController implements TransparentController {
 }
 
 export type LANG_MAP = [Exclude<SUPPORTED_LANG_TYPE, "hi" | "xx-XX">, string];
-export const LANG_DISPLAY_NAMES: Map<LANG_MAP[0], LANG_MAP[1]> = new Map([
+export const LANG_DISPLAY_NAMES = new Map<LANG_MAP[0], LANG_MAP[1]>([
   ["en", "English (US)"],
   ["es", "Español (LATAM)"],
   ["et", "Eesti"],

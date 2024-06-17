@@ -34,8 +34,8 @@ export default class HotkeysController implements TransparentController {
   }
 
   handleGlobalKeydown(ev: KeyboardEvent) {
-    // console.log(ev);
     if (this.isUndo(ev) || this.isRedo(ev)) {
+      console.log("Undo/Redo");
     } else if (ev.ctrlKey || ev.shiftKey || ev.altKey || ev.metaKey || ev.key !== "Escape") {
       if (this.isHelp(ev)) {
         // show keyboard hotkeys modal

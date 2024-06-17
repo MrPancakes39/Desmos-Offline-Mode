@@ -50,14 +50,14 @@ class HeaderController implements TransparentController {
   }
 
   openMenu(menu: HeaderPopoverMenu) {
-    if (!VALID_HEADER_MENUS.includes(menu as Exclude<HeaderPopoverMenu, "closed">)) {
+    if (!VALID_HEADER_MENUS.includes(menu)) {
       throw new Error(`Invalid header menu: ${menu}`);
     }
     if (this.#currentMenu === menu) return;
     // Just in case
     document.removeEventListener("pointerdown", this.listener);
 
-    this.#currentMenu = menu as HeaderPopoverMenu;
+    this.#currentMenu = menu;
     this.dsom.cc.updateViews();
 
     document.addEventListener("pointerdown", this.listener);

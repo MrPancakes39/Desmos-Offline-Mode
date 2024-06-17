@@ -12,7 +12,7 @@ export default class ShortcutTable extends Component<{
 }> {
   shortcutList!: Shortcut[];
 
-  init() {
+  override init() {
     this.shortcutList = this.props.shortcutList();
   }
 
@@ -41,7 +41,7 @@ export default class ShortcutTable extends Component<{
                   {(col: "heading" | shortcutOS) => (
                     <td didMount={(e: HTMLElement) => this.populateContent(e, col, shortcut)}>
                       <If predicate={() => "latex" in shortcut && col === "heading"}>
-                        {/* @ts-expect-error */}
+                        {/* @ts-expect-error If enter here it means that the shortcut has a latex property */}
                         {() => <DStaticMathquillView latex={() => shortcut.latex} config={{}} />}
                       </If>
                     </td>
@@ -69,12 +69,12 @@ export default class ShortcutTable extends Component<{
     if (col !== "mac") {
       shortcutString = shortcut.standard;
     } else {
-      shortcutString = "apple" in shortcut ? (shortcut.apple as string) : shortcut.standard;
+      shortcutString = "apple" in shortcut ? shortcut.apple! : shortcut.standard;
     }
     elem.innerHTML = this.replaceKey(shortcutString);
   }
 
   replaceKey(shortcutString: string) {
-    return shortcutString.replace(/\<key\>/g, "<span class='dcg-key-command'>").replace(/\<\/key\>/g, "</span>");
+    return shortcutString.replace(/<key>/g, "<span class='dcg-key-command'>").replace(/<\/key>/g, "</span>");
   }
 }

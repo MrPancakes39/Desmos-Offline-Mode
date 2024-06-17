@@ -13,7 +13,7 @@ export default class SwitcherModal extends Modal<{
 }> {
   switcher!: DesmosOfflineMode["switcherController"];
 
-  init() {
+  override init() {
     this.switcher = this.props.switcher();
   }
 
@@ -78,10 +78,11 @@ class CalculatorButton extends Component<{
   disabled!: boolean;
   onTap!: (e: Event) => void;
 
-  init() {
+  override init() {
     this.product = this.props.product();
     this.selected = this.props.selected?.() ?? false;
     this.disabled = this.props.disabled?.() ?? false;
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.onTap = this.props.onTap ? this.props.onTap : () => {};
   }
 

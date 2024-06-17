@@ -23,7 +23,7 @@ export default class RightContainer extends Component<{
     lang: () => LanguageMenu(this.dsom),
   } as const satisfies Record<HeaderPopoverMenu, PopoverProps>;
 
-  init() {
+  override init() {
     this.dsom = this.props.dsom();
     this.menu = this.props.menu();
 
@@ -42,15 +42,23 @@ export default class RightContainer extends Component<{
         {/* Language Menu (Ctrl + Alt/Cmd + L) */}
         <Tooltip tooltip={() => this.dsom.format("account-shell-label-language")}>
           <div class="center-div">
-            <span class="dcg-icon-world desom-icon-inline" tabindex="0" onTap={() => this.toggleMenu("lang")}></span>
+            <span
+              role="button"
+              tabindex="0"
+              aria-label={() => this.dsom.format("account-shell-label-language")}
+              class="dcg-icon-world desom-icon-inline"
+              onTap={() => this.toggleMenu("lang")}
+            ></span>
           </div>
         </Tooltip>
         {/* Help Menu (Ctrl + Alt/Cmd + H) */}
         <Tooltip tooltip={() => this.dsom.format("account-shell-label-help")}>
           <div class="center-div">
             <span
-              class="dcg-icon-question-sign desom-icon-inline"
+              role="button"
               tabindex="0"
+              aria-label={() => this.dsom.format("account-shell-label-help")}
+              class="dcg-icon-question-sign desom-icon-inline"
               onTap={() => this.toggleMenu("help")}
             ></span>
           </div>
@@ -82,10 +90,16 @@ function HelpMenu(dsom: DesmosOfflineMode) {
       <div class="message-container">
         <div class="message">{() => dsom.format("dsom-shell-help-message")}</div>
       </div>
-      <a role="link" tabindex="0" class="dcg-link" onTap={() => dsom.modalController.showModal("hotkeys")}>
+      <button
+        type="button"
+        role="link"
+        tabindex="0"
+        class="dcg-link"
+        onTap={() => dsom.modalController.showModal("hotkeys")}
+      >
         <i class="dcg-icon-keyboard"></i>
         <span class="dcg-link-text">{() => dsom.format("account-shell-link-keyboard-shortcuts")}</span>
-      </a>
+      </button>
     </div>
   );
 }

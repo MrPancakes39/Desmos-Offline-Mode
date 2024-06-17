@@ -1,5 +1,5 @@
-import { ExpressionModel, ItemModel, CalcController, Fragile } from "#globals";
-import { ClassComponent, ComponentChild, ComponentTemplate, DCGView } from "#DCGView";
+import { Fragile, type ExpressionModel, type ItemModel, type CalcController } from "#globals";
+import { ClassComponent, DCGView, type ComponentChild, type ComponentTemplate } from "#DCGView";
 
 export abstract class CheckboxComponent extends ClassComponent<{
   checked: boolean;
@@ -133,13 +133,13 @@ export function Match<Disc extends { type: string }>(
 ): ComponentTemplate {
   return DCGView.createElement(Switch, { key: () => discriminant().type }, () => {
     const d = discriminant();
-    return branches[d.type as Disc["type"]](d) as any;
+    return branches[d.type as Disc["type"]](d) as string;
   });
 }
 
 export abstract class DStaticMathquillViewComponent extends ClassComponent<{
   latex: string;
-  config: any;
+  config: unknown;
 }> {}
 
 export const DStaticMathquillView = Fragile.StaticMathquillView;

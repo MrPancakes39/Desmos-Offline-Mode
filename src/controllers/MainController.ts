@@ -40,6 +40,8 @@ export default class DesmosOfflineMode implements TransparentController {
 
   async init() {
     this.switcherController.init();
+    if (typeof this.switcherController.calculators[0] === "undefined")
+      throw new Error("SwitcherController should not have calculators at init");
     this.cc = this.switcherController.calculators[0].calc._calc.controller;
     this.languageController.init();
 
@@ -75,7 +77,7 @@ export default class DesmosOfflineMode implements TransparentController {
   }
 
   async openOnWeb() {
-    const calc = this.switcherController.calculators[0].calc._calc;
+    const calc = this.switcherController.calculators[0]!.calc._calc;
     const state = JSON.stringify(calc.getState()),
       thumbnail = calc.grapher.screenshot({ width: 100, height: 100 }),
       url = "https://www.desmos.com/api/v1/calculator/cross_origin_save";
@@ -94,7 +96,7 @@ export default class DesmosOfflineMode implements TransparentController {
 
     const web_url = await fetch(url, {
       method: "POST",
-      // @ts-expect-error
+      // @ts-expect-error Conversion to FormData works
       body: new URLSearchParams(new FormData(form_submit)),
       headers: {
         Accept: "application/json, text/plain, */*",

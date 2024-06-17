@@ -13,7 +13,7 @@ export class ModalContainer extends Component<{
 }> {
   dsom!: DesmosOfflineMode;
 
-  init() {
+  override init() {
     this.dsom = this.props.dsom();
   }
 
@@ -28,7 +28,7 @@ export class ModalContainer extends Component<{
               return (
                 <HotkeysModal
                   close={this.props.closeModal}
-                  format={(...args) => this.dsom.format(...args)}
+                  format={this.dsom.format.bind(this.dsom)}
                   updateViews={() => this.dsom.cc.updateViews()}
                   product={() => this.dsom.switcherController.selected!.type}
                 />
@@ -38,7 +38,7 @@ export class ModalContainer extends Component<{
                 <SwitcherModal
                   close={this.props.closeModal}
                   switcher={this.dsom.switcherController}
-                  format={(...args) => this.dsom.format(...args)}
+                  format={this.dsom.format.bind(this.dsom)}
                   currentLanguage={() => this.dsom.currentLanguage()}
                 />
               );

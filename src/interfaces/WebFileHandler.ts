@@ -24,10 +24,12 @@ export class WebFileHandler implements FileHandler {
         input.addEventListener(
           "change",
           () => {
-            if (input.files === null || input.files[0] === undefined) {
-              return reject("No file selected");
+            const file = input.files?.[0];
+            if (file === undefined) {
+              reject("No file selected");
+              return;
             }
-            resolve(input.files[0]);
+            resolve(file);
           },
           { once: true }
         );
@@ -44,7 +46,8 @@ export class WebFileHandler implements FileHandler {
         const reader = new FileReader();
         reader.addEventListener("load", () => {
           if (typeof reader.result !== "string") {
-            return reject("Could not read file");
+            reject("Could not read file");
+            return;
           }
           resolve(reader.result);
         });
@@ -61,7 +64,11 @@ export class WebFileHandler implements FileHandler {
       }
       return { error: null, file: result.desmos_file };
     } catch (e) {
-      return { error: `${e}`, file: null };
+      const errMessage = typeof e === "string" ? e : e instanceof Error ? e.message : "Unknown error";
+      if (e === "Unknown error") {
+        console.error(e);
+      }
+      return { error: errMessage, file: null };
     }
   }
 
@@ -79,6 +86,7 @@ export class WebFileHandler implements FileHandler {
  */
 
 type Booleanish = boolean | "true" | "false";
+type any_string = string & NonNullable<unknown>;
 
 class FileDownloader {
   _isSafari: boolean;
@@ -87,7 +95,7 @@ class FileDownloader {
     this._isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   }
 
-  _checkFileExtension(filename?: string, extension?: string | Booleanish) {
+  _checkFileExtension(filename?: string, extension?: any_string | Booleanish): [string, string] {
     if (!extension || extension === true || extension === "true") {
       extension = "";
     }
@@ -96,7 +104,7 @@ class FileDownloader {
     }
     let ext = "";
     // make sure the file will have a name, see if filename needs extension
-    if (filename && filename.includes(".")) {
+    if (filename.includes(".")) {
       ext = filename.split(".").pop()!;
     }
     // append extension if it doesn't exist
@@ -153,14 +161,15 @@ class FileDownloader {
   saveStrings(list: string[], filename: string, extension: string, isCRLF?: boolean) {
     const ext = extension || "txt";
     const pWriter = new PrintWriter(filename, ext);
-    for (let i = 0; i < list.length; i++) {
-      isCRLF ? pWriter.write(list[i] + "\r\n") : pWriter.write(list[i] + "\n");
+
+    for (const line of list) {
+      isCRLF ? pWriter.write(line + "\r\n") : pWriter.write(line + "\n");
     }
     pWriter.close();
     pWriter.clear();
   }
 
-  saveJSON(json: Record<string, unknown>, filename: string, extension: string = "json", opt?: boolean) {
+  saveJSON(json: Record<string, unknown>, filename: string, extension = "json", opt?: boolean) {
     let stringify;
     if (opt) {
       stringify = JSON.stringify(json);

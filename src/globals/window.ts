@@ -37,7 +37,7 @@ if (!checkDesmosSchema.success) {
 import type DesmosTypeWithoutLocales from "./Desmos";
 import { type CalcWithPatches } from "./patches";
 import type DesmosOfflineMode from "#DSOM";
-import { SUPPORTED_LANG_TYPE } from "#DSOM";
+import type { SUPPORTED_LANG_TYPE } from "#DSOM";
 
 type DesmosType = DesmosTypeWithoutLocales & {
   locales: Record<Exclude<SUPPORTED_LANG_TYPE, "en" | "xx-XX">, string>;

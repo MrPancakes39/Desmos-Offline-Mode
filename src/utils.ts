@@ -31,7 +31,7 @@ export function select<E extends Element>(selector: string): E {
 }
 
 export function createElt<T extends HTMLElement>(html: string): T {
-  let tmp = document.createElement("div");
+  const tmp = document.createElement("div");
   tmp.innerHTML = html;
   return tmp.firstElementChild as T;
 }

@@ -21,6 +21,8 @@ const config = {
   plugins: ["@typescript-eslint"],
   rules: {
     "linebreak-style": ["error", "unix"],
+    // We have to disable this for returning JSX from functions to work
+    "@typescript-eslint/no-unsafe-return": "off",
     // TS ESLint
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",

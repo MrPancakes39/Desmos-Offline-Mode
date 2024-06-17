@@ -3,8 +3,8 @@
  * This file includes type definition for internal graph state models.
  * These have more information than the graph state related to getState and setState.
  */
-import { ClassComponent } from "#DCGView";
-import { CalcController } from ".";
+import type { ClassComponent } from "#DCGView";
+import type { CalcController } from ".";
 
 interface BasicSetExpression {
   id: string;
@@ -29,7 +29,7 @@ interface ItemModelBase {
   id: string;
   folderId?: string;
   secret?: boolean;
-  error?: any;
+  error?: unknown;
   formula?: {
     expression_type:
       | "X_OR_Y"
@@ -157,7 +157,7 @@ export interface FolderModel {
   id: string;
   title?: string;
   secret?: boolean;
-  error?: any;
+  error?: unknown;
   hidden?: boolean; // TODO: Check if this property exists
   index: number;
   controller: CalcController;

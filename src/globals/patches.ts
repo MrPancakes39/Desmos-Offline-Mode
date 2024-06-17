@@ -1,5 +1,5 @@
-import { Calc as CalcType } from "./Calc";
-import { ExpressionModel, ItemModel, TableModel } from ".";
+import type { Calc as CalcType } from "./Calc";
+import type { ExpressionModel, ItemModel, TableModel } from ".";
 
 type DesmosColorNames = keyof typeof Desmos.Colors;
 type DesmosColorsValues = (typeof Desmos.Colors)[DesmosColorNames];
@@ -22,8 +22,8 @@ export function applyPatches(Calc: CalcWithPatches) {
   type DesmosColorRotation = (typeof colorRotation)[number];
 
   Calc.getNextColor = () => {
-    let index = Calc.controller.listModel.colorIdx;
-    return colorRotation[index];
+    const index = Calc.controller.listModel.colorIdx;
+    return colorRotation[index]!;
   };
 
   Calc.setNextColor = (color) => {
@@ -38,10 +38,10 @@ export function applyPatches(Calc: CalcWithPatches) {
   };
 
   Calc.getSelectedItem = (): SelectedItem => {
-    let item = Calc.controller.getSelectedItem();
+    const item = Calc.controller.getSelectedItem();
     if (item === undefined) return undefined;
 
-    let sanitized = sanitizeItem(item);
+    const sanitized = sanitizeItem(item);
     if (sanitized.type === "expression") {
       delete sanitized.fill;
       delete sanitized.lines;
@@ -57,12 +57,12 @@ export function applyPatches(Calc: CalcWithPatches) {
 
   Calc.setItemColor = (color) => {
     if (color === undefined) return false;
-    let item = Calc.getSelectedItem();
+    const item = Calc.getSelectedItem();
     if (item === undefined) return false;
     if (item.type === "expression") {
       item.color = color;
       // TODO: Fix Later
-      // @ts-expect-error
+      // @ts-expect-error At runtime setExpression works
       Calc.setExpression(item);
       return true;
     }

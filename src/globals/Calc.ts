@@ -1,7 +1,10 @@
 // Original File: https://github.com/DesModder/DesModder/blob/main/src/globals/Calc.ts
-import { ItemModel } from "./models";
-import { GraphState } from "@desmodder/graph-state";
-import { MathQuillField } from "../components";
+import type { ItemModel } from "./models";
+import type { GraphState } from "@desmodder/graph-state";
+import type { MathQuillField } from "../components";
+
+// Keeps the type of string of absorbing literals in unions.
+type any_string = string & NonNullable<unknown>;
 
 export type DispatchedEvent =
   | {
@@ -97,7 +100,7 @@ export type DispatchedEvent =
       update: {
         // folderId is 'move these objects to folder'
         // Everything else is simply styling
-        prop: "folderId" | string;
+        prop: "folderId" | any_string; // TODO: Pull Request??
       };
     }
   | { type: "set-folder-collapsed"; id: string; isCollapsed: boolean }
@@ -193,7 +196,7 @@ interface CalcPrivate {
     // _removeExpressionSynchronously(model: ItemModel): void;
     handleDispatchedAction: (evt: DispatchedEvent) => void;
     _toplevelReplaceItemAt: (index: number, model: ItemModel, shouldFocus: boolean) => void;
-    createItemModel: (modelTemplate: any) => ItemModel;
+    createItemModel: (modelTemplate: unknown) => ItemModel;
     getPillboxBackgroundColor: () => string;
     isGraphSettingsOpen: () => boolean;
     graphSettings: {
@@ -212,7 +215,7 @@ interface CalcPrivate {
     getTickerPlaying?: () => boolean;
     // The item models returned are actually much more detailed
     getSelectedItem: () => ItemModel | undefined;
-    getItemModel: (id: any) => ItemModel | undefined;
+    getItemModel: (id: unknown) => ItemModel | undefined;
     getAllSelectedItems: () => ItemModel[];
     getItemModelByIndex: (index: number) => ItemModel | undefined;
     getAllItemModels: () => ItemModel[];
@@ -275,7 +278,7 @@ interface CalcPrivate {
     };
     is3dProduct: () => boolean;
     // TODO: Pull Request??
-    s: (key: string, options?: Record<string, any> | null) => string;
+    s: (key: string, options?: Record<string, unknown> | null) => string;
   };
   _calc: {
     globalHotkeys: TopLevelComponents;

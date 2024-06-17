@@ -1,6 +1,6 @@
 import { Component, jsx } from "#DCGView";
 
-export default class Fragment extends Component<{}> {
+export default class Fragment extends Component {
   template() {
     return <div>{this.children}</div>;
   }
