@@ -3,12 +3,19 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import eslintConfigPrettier from "eslint-config-prettier";
 import eslintConfigLove from "eslint-config-love";
+import pluginJsxA11y from "eslint-plugin-jsx-a11y";
 
 export default tseslint.config(
   { ignores: ["**/dist", "**/fetch_desmos_res", "**/public/desmos", "**/eslint.config.js"] },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+  {
+    plugins: {
+      "jsx-a11y": pluginJsxA11y,
+    },
+    rules: pluginJsxA11y.configs.recommended.rules,
+  },
   eslintConfigLove,
   {
     languageOptions: {
