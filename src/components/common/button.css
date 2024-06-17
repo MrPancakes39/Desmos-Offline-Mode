@@ -14,8 +14,12 @@
 }
 .dcg-calculator-api-container .dcg-btn-green {
   color: #fff;
-  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.15), inset 0 -1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 1px rgba(255, 255, 255, 0.15), inset 0 -1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 -1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 1px rgba(255, 255, 255, 0.15),
+    inset 0 -1px rgba(0, 0, 0, 0.1);
 }
 .dcg-calculator-api-container .dcg-btn-green {
   background: #1aad57;
@@ -32,8 +36,12 @@
   box-shadow: none;
 }
 .dcg-calculator-api-container .dcg-inverted-colors .dcg-btn-green {
-  -webkit-box-shadow: inset 0 -1px rgba(255, 255, 255, 0.15), inset 0 1px rgba(0, 0, 0, 0.1);
-  box-shadow: inset 0 -1px rgba(255, 255, 255, 0.15), inset 0 1px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow:
+    inset 0 -1px rgba(255, 255, 255, 0.15),
+    inset 0 1px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 0 -1px rgba(255, 255, 255, 0.15),
+    inset 0 1px rgba(0, 0, 0, 0.1);
 }
 .dcg-calculator-api-container .dcg-component-checkbox {
   cursor: pointer;

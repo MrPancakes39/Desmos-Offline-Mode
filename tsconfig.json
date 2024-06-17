@@ -1,28 +1,45 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    /* Base Options */
     "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ES2021",
+    "allowJs": false,
     "resolveJsonModule": true,
+    "moduleDetection": "force",
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react",
-    "jsxFactory": "jsx",
+    // "verbatimModuleSyntax": true,
 
-    /* Linting */
+    /* Strictness & Linting */
     "strict": true,
     "strictNullChecks": true,
+    "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+
+    /* Bundler Mode */
+    "useDefineForClassFields": true,
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "noEmit": true,
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "jsx": "react",
+    "jsxFactory": "jsx",
+
+    /* Output Options */
+    "composite": true,
+    "declaration": true,
+    "sourceMap": false,
+
+    // This property will prevent issues related to the file casing
+    // and how the files are referenced in the code in different OSes
+    // (e.g.: Windows and Linux)
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["src"]
 }

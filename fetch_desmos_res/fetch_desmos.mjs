@@ -52,7 +52,7 @@ const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
 const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 
 async function main() {
-  const TESTED_COMMIT = "4f3b2693c90caae249fa98fcad920c4721087982";
+  const TESTED_COMMIT = "0c95925b9251cc673a8296309ee501597aff130f";
   const USE_3D_API = false;
 
   const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
