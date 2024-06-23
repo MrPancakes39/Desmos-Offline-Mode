@@ -1,6 +1,5 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
-import html2canvas from "html2canvas";
 import { PPreviewContainer } from "../components";
 
 import type DesmosOfflineMode from "#DSOM";
@@ -33,13 +32,17 @@ export default class PrintPreviewController implements TransparentController {
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
-  async open() {
+  open() {
     if (!this.ppreviewContent) return;
-    const dcgGraphElt = select<HTMLDivElement>("#calc-container .dcg-graph-outer");
+    const dcgGraphElt = select<HTMLCanvasElement>("#calc-container canvas.dcg-graph-inner");
     const dcgExpPanelElt = select<HTMLDivElement>("#calc-container .dcg-exppanel-outer");
 
     // Copy DCG Graph
-    const canvas = await html2canvas(dcgGraphElt);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = dcgGraphElt.width;
+    canvas.height = dcgGraphElt.height;
+    ctx && ctx.drawImage(dcgGraphElt, 0, 0);
     canvas.style.border = "2px solid #444";
 
     // Copy Expression Panel
