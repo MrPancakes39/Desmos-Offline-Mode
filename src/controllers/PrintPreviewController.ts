@@ -33,7 +33,7 @@ export default class PrintPreviewController implements TransparentController {
     if (this.divContainer) Fragile.DCGView.unmountFromNode(this.divContainer);
   }
 
-  async openPrintPreview() {
+  async open() {
     if (!this.ppreviewContent) return;
     const dcgGraphElt = select<HTMLDivElement>("#calc-container .dcg-graph-outer");
     const dcgExpPanelElt = select<HTMLDivElement>("#calc-container .dcg-exppanel-outer");
@@ -56,7 +56,7 @@ export default class PrintPreviewController implements TransparentController {
     document.documentElement.classList.add("print-preview");
   }
 
-  closePrintPreview() {
+  close() {
     document.documentElement.classList.remove("print-preview");
     if (this.ppreviewContent) this.ppreviewContent.innerHTML = "";
   }
