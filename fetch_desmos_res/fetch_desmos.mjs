@@ -52,14 +52,12 @@ const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
 const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 
 async function main() {
-  const TESTED_COMMIT = "0c95925b9251cc673a8296309ee501597aff130f";
-  const USE_3D_API = false;
+  const TESTED_COMMIT = "850eb1be157c0f8aebbb3f63eb84a3481cc4c471";
 
   const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
-  const JS_FILENAME = USE_3D_API ? "calculator_3d.js" : "calculator.js";
 
   // Get HTML Page
-  logger.info("[1/7] Getting HTML Page");
+  logger.info("[1/6] Getting HTML Page");
   const URL = "https://www.desmos.com";
   const response = await fetch(URL + "/calculator");
   if (!response.ok) {
@@ -95,7 +93,7 @@ async function main() {
 
   // Create Preload Script
   {
-    logger.info("[2/7] Creating Preload Script");
+    logger.info("[2/6] Creating Preload Script");
     fs.writeFileSync(
       `${PARENT_DIR}/public/desmos/preload_desmos.js`,
       `// catches errors within iframe and promotes them to qunit during tests
@@ -130,9 +128,9 @@ document.documentElement.classList.add(${html_class});`
 
   // Fetch the calculator CSS and JS
   {
-    logger.info("[3/7] Getting Calculator API");
-    const api_files = html.match(/\/assets\/build\/calculator_desktop.*?\.(?:js|css)/g);
-    if (api_files.length != 2) {
+    logger.info("[3/6] Getting Calculator API");
+    const api_files = html.match(/\/assets\/build\/.*?calculator_desktop.*?\.(?:js|css)/g);
+    if (api_files === null || api_files.length !== 2) {
       throw Error("Couldn't get API files.");
     }
     await Promise.all(
@@ -141,30 +139,13 @@ document.documentElement.classList.add(${html_class});`
         await getFile(URL + file, `Couldn't get ${ext} of desmos.`, `${PARENT_DIR}/public/desmos/calculator${ext}`);
       })
     );
-
-    if (USE_3D_API) {
-      const response = await fetch(URL + "/3d");
-      if (!response.ok) {
-        throw Error("Couldn't get html page of desmos 3d.");
-      }
-      const html = await response.text();
-      const api_3d_js = html.match(/\/assets\/build\/calculator_3d.*?\.js/g);
-      if (api_3d_js.length != 1) {
-        throw Error("Couldn't find 3D API file endpoint.");
-      }
-      await getFile(
-        URL + api_3d_js[0],
-        `Couldn't get 3d api of desmos.`,
-        `${PARENT_DIR}/public/desmos/calculator_3d.js`
-      );
-    }
   }
 
   // Fetch desmos font files
   {
     logger.info("[4/7] Downloading Desmos Fonts");
     let css = fs.readFileSync(`${PARENT_DIR}/public/desmos/calculator.css`, { encoding: "utf-8" });
-    const fontMatches = css.match(/\/assets\/font\/.+?woff2/g);
+    const fontMatches = css.match(/\/assets\/build\/.+?woff2/g);
     await Promise.all(
       fontMatches.map(async (endpoint) => {
         const font_fname = path.basename(endpoint);
@@ -181,7 +162,7 @@ document.documentElement.classList.add(${html_class});`
 
   // Move internal css to loading.css file
   {
-    logger.info("[5/7] Extracting additional assets");
+    logger.info("[4/6] Extracting additional assets");
     const loading = /<style type='text\/css'>(.+)<\/style>/gs.exec(html);
     if (loading === null) {
       throw Error("Expected to have loading as internal css.");
@@ -192,7 +173,7 @@ document.documentElement.classList.add(${html_class});`
   // Fetch desmos lang files
   {
     let locales = {};
-    logger.info("[6/7] Downloading Desmos Language Files");
+    logger.info("[5/6] Downloading Desmos Language Files");
     for (let lang of SUPPORTED_LANGS) {
       if (lang === "en" || lang === "xx-XX") continue;
       const endpoint = `${URL}/api/v1/calculator/language/${lang}.ftl`;
@@ -213,8 +194,8 @@ document.documentElement.classList.add(${html_class});`
 
   // Fix calculator api file
   {
-    logger.info("[7/7] Fixing files");
-    let js = fs.readFileSync(`${PARENT_DIR}/public/desmos/${JS_FILENAME}`, { encoding: "utf-8" });
+    logger.info("[6/6] Fixing files");
+    let js = fs.readFileSync(`${PARENT_DIR}/public/desmos/calculator.js`, { encoding: "utf-8" });
 
     // Removing bugsnag
     const old_bugsnag = js.match(/Bugsnag JavaScript.*?.default=.*?,/g)[0];
@@ -225,31 +206,22 @@ document.documentElement.classList.add(${html_class});`
     js = js.replace(old_bugsnag, new_bugsnag);
 
     // Creates a copy of end of file
-    let endIndex = -11000;
+    let endIndex = -2000;
     let new_end_js = js.slice(endIndex); // Calculator 3D's loader is in last 11000 instead of 2000.
 
-    const old_load_search =
-      /}async function (.+?)\(\){.+?(calcConstructor.+?),.+?(product.+?),.+?(var.+;.+?;typeof Desmos=="undefined"&&\(Desmos={}\));/g.exec(
-        new_end_js
-      );
+    const data_loader = /\.initialProduct\)\?(.+?)\.initialProduct:/g.exec(new_end_js);
+    if (data_loader == null) throw Error("Expected data loader to exist.");
+
+    const old_load_search = /typeof Desmos=="undefined"&&\(Desmos={}\);/g.exec(new_end_js);
     if (old_load_search == null) throw Error("Expected load Desmos to exist.");
 
-    const [old_load, func_name, calc_constructor_option, product_option, line_load] = old_load_search;
-    const productType = product_option.split(":")[1].slice(1, -1);
-    const [isCalc3D, isCalc] = [productType === "graphing-3d", productType === "graphing"];
-    if (!isCalc3D && !isCalc) throw Error("Unknown Desmos Calculator Constructor");
+    const new_load_search = `${data_loader[1]}={initialProduct:"graphing"};${old_load_search}`;
+    new_end_js = new_end_js.replace(old_load_search, new_load_search);
 
-    const calc_constructor = calc_constructor_option.split(":")[1];
-    const new_promise_load = isCalc3D
-      ? `new Promise(res=>{function CC_3D(...r){return new ${calc_constructor}(...r)};CC_3D.prototype=${calc_constructor}.prototype;Desmos.Graphing3DCalculator=CC_3D;res();})`
-      : "new Promise(res=>{Desmos.Graphing3DCalculator=function(){throw new Error('Graphing 3D API is Disabled.')}res();})";
-    const new_line_load = line_load.replace(`${func_name}()`, new_promise_load);
-    new_end_js = new_end_js.replace(line_load, new_line_load);
-
-    // Removes window.Calc assignment
-    const old_calc = new_end_js.match(/,window.Calc=.*?}\)/g)[0];
-    const new_calc = ";})";
-    new_end_js = new_end_js.replace(old_calc, new_calc);
+    // Removes call to Desmos product initializer
+    const old_initalizer = /\({initialProduct.*?\.then/g.exec(new_end_js);
+    const new_initalizer = ";new Promise(res=>res()).then";
+    new_end_js = new_end_js.replace(old_initalizer, new_initalizer);
 
     // Removes hiding of loader
     const old_loader = new_end_js.match(/\.dcg-loading-div-container.+?\.style\.display="none"/g)[0];
