@@ -27,6 +27,7 @@ const DesmosApiSchema = z.object(
   {
     GraphingCalculator: z.function(),
     Geometry: z.function(),
+    Calculator3D: z.function(),
     Private: z.object({
       Fragile: z.object({}),
     }),

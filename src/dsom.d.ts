@@ -2,6 +2,7 @@ declare namespace Desmos {
   /**
    * Creates a 3d calculator object to control the calculator embedded in the DOM element specified by element.
    */
+  export function Calculator3D(...params: Parameters<(typeof Desmos)["GraphingCalculator"]>): Desmos.Calculator;
   export function Geometry(...params: Parameters<(typeof Desmos)["GraphingCalculator"]>): Desmos.Calculator;
 
   interface TapEvent extends JQuery.TriggeredEvent {

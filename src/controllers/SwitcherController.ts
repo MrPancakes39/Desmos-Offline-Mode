@@ -9,7 +9,7 @@ const initSettings = {
   pasteGraphLink: true,
 };
 
-const CALC_TYPES = ["graphing", "geometry"] as const;
+const CALC_TYPES = ["graphing", "geometry", "calc3d"] as const;
 
 type MountedCalculator = {
   type: (typeof CALC_TYPES)[number];
@@ -24,9 +24,11 @@ export default class SwitcherController implements TransparentController {
   init() {
     const graphContainer = select<HTMLDivElement>("#graph-container");
     const geoContainer = select<HTMLDivElement>("#geometry-container");
+    const c3dContainer = select<HTMLDivElement>("#calc3d-container");
 
     const graphCalc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as CalcWithPatches;
     const geoCalc = window.Desmos.Geometry(geoContainer, initSettings) as CalcWithPatches;
+    const c3dCalc = window.Desmos.Calculator3D(c3dContainer, initSettings) as CalcWithPatches;
 
     applyPatches(graphCalc);
     applyPatches(geoCalc);
@@ -41,6 +43,11 @@ export default class SwitcherController implements TransparentController {
         type: "geometry",
         calc: geoCalc,
         container: geoContainer,
+      },
+      {
+        type: "calc3d",
+        calc: c3dCalc,
+        container: c3dContainer,
       },
     ];
 

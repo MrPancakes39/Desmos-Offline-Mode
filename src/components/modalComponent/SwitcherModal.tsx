@@ -58,8 +58,11 @@ export default class SwitcherModal extends Modal<{
               ? "3D Calculator"
               : this.props.format("frontpage-link-shared-3d-calculator")
           }
-          disabled={true}
-          onTap={() => console.log("3d")}
+          selected={() => this.switcher.selected!.type === "calc3d"}
+          onTap={() => {
+            this.switcher.selectCalculator("calc3d");
+            this.props.close();
+          }}
         />
       </GenericModal>
     );
