@@ -9,7 +9,7 @@ const initSettings = {
   pasteGraphLink: true,
 };
 
-const CALC_TYPES = ["graphing", "geometry", "calc3d"] as const;
+const CALC_TYPES = ["graphing", "geometry", "3d"] as const;
 
 type MountedCalculator = {
   type: (typeof CALC_TYPES)[number];
@@ -45,7 +45,7 @@ export default class SwitcherController implements TransparentController {
         container: geoContainer,
       },
       {
-        type: "calc3d",
+        type: "3d",
         calc: c3dCalc,
         container: c3dContainer,
       },
