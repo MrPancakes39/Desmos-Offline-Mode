@@ -45,7 +45,6 @@ export default class SwitcherController implements TransparentController {
     ];
 
     this.selectCalculator("graphing");
-    // export const Calc = window.Desmos.Graphing3DCalculator(graphContainer) as CalcWithPatches;
   }
 
   destroy() {
