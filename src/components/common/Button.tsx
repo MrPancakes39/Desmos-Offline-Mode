@@ -37,7 +37,7 @@ export default class DCGButton extends Component<{
         {...(this.props["aria-label"] ? { "aria-label": this.props["aria-label"]() } : null)}
         onTap={(e: Event) => !this.props.disabled?.() && this.props.onTap(e)}
       >
-        {this.children}
+        {this.props.children}
       </span>
     );
   }

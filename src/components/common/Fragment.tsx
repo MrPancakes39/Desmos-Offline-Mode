@@ -2,7 +2,7 @@ import { Component, jsx } from "#DCGView";
 
 export default class Fragment extends Component {
   template() {
-    return <div>{this.children}</div>;
+    return <div>{this.props.children}</div>;
   }
 
   didMount() {

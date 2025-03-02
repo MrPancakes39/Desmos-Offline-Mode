@@ -33,7 +33,7 @@ export default class GenericModal extends Modal<{
           </span>
           <div class="modal-dialog">
             <h1>{this.props.title()}</h1>
-            {this.useWrapper ? <div class="modal-content">{this.children}</div> : this.children}
+            {this.useWrapper ? <div class="modal-content">{this.props.children}</div> : this.props.children}
           </div>
         </div>
       </div>
