@@ -19,9 +19,6 @@ export class ModalContainer extends Component<{
   }
 
   template() {
-    const product = this.dsom.switcherController.selected?.type;
-    if (product === undefined) return null;
-
     return (
       <Switch key={() => this.props.modalType()}>
         {(type: ModalType) => {
@@ -34,7 +31,7 @@ export class ModalContainer extends Component<{
                   close={this.props.closeModal}
                   format={this.dsom.format.bind(this.dsom)}
                   updateViews={() => this.dsom.cc.updateViews()}
-                  product={() => product}
+                  product={() => this.dsom.switcherController.selected?.type ?? "graphing"}
                 />
               );
             case "switcher":
