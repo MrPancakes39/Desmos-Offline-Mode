@@ -10,6 +10,7 @@
     "lint": "eslint --report-unused-disable-directives --max-warnings 0 .",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier --write 'src/**/*.{css,less,ts,tsx}'",
+    "typecheck": "tsc --project ./tsconfig.json",
     "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs"
   },
   "dependencies": {
