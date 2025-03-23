@@ -3,13 +3,6 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "imports": {
-    "#i18n": "./src/i18n/index.ts",
-    "#globals": "./src/globals/index.ts",
-    "#DCGView": "./src/DCGView.ts",
-    "#DSOM": "./src/controllers/MainController.ts",
-    "#utils": "./src/utils.ts"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
