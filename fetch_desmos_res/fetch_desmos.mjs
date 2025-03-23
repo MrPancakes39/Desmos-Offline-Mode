@@ -52,7 +52,7 @@ const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
 const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 
 async function main() {
-  const TESTED_COMMIT = "850eb1be157c0f8aebbb3f63eb84a3481cc4c471";
+  const TESTED_COMMIT = "571d15cdbfbf67bc598b671db5138a88a3dd8c00";
 
   const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
 
