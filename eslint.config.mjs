@@ -31,7 +31,6 @@ export default tseslint.config(
     },
     rules: {
       // File Formatting
-      "react/jsx-filename-extension": ["warn", { extensions: [".tsx"] }],
       "linebreak-style": ["error", "unix"],
       "import/order": [
         "warn",
