@@ -12,7 +12,6 @@
   },
   "scripts": {
     "dev": "vite",
-    "dev:browser": "vite --mode browser",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --report-unused-disable-directives --max-warnings 0 .",

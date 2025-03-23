@@ -71,7 +71,7 @@ export const DSOM = window.DSOM;
 
 // Check if we're in a browser
 Object.defineProperty(window, "IS_BROWSER", {
-  value: import.meta.env.VITE_DESMOS_PROTOCOL !== "desmos:/",
+  value: true,
   configurable: false,
   enumerable: true,
   writable: false,
