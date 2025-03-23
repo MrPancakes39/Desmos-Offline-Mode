@@ -1,42 +1,61 @@
+// @ts-check
+
+import js from "@eslint/js";
 import globals from "globals";
-import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import eslintConfigPrettier from "eslint-config-prettier";
-import eslintConfigLove from "eslint-config-love";
-import pluginJsxA11y from "eslint-plugin-jsx-a11y";
+import love from "eslint-config-love";
 
 export default tseslint.config(
-  { ignores: ["**/dist", "**/fetch_desmos_res", "**/public/desmos", "**/eslint.config.js"] },
-  eslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  { ignores: ["dist", "fetch_desmos_res", "public/desmos"] },
   {
-    plugins: {
-      "jsx-a11y": pluginJsxA11y,
-    },
-    rules: pluginJsxA11y.configs.recommended.rules,
-  },
-  eslintConfigLove,
-  {
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
+      love,
+    ],
+    files: ["**/*.{ts,tsx}"],
     languageOptions: {
+      ecmaVersion: 2020,
       globals: globals.browser,
-
-      ecmaVersion: "latest",
       sourceType: "module",
-
       parserOptions: {
-        project: "./tsconfig.json",
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
+        ecmaFeatures: {
+          jsx: true,
+        },
       },
     },
     rules: {
+      // File Formatting
+      "react/jsx-filename-extension": ["warn", { extensions: [".tsx"] }],
       "linebreak-style": ["error", "unix"],
+      "import/order": [
+        "warn",
+        {
+          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+          "newlines-between": "always",
+          alphabetize: {
+            order: "asc",
+            caseInsensitive: true,
+          },
+          pathGroups: [
+            {
+              pattern: "~/**",
+              group: "internal",
+            },
+          ],
+        },
+      ],
       // We have to disable this for returning JSX from functions to work
       "@typescript-eslint/no-unsafe-return": "off",
       // Disable some love eslint rules
       "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/strict-boolean-expressions": "off",
-      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-magic-numbers": "off",
+      "@typescript-eslint/prefer-destructuring": "off",
       // TS ESLint
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
@@ -70,5 +89,6 @@ export default tseslint.config(
       ],
     },
   },
+  jsxA11y.flatConfigs.recommended,
   eslintConfigPrettier
 );
