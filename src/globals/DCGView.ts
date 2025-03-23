@@ -1,19 +1,17 @@
 // Original File: https://github.com/DesModder/DesModder/blob/main/src/DCGView.ts
 import { Desmos } from "./window";
 
-export const DCGView = Desmos.Private.Fragile.DCGView;
+export const { DCGView } = Desmos.Private.Fragile;
 
 type OrConst<T> = {
   [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? T[K] : T[K] | (() => T[K]);
 };
 
 type ToFunc<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- This any is fine
-  [K in keyof T]: T[K] extends (...args: any[]) => unknown ? T[K] : () => T[K];
+  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? T[K] : () => T[K];
 };
 
 export abstract class ClassComponent<PropsType extends GenericProps = Record<string, unknown>> {
-  update!: () => void;
   props!: ToFunc<PropsType> & { children: unknown };
   // eslint-disable-next-line @typescript-eslint/no-useless-constructor, @typescript-eslint/no-empty-function -- Used by DCGView
   constructor(_props: OrConst<PropsType>) {}
@@ -102,16 +100,16 @@ interface CommonProps {
   class?: () => string;
   didMount?: (elem: HTMLElement) => void;
   willUnmount?: () => void;
+  children?: ComponentChild[];
 }
 type WithCommonProps<T> = Omit<T, keyof CommonProps> & CommonProps;
 export interface ComponentTemplate {
   __nominallyComponentTemplate: undefined;
+  children?: ComponentChild;
 }
 export type ComponentChild = ComponentTemplate | null | string | (() => string);
 
-export const Component = DCGView.Class;
-export const mountToNode = DCGView.mountToNode;
-export const unmountFromNode = DCGView.unmountFromNode;
+export const { Class: Component, mountToNode, unmountFromNode } = DCGView;
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace -- For JSX
@@ -188,6 +186,25 @@ export function jsx<Props extends GenericProps>(
       fnProps[k] = props[k];
     }
   }
+  fnProps.children = children.length === 1 ? children[0] : children;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore type assertion
-  return DCGView.createElement(el, fnProps as WithCommonProps<ToFunc<Props>>, ...children);
+  return createElementWrapped(el, fnProps as OrConst<Props>);
+}
+
+export function createElementWrapped<Props>(
+  el: ComponentConstructor<Props>,
+  props: OrConst<Props> & { children?: ComponentChild[] }
+) {
+  const { DCGView } = Desmos.Private.Fragile;
+  const isChildrenOutsideProps = DCGView.createElement("div", {}, "third-arg").children === "third-arg";
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Two versions of DCGView
+  const eltProps = props as WithCommonProps<ToFunc<Props>>;
+  if (isChildrenOutsideProps) {
+    const { children } = props;
+    const childrenArr = children === undefined ? [] : Array.isArray(children) ? children : [children];
+    // Old interface
+    // TODO-remove-children-props
+    return DCGView.createElement(el, eltProps, ...childrenArr);
+  }
+  return DCGView.createElement(el, eltProps);
 }

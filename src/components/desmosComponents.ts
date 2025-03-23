@@ -1,7 +1,12 @@
-import { ClassComponent, DCGView } from "~/globals/DCGView";
-import type { ComponentChild, ComponentTemplate } from "~/globals/DCGView";
+import {
+  ClassComponent,
+  type ComponentChild,
+  type ComponentTemplate,
+  createElementWrapped,
+  DCGView,
+} from "~/globals/DCGView";
 import { Fragile } from "~/globals/window";
-import type { CalcController } from "~/types/Calc";
+import type { CalcController } from "~/types/DSOM";
 import type { ExpressionModel, ItemModel } from "~/types/models";
 
 export abstract class CheckboxComponent extends ClassComponent<{
@@ -12,7 +17,7 @@ export abstract class CheckboxComponent extends ClassComponent<{
   onChange: (checked: boolean) => void;
 }> {}
 
-export const Checkbox = Fragile.Checkbox;
+export const { Checkbox } = Fragile;
 
 export abstract class SegmentedControlComponent extends ClassComponent<{
   ariaGroupLabel: string;
@@ -106,13 +111,14 @@ export abstract class MathQuillViewComponent extends ClassComponent<{
 export const MathQuillView = Fragile.MathquillView;
 
 export abstract class InlineMathInputViewComponent extends ClassComponent<{
+  containerClass?: string | Record<string, boolean>;
   latex: string;
   // capExpressionSize: number | false;
   // config: { autoOperatorNames: string };
   isFocused: boolean;
   ariaLabel: string;
   // ariaPostLabel: string;
-  placeholder?: string;
+  placeholder: string;
   handleLatexChanged: (s: string) => void;
   handlePressedKey?: (key: string, e: KeyboardEvent) => void;
   hasError?: boolean;
@@ -134,10 +140,15 @@ export function Match<Disc extends { type: string }>(
     [K in Disc["type"]]: (r: Disc & { type: K }) => ComponentChild;
   }
 ): ComponentTemplate {
-  return DCGView.createElement(Switch, { key: () => discriminant().type }, () => {
-    const d = discriminant();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- This is false but ok
-    return branches[d.type as Disc["type"]](d) as string;
+  return createElementWrapped(Switch, {
+    key: () => discriminant().type,
+    children: [
+      () => {
+        const d = discriminant();
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- This is false but ok
+        return branches[d.type as Disc["type"]](d) as string;
+      },
+    ],
   });
 }
 
@@ -153,7 +164,7 @@ export abstract class TooltipComponent extends ClassComponent<{
   gravity?: "n" | "e" | "s" | "w";
 }> {}
 
-export const Tooltip = Fragile.Tooltip;
+export const { Tooltip } = Fragile;
 
 export abstract class ExpressionViewComponent extends ClassComponent<
   ModelAndController & {
@@ -162,46 +173,12 @@ export abstract class ExpressionViewComponent extends ClassComponent<
   }
 > {}
 
-// const ExpressionView = window.DesModderFragile.ExpressionView;
-
 export abstract class IconViewComponent extends ClassComponent<{
   model: ItemModel;
   controller: CalcController;
 }> {}
 
-// export const ImageIconView = window.DesModderFragile.ImageIconView;
-
 interface ModelAndController {
   model: ExpressionModel;
   controller: CalcController;
 }
-
-// // <ExpressionIconView ... >
-// export class ExpressionIconView extends Component<ModelAndController> {
-//   template() {
-//     const template = exprTemplate(this);
-//     return template.children[1].children[1].children[0];
-//   }
-// }
-
-// // <If predicate={this.shouldShowFooter}>
-// //   {() => <div class={this.getFooterClass()}> ...
-// export class FooterView extends Component<ModelAndController> {
-//   template() {
-//     const template = exprTemplate(this);
-//     return template.children[0].children[2];
-//   }
-// }
-
-// function exprTemplate(self: InstanceType<typeof Component<ModelAndController>>) {
-//   const n = new (ExpressionView as any)(
-//     {
-//       model: () => self.props.model(),
-//       controller: () => self.props.controller(),
-//       onDragPending: () => {},
-//       isDragCopy: () => false,
-//     },
-//     []
-//   );
-//   return n.template();
-// }
