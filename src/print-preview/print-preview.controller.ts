@@ -1,6 +1,6 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
-import { PPreviewContainer } from "../components";
+import { PPreviewContainer } from "./ppreview.component";
 
 import type DesmosOfflineMode from "#DSOM";
 

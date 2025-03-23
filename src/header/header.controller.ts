@@ -1,6 +1,6 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
-import { Header } from "../components";
+import Header from "./headerComponent";
 import type DesmosOfflineMode from "#DSOM";
 
 const VALID_HEADER_MENUS = ["help", "lang"] as const;

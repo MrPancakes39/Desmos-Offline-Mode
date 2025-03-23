@@ -1,5 +1,5 @@
 import { Component, jsx } from "#DCGView";
-import { Switch } from "..";
+import { Switch } from "../../components";
 import HotkeysModal from "./HotKeysModal/HotkeysModal";
 import SwitcherModal from "./SwitcherModal";
 

@@ -5,7 +5,7 @@ import LeftContainer from "./left-container";
 import RightContainer from "./right-container";
 
 import type DesmosOfflineMode from "#DSOM";
-import type { HeaderMenuProp } from "../../controllers/HeaderController";
+import type { HeaderMenuProp } from "../../header/header.controller";
 
 export class Header extends Component<{
   dsom: DesmosOfflineMode;

@@ -1,6 +1,6 @@
-import "./print-preview.less";
+import "./print-preview.style.less";
 import { Component, jsx } from "#DCGView";
-import Fragment from "../common/Fragment";
+import Fragment from "../components/common/Fragment";
 import type DesmosOfflineMode from "#DSOM";
 
 export class PPreviewContainer extends Component<{
@@ -21,7 +21,7 @@ export class PPreviewContainer extends Component<{
             role="link"
             tabindex="0"
             class="dcg-link dsom-pprint-close"
-            onTap={() => this.dsom.ppreviewController.closePrintPreview()}
+            onTap={() => this.dsom.ppreviewController.close()}
           >
             « Close preview
           </button>

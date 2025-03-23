@@ -2,9 +2,9 @@ import { jsx } from "#DCGView";
 import { Modal } from "../modal";
 import GenericModal from "../GenericModal";
 
-import { If } from "../..";
-import SegmentedControl from "../../common/SegmentedControl";
-import Fragment from "../../common/Fragment";
+import { If } from "../../../components";
+import SegmentedControl from "../../../components/common/SegmentedControl";
+import Fragment from "../../../components/common/Fragment";
 
 import ShortcutTable from "./ShortcutTable";
 import DesmosShortcuts from "./shortcuts";

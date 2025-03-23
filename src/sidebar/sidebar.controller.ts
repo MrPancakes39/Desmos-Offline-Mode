@@ -1,7 +1,7 @@
 import { Fragile } from "#globals";
 import { select } from "#utils";
 import type DesmosOfflineMode from "#DSOM";
-import { SideBarContainer } from "../components";
+import { SideBarContainer } from "./sidebar.component";
 
 class SideBarController implements TransparentController {
   unsub: (() => void) | undefined;

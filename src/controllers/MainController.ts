@@ -1,10 +1,10 @@
-import SwitcherController from "./SwitcherController";
-import ModalController from "./ModalController";
-import SideBarController from "./SideBarController";
-import HotkeysController from "./HotkeysController";
-import HeaderController from "./HeaderController";
-import LanguageController from "./LanguageController";
-import PrintPreviewController from "./PrintPreviewController";
+import SwitcherController from "../switcher/switcher.controller";
+import ModalController from "../modal/modal.controller";
+import SideBarController from "../sidebar/sidebar.controller";
+import HotkeysController from "../hotkeys/hotkeys.controller";
+import HeaderController from "../header/header.controller";
+import LanguageController from "../i18n/language.controller";
+import PrintPreviewController from "../print-preview/print-preview.controller";
 
 import window, { type CalcController } from "#globals";
 import { type FluentVariable } from "@fluent/bundle";
@@ -15,7 +15,7 @@ import type { FileHandler } from "../interfaces/DesmosFileFormat";
 import { createElt } from "#utils";
 
 // Exporting the language names for the language selector
-export { LANG_DISPLAY_NAMES, type LANG_MAP, type SUPPORTED_LANG_TYPE } from "./LanguageController";
+export { LANG_DISPLAY_NAMES, type LANG_MAP, type SUPPORTED_LANG_TYPE } from "../i18n/language.controller";
 
 // Desmos Offline Mode
 export default class DesmosOfflineMode implements TransparentController {

@@ -1,5 +1,5 @@
 import { Component, jsx } from "#DCGView";
-import { DStaticMathquillView, For, If } from "../..";
+import { DStaticMathquillView, For, If } from "../../../components";
 
 import { type shortcutOS } from "./HotkeysModal";
 import { type Shortcut } from "./shortcuts";

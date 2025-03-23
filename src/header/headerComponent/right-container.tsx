@@ -1,12 +1,12 @@
-import { For, Switch, Tooltip } from "..";
+import { For, Switch, Tooltip } from "../../components";
 import { Component, jsx } from "#DCGView";
-import Toggle from "../common/Toggle";
+import Toggle from "../../components/common/Toggle";
 
 import { LANG_DISPLAY_NAMES, type LANG_MAP } from "#DSOM";
 import { localDorage } from "#utils";
 
 import type DesmosOfflineMode from "#DSOM";
-import type { HeaderMenuProp, HeaderPopoverMenu } from "../../controllers/HeaderController";
+import type { HeaderMenuProp, HeaderPopoverMenu } from "../../header/header.controller";
 
 type PopoverProps = () => void;
 

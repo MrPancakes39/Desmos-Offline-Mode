@@ -1,7 +1,7 @@
 import { Component, jsx } from "#DCGView";
 import { Modal } from "./modal";
 import GenericModal from "./GenericModal";
-import DCGAppIcon, { type DCGProduct } from "../common/DCGAppIcon";
+import DCGAppIcon, { type DCGProduct } from "../../components/common/DCGAppIcon";
 import type DesmosOfflineMode from "#DSOM";
 
 type SwitcherProduct = Extract<DCGProduct, "graphing" | "geometry" | "3d">;
