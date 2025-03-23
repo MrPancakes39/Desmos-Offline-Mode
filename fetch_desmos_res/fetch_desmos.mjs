@@ -174,17 +174,18 @@ document.documentElement.classList.add(${html_class});`
   {
     let locales = {};
     logger.info("[5/6] Downloading Desmos Language Files");
-    for (let lang of SUPPORTED_LANGS) {
-      if (lang === "en" || lang === "xx-XX") continue;
-      const endpoint = `${URL}/api/v1/calculator/language/${lang}.ftl`;
-      logger.log(`Fetching lang: ${endpoint}`);
-      const response = await fetch(endpoint);
-      if (!response.ok) {
-        throw Error(`Couldn't get lang ${lang} of desmos.`);
-      }
-      const lang_file = JSON.parse(await response.text());
-      locales = { ...locales, ...lang_file };
-    }
+    await Promise.all(
+      SUPPORTED_LANGS.map(async (lang) => {
+        if (lang === "en" || lang === "xx-XX") return;
+        const endpoint = `${URL}/api/v1/calculator/language/${lang}.ftl`;
+        const response = await fetch(endpoint);
+        if (!response.ok) {
+          throw Error(`Couldn't get lang ${lang} of desmos.`);
+        }
+        const lang_file = JSON.parse(await response.text());
+        locales = { ...locales, ...lang_file };
+      })
+    );
     fs.writeFileSync(
       `${PARENT_DIR}/public/desmos/locales.js`,
       `"undefined" == typeof Desmos && (Desmos = {}), Desmos.locales = ${JSON.stringify(locales)};`
