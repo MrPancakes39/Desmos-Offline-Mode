@@ -3,13 +3,15 @@ import { DesmosOfflineMode } from "./app/app.controller";
 import window from "./globals/window";
 import { select } from "./utils";
 
-// Init the app
-const dsom = new DesmosOfflineMode();
 try {
+  // Init the app
+  const dsom = new DesmosOfflineMode();
   dsom.init();
+
   if (import.meta.env.DEV) {
     window.DSOM = dsom;
   }
+
   dsom.switcherController.selected?.calc.focusFirstExpression();
   select<HTMLDivElement>(".dcg-loading-div-container").style.display = "none";
 } catch (e) {
