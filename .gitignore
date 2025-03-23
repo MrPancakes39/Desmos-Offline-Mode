@@ -23,6 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
 # Desmos from Website
 src/desmos
 public/desmos
