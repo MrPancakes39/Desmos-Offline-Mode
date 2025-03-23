@@ -1,0 +1,32 @@
+import { DCGButton, Tooltip } from "~/components";
+import { Component, jsx } from "~/globals/DCGView";
+import type { DesmosOfflineMode } from "~/types/DSOM";
+
+export class LeftContainer extends Component<{
+  dsom: DesmosOfflineMode;
+}> {
+  dsom!: DesmosOfflineMode;
+
+  override init() {
+    this.dsom = this.props.dsom();
+  }
+
+  template() {
+    return (
+      <div class="left-container">
+        <Tooltip tooltip={() => this.dsom.format("dsom-label-main-menu")} gravity="s">
+          <div class="center-div sidebar-fix">
+            <DCGButton
+              color="invisible"
+              onTap={() => this.dsom.sidebarController.toggleSideBar()}
+              class="desom-icon-btn sidebar-menu-btn"
+            >
+              <i class="dcg-icon-hamburger" aria-hidden="true"></i>
+            </DCGButton>
+          </div>
+        </Tooltip>
+        <h1 class="graph-title">{() => this.dsom.format("account-shell-text-untitled-graph")}</h1>
+      </div>
+    );
+  }
+}

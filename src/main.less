@@ -1,0 +1,80 @@
+@import "./fonts/style.less";
+
+.dcg-calculator-api-container :where(#graph-container, #geometry-container, #calc3d-container) {
+  position: absolute;
+  top: 46px;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.dcg-calculator-api-container button[role="link"].dcg-link {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: initial;
+}
+
+@media only print {
+  html,
+  body,
+  .dcg-calculator-api-container .dcg-sliding-interior {
+    overflow: visible !important;
+    position: relative !important;
+  }
+
+  .dcg-calculator-api-container #dcg-header-container,
+  .dcg-calculator-api-container #side-bar-container,
+  .dcg-calculator-api-container .sidebar-menu-btn {
+    display: none !important;
+  }
+}
+
+#desmos_load_errors {
+  position: absolute;
+  width: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  background: #1aad57;
+  color: #eff1f5;
+  padding: 20px;
+  border-radius: 10px;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+
+  & h1 {
+    margin: 0 0 1.25rem 0;
+    text-align: center;
+  }
+
+  & h2 {
+    margin: 0 0 1rem 0;
+  }
+
+  & code {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-size: 1rem;
+    font-family: monospace;
+    gap: 5px;
+    background: #dce0e8;
+    color: #4c4f69;
+
+    & > span {
+      list-style: disc;
+    }
+  }
+}

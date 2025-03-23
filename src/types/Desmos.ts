@@ -1,0 +1,70 @@
+import "desmos";
+import type _ from "underscore";
+
+import type {
+  CheckboxComponent,
+  DStaticMathquillViewComponent,
+  InlineMathInputViewComponent,
+  MathQuillField,
+  MathQuillViewComponent,
+  SegmentedControlComponent,
+  TooltipComponent,
+} from "~/components";
+import type { DCGViewModule } from "~/globals/DCGView";
+
+import type { ItemModel } from "./models";
+
+export type DesmosType = typeof Desmos & {
+  version: string;
+  $: JQueryStatic;
+  _: typeof _;
+  MathQuill: unknown;
+  Private: {
+    Fragile: FragileType;
+  };
+};
+
+type FragileType = {
+  DCGView: DCGViewModule;
+  PromptSliderView: unknown;
+  Checkbox: typeof CheckboxComponent;
+  SegmentedControl: typeof SegmentedControlComponent;
+  MathquillView: typeof MathQuillViewComponent & {
+    // static abstract getFocusedMathquill()
+    getFocusedMathquill: () => MathQuillField;
+  };
+  InlineMathInputView: typeof InlineMathInputViewComponent;
+  StaticMathquillView: typeof DStaticMathquillViewComponent;
+  Tooltip: typeof TooltipComponent;
+  ExpressionOptionsMenuView: {
+    prototype: {
+      getSections: {
+        apply: (m: { model: ItemModel }) => Section[];
+      };
+    };
+  };
+  evaluateLatex: (s: string, isDegreeMode: boolean) => number;
+  Keys: {
+    lookup: (e: KeyboardEvent) => string;
+    lookupChar: (e: KeyboardEvent) => string;
+    isUndo: (e: KeyboardEvent) => boolean;
+    isRedo: (e: KeyboardEvent) => boolean;
+    isHelp: (e: KeyboardEvent) => boolean;
+  };
+  getQueryParams: () => Record<string, string | true>;
+  getReconciledExpressionProps: (
+    type: string,
+    model?: ItemModel
+  ) => {
+    points: boolean;
+    lines: boolean;
+    fill: boolean;
+  };
+  List: {
+    removeItemById: (listModel: unknown, id: string) => void;
+    moveItemsTo: (listModel: unknown, from: number, to: number, n: number) => void;
+  };
+  currentLanguage: () => string;
+};
+
+type Section = "colors-only" | "lines" | "points" | "fill" | "label" | "drag";

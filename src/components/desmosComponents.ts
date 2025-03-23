@@ -1,5 +1,8 @@
-import { Fragile, type ExpressionModel, type ItemModel, type CalcController } from "#globals";
-import { ClassComponent, DCGView, type ComponentChild, type ComponentTemplate } from "#DCGView";
+import { ClassComponent, DCGView } from "~/globals/DCGView";
+import type { ComponentChild, ComponentTemplate } from "~/globals/DCGView";
+import { Fragile } from "~/globals/window";
+import type { CalcController } from "~/types/Calc";
+import type { ExpressionModel, ItemModel } from "~/types/models";
 
 export abstract class CheckboxComponent extends ClassComponent<{
   checked: boolean;
@@ -133,6 +136,7 @@ export function Match<Disc extends { type: string }>(
 ): ComponentTemplate {
   return DCGView.createElement(Switch, { key: () => discriminant().type }, () => {
     const d = discriminant();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- This is false but ok
     return branches[d.type as Disc["type"]](d) as string;
   });
 }

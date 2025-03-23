@@ -55,6 +55,11 @@ export default tseslint.config(
       "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/no-magic-numbers": "off",
       "@typescript-eslint/prefer-destructuring": "off",
+      "@typescript-eslint/class-methods-use-this": "off",
+      "@typescript-eslint/no-unnecessary-type-parameters": "off",
+      "promise/avoid-new": "off",
+      "no-console": "off",
+      "no-alert": "off",
       // TS ESLint
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",

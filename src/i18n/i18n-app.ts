@@ -1,6 +1,7 @@
 // Reference: https://github.com/DesModder/DesModder/blob/main/localization/i18n-core.ts
-import enFTL from "./en.ftl?raw";
 import { FluentBundle, FluentResource } from "@fluent/bundle";
+
+import enFTL from "./en.ftl?raw";
 
 export const dsomLocales = new Map<string, FluentBundle>();
 
@@ -12,7 +13,7 @@ export function addLanguage(locales: Map<string, FluentBundle>, locale: string, 
   const resource = new FluentResource(ftl);
   const bundle = new FluentBundle(locale, { useIsolating: false });
   const errors = bundle.addResource(resource, { allowOverrides: isDesmos });
-  if (errors.length) {
+  if (errors.length > 0) {
     console.warn("FTL translation file errors for locale " + locale, errors);
   }
   locales.set(locale, bundle);
