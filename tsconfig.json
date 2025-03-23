@@ -8,7 +8,6 @@
     "resolveJsonModule": true,
     "moduleDetection": "force",
     "isolatedModules": true,
-    "verbatimModuleSyntax": true,
 
     /* Strictness & Linting */
     "strict": true,
@@ -39,7 +38,13 @@
     // This property will prevent issues related to the file casing
     // and how the files are referenced in the code in different OSes
     // (e.g.: Windows and Linux)
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+
+    /* Path Aliasing */
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }
