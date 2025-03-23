@@ -17,7 +17,9 @@ export class Toggle extends Component<{
         })}
         onTap={() => this.props.onChange()}
       >
-        <div class="dcg-toggle-switch" />
+        <div class="dcg-toggle-track">
+          <div class="dcg-toggle-switch" />
+        </div>
       </div>
     );
   }
