@@ -1,35 +1,113 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Dependencies
 node_modules
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Testing
+coverage
+.nyc_output
+
+# Build outputs
+out/
+build/
+dist/
+.cache/
+.next/
+.vinxi/
+.output/
+.react-router/
+.tanstack/
+.nitro/
+.million/
+.turbo/
+.expo/
+.astro/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# Deployment
+.vercel
+.netlify
+.wrangler
+.alchemy
+
+# compiled output
 dist
 dist-ssr
 *.local
+build
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Logs
+logs
+*.log*
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Misc
 .DS_Store
+*.pem
+.dev.vars*
+.open-next
+
+# IDEs, editors and other files
+.vscode/*
+!.vscode/launch.json
+!.vscode/*.code-snippets
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-*.tsbuildinfo
 
-# dotenv environment variable files
-.env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
+# Environment & local files
+.env*
+!.env.example
+!.env.template
+!.env.sample
+
+# temp directory
+.temp
+.tmp
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Diagnostic reports (https://nodejs.org/api/report.html)
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
 
 # Desmos from Website
 src/desmos
