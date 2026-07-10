@@ -54,7 +54,7 @@ const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 async function main() {
   const TESTED_COMMIT = "571d15cdbfbf67bc598b671db5138a88a3dd8c00";
 
-  const PARENT_DIR = path.dirname(path.dirname(process.argv[1]));
+  const PARENT_DIR = path.resolve(path.dirname(process.argv[1]), "..", "..", "apps", "web");
 
   // Get HTML Page
   logger.info("[1/6] Getting HTML Page");

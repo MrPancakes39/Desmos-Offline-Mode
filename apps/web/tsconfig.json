@@ -12,6 +12,7 @@
     /* Strictness & Linting */
     "strict": true,
     "strictNullChecks": true,
+    "exactOptionalPropertyTypes": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
@@ -27,6 +28,9 @@
     "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
     "jsx": "react",
     "jsxFactory": "jsx",
 
@@ -43,8 +47,8 @@
     /* Path Aliasing */
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./src/*"]
-    }
+      "~/*": ["./src/*"],
+    },
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"],
 }

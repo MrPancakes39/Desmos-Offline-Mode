@@ -1,40 +1,14 @@
 {
-  "name": "desmos-offline-mode",
-  "private": true,
-  "version": "0.1.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview",
-    "lint": "eslint --report-unused-disable-directives --max-warnings 0 .",
-    "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --write 'src/**/*.{css,less,ts,tsx}'",
-    "typecheck": "tsc --project ./tsconfig.json",
-    "fetch_desmos_api": "node ./fetch_desmos_res/fetch_desmos.mjs"
+  "name": "@dsom/monorepo",
+  "engines": {
+    "node": ">=24.18.0"
   },
-  "dependencies": {
-    "@fluent/bundle": "^0.18.0",
-    "zod": "^3.24.2"
-  },
-  "devDependencies": {
-    "@desmodder/graph-state": "^0.2.3",
-    "@eslint/js": "^9.23.0",
-    "@types/desmos": "^1.11.0",
-    "@types/jquery": "^3.5.32",
-    "@types/node": "^22.13.11",
-    "@types/underscore": "^1.11.15",
-    "eslint": "^9.23.0",
-    "eslint-config-love": "^119.0.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsx-a11y": "^6.10.2",
-    "fetch_desmos_resources": "file:./fetch_desmos_res",
-    "globals": "^16.0.0",
-    "less": "^4.2.2",
-    "prettier": "^3.3.2",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.27.0",
-    "vite": "^6.2.2"
+  "packageManager": "pnpm@11.11.0",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.11.0",
+      "onFail": "download"
+    }
   }
 }

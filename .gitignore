@@ -110,5 +110,5 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 next-env.d.ts
 
 # Desmos from Website
-src/desmos
-public/desmos
+**/src/desmos
+**/public/desmos
