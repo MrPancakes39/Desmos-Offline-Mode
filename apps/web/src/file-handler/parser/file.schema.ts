@@ -25,9 +25,9 @@ export const DesmosFileFormatSchema = z.object({
   version: z.string().regex(/^\d{1,2}.\d{1,2}$/), // XX.YY e.g. "1.0"
   title: z.string(),
   state: ShallowGraphStateSchema,
-  thumb: z.string().base64(),
-  created: z.string().datetime(),
-  modified: z.string().datetime(),
+  thumb: z.base64(),
+  created: z.iso.datetime(),
+  modified: z.iso.datetime(),
 });
 
 export type DesmosFileFormat = z.infer<typeof DesmosFileFormatSchema>;
