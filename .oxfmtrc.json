@@ -6,5 +6,7 @@
   "arrowParens": "always",
   "trailingComma": "es5",
   "semi": true,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "sortPackageJson": false,
+  "ignorePatterns": []
 }
