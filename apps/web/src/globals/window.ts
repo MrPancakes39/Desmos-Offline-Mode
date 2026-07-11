@@ -25,7 +25,9 @@ export const Desmos = window.Desmos;
 export const Fragile = Desmos.Private.Fragile;
 
 // Fix missing globals
+// oxlint-disable-next-line typescript/no-unsafe-assignment -- Desmos' bundled jQuery type is incomplete
 window.$ = window.Desmos.$;
+// oxlint-disable-next-line typescript/no-unsafe-assignment -- Desmos' bundled jQuery type is incomplete
 window.jQuery = window.Desmos.$; // Is this right?
 window.MathQuill = window.Desmos.MathQuill;
 

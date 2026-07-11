@@ -49,13 +49,13 @@ export function applyPatches(Calc: Calc) {
 
   Calc.getNextColor = () => {
     const index = Calc.controller.listModel.colorIdx;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-non-null-assertion -- The color index is supplied by Desmos
     return colorRotation[index]!;
   };
 
   Calc.setNextColor = (color) => {
     if (color === undefined) return false;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Runtime membership is checked below
     const colorIndex = colorRotation.indexOf(color as DesmosColorRotation);
     if (colorIndex < 0) {
       console.error(`${color} is not a valid color.`);
@@ -151,7 +151,7 @@ const sanitizeItem = function (item: ItemModel) {
         ];
         properties.forEach((prop) => {
           // TODO: Fix???
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keys are filtered by this property list
           if (prop in modal) tmp[prop as keySanitized] = modal[prop] as never;
         });
         if ("parametricDomain" in modal && modal.parametricDomain !== undefined) {

@@ -26,11 +26,11 @@ export class SwitcherController implements TransparentController {
     const geoContainer = select<HTMLDivElement>("#geometry-container");
     const c3dContainer = select<HTMLDivElement>("#calc3d-container");
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Patches extend the Desmos calculator at runtime
     const graphCalc = window.Desmos.GraphingCalculator(graphContainer, initSettings) as Calc;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Patches extend the Desmos calculator at runtime
     const geoCalc = window.Desmos.Geometry(geoContainer, initSettings) as Calc;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Patches extend the Desmos calculator at runtime
     const c3dCalc = window.Desmos.Calculator3D(c3dContainer, initSettings) as Calc;
 
     applyPatches(graphCalc);

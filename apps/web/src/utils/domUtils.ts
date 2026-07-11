@@ -13,5 +13,6 @@ export function select<E extends Element>(selector: string): E {
 export function createElt<T extends HTMLElement>(html: string): T {
   const tmp = document.createElement("div");
   tmp.innerHTML = html;
-  return tmp.firstElementChild as T; // eslint-disable-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Callers specify the element represented by the HTML
+  return tmp.firstElementChild as T;
 }

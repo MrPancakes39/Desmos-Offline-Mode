@@ -13,9 +13,9 @@ type ToFunc<T> = {
 
 export abstract class ClassComponent<PropsType extends GenericProps = Record<string, unknown>> {
   props!: ToFunc<PropsType> & { children: unknown };
-  // eslint-disable-next-line @typescript-eslint/no-useless-constructor, @typescript-eslint/no-empty-function -- Used by DCGView
+  // oxlint-disable-next-line typescript/no-useless-constructor, typescript/no-empty-function -- Used by DCGView
   constructor(_props: OrConst<PropsType>) {}
-  // eslint-disable-next-line @typescript-eslint/no-empty-function -- Used by DCGView
+  // oxlint-disable-next-line typescript/no-empty-function -- Used by DCGView
   init(): void {}
   abstract template(): unknown;
   _element!:
@@ -34,12 +34,10 @@ export interface MountedComponent {
   update: () => void;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by DCGView
 abstract class IfComponent extends ClassComponent<{
   predicate: () => boolean;
 }> {}
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by DCGView
 abstract class ForComponent<T> extends ClassComponent<{
   each: () => Array<T>;
   key: (t: T) => string | number;
@@ -50,7 +48,6 @@ export interface IfElseSecondParam {
   false: () => ComponentChild;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by DCGView
 abstract class InputComponent extends ClassComponent<{
   value: () => string;
   onInput: (s: string) => void;
@@ -60,7 +57,6 @@ abstract class InputComponent extends ClassComponent<{
 }> {}
 
 /** Switch expects one child which is a function returning a component */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Used by DCGView
 abstract class SwitchComponent extends ClassComponent<{
   key: () => unknown;
 }> {}
@@ -112,7 +108,7 @@ export type ComponentChild = ComponentTemplate | null | string | (() => string);
 export const { Class: Component, mountToNode, unmountFromNode } = DCGView;
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace -- For JSX
+  // oxlint-disable-next-line typescript/no-namespace -- For JSX
   namespace JSX {
     interface IntrinsicAttributes {
       class?: string | Record<string, boolean>;
@@ -187,7 +183,7 @@ export function jsx<Props extends GenericProps>(
     }
   }
   fnProps.children = children.length === 1 ? children[0] : children;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore type assertion
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- DCGView expects function-wrapped props
   return createElementWrapped(el, fnProps as OrConst<Props>);
 }
 
@@ -197,7 +193,7 @@ export function createElementWrapped<Props>(
 ) {
   const { DCGView } = Desmos.Private.Fragile;
   const isChildrenOutsideProps = DCGView.createElement("div", {}, "third-arg").children === "third-arg";
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Two versions of DCGView
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Support both DCGView prop interfaces
   const eltProps = props as WithCommonProps<ToFunc<Props>>;
   if (isChildrenOutsideProps) {
     const { children } = props;

@@ -31,7 +31,7 @@ export class LanguageController implements TransparentController {
     const callsFormat = (...args: Parameters<LanguageController["format"]>) => {
       if (args[0] === "graphing-calculator-narration-audio-trace-traceable-curves") {
         // @ts-expect-error At runtime sketchCount doesn't have correct type
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment -- Ignore
+        // oxlint-disable-next-line typescript/no-unsafe-assignment -- Desmos supplies a mismatched runtime shape
         args[1].sketchCount = args[1].sketchCount.value;
       }
       return this.format(...args);
@@ -63,7 +63,7 @@ export class LanguageController implements TransparentController {
     if (!this.cachedBundles.has(lang)) {
       dsomFluent.addLanguage(this.cachedBundles, lang, this.Desmos.locales[lang], true);
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-non-null-assertion -- English is always present
     const bundle = this.cachedBundles.get(lang)!;
     this.desmosCurrentFormat = (key: string, args?: Record<string, FluentVariable> | null) => {
       const message = bundle.getMessage(key);
@@ -95,11 +95,8 @@ export class LanguageController implements TransparentController {
 
   dsomFormat(key: string, args?: Record<string, FluentVariable> | null) {
     const lang = this.currentLanguage();
-    let bundle = dsomFluent.dsomLocales.get(lang);
-    if (bundle === undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion -- Ignore
-      bundle = dsomFluent.dsomLocales.get("en")!;
-    }
+    // oxlint-disable-next-line typescript/no-non-null-assertion -- English is always present
+    const bundle = dsomFluent.dsomLocales.get(lang) ?? dsomFluent.dsomLocales.get("en")!;
     const message = bundle.getMessage(key);
     if (message?.value != null) {
       return bundle.formatPattern(message.value, args);

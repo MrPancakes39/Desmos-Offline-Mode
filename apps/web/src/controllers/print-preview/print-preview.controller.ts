@@ -46,7 +46,7 @@ export default class PrintPreviewController implements TransparentController {
     canvas.style.border = "2px solid #444";
 
     // Copy Expression Panel
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- Ignore
+    // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- This clones a known expression-panel element
     const expPanelPreview = dcgExpPanelElt.cloneNode(true) as HTMLDivElement;
     expPanelPreview.querySelectorAll(".dcg-selected").forEach((elt) => elt.classList.remove("dcg-selected"));
     expPanelPreview.style.display = "block";

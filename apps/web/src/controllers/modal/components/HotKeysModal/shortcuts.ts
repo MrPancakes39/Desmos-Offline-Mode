@@ -1,4 +1,4 @@
-/* eslint-disable max-lines -- JSON dump of shortcuts */
+/* oxlint-disable max-lines -- JSON dump of shortcuts */
 
 export type Shortcut =
   | {

@@ -145,7 +145,7 @@ export function Match<Disc extends { type: string }>(
     children: [
       () => {
         const d = discriminant();
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-type-assertion -- This is false but ok
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- The discriminant selects its matching branch
         return branches[d.type as Disc["type"]](d) as string;
       },
     ],
