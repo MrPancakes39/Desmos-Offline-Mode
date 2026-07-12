@@ -4,11 +4,11 @@ import { Desmos } from "./window";
 export const { DCGView } = Desmos.Private.Fragile;
 
 type OrConst<T> = {
-  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? T[K] : T[K] | (() => T[K]);
+  [K in keyof T]: T[K] extends (...args: never[]) => unknown ? T[K] : T[K] | (() => T[K]);
 };
 
 type ToFunc<T> = {
-  [K in keyof T]: T[K] extends (...args: unknown[]) => unknown ? T[K] : () => T[K];
+  [K in keyof T]: T[K] extends (...args: never[]) => unknown ? T[K] : () => T[K];
 };
 
 export abstract class ClassComponent<PropsType extends GenericProps = Record<string, unknown>> {
