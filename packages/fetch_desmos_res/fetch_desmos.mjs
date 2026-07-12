@@ -52,9 +52,10 @@ const RTL_LANGS = /** @type const */ (["ar", "hy-AM", "hi", "tr", "xx-XX"]);
 const SUPPORTED_LANGS = /** @type const */ ([...LTR_LANGS, ...RTL_LANGS]);
 
 async function main() {
-  const TESTED_COMMIT = "571d15cdbfbf67bc598b671db5138a88a3dd8c00";
+  const TESTED_COMMIT = "b9de154eed8778820eae9fd1064c797712cdb2a5";
 
   const PARENT_DIR = path.resolve(path.dirname(process.argv[1]), "..", "..", "apps", "web");
+  fs.emptyDirSync(`${PARENT_DIR}/public/desmos`);
 
   // Get HTML Page
   logger.info("[1/6] Getting HTML Page");
@@ -145,7 +146,7 @@ document.documentElement.classList.add(${html_class});`
   {
     logger.info("[4/7] Downloading Desmos Fonts");
     let css = fs.readFileSync(`${PARENT_DIR}/public/desmos/calculator.css`, { encoding: "utf-8" });
-    const fontMatches = css.match(/\/assets\/build\/.+?woff2/g);
+    const fontMatches = css.match(/(?:(?:\/assets\/build\/)|(?:\/desmos\/fonts\/)).+?woff2/g);
     await Promise.all(
       fontMatches.map(async (endpoint) => {
         const font_fname = path.basename(endpoint);
@@ -163,7 +164,7 @@ document.documentElement.classList.add(${html_class});`
   // Move internal css to loading.css file
   {
     logger.info("[4/6] Extracting additional assets");
-    const loading = /<style type='text\/css'>(.+)<\/style>/gs.exec(html);
+    const loading = /<style(?: type='text\/css')?>(.+)<\/style>/gs.exec(html);
     if (loading === null) {
       throw Error("Expected to have loading as internal css.");
     }
@@ -203,7 +204,7 @@ document.documentElement.classList.add(${html_class});`
     const at_export = old_bugsnag.indexOf(".default=");
     // const bugsnag_function_name = old_bugsnag.slice(at_export, -1);
     const new_bugsnag =
-      old_bugsnag.slice(0, at_export) + `={start:()=>({leaveBreadcrumb:function(){},notify:function(){}})},`;
+      old_bugsnag.slice(0, at_export) + `={_client:{},start:()=>({leaveBreadcrumb:function(){},notify:function(){}})},`;
     js = js.replace(old_bugsnag, new_bugsnag);
 
     // Creates a copy of end of file
