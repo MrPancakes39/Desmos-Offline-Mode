@@ -97,21 +97,21 @@ type FragileType = {
 interface Mathtools {
   Label: {
     truncatedLatexLabel: (
-      label: ValueTypeMap[ValueType.Number],
+      label: ValueTypeMap[ValueType["Number"]],
       labelOptions?: LabelOptionsBase
     ) => string;
     pointLabel: (
-      label: ValueTypeMap[ValueType.Point],
+      label: ValueTypeMap[ValueType["Point"]],
       labelOptions?: LabelOptionsBase,
       emitComponentsAs?: ComponentEmitType
     ) => string;
     point3dLabel: (
-      label: ValueTypeMap[ValueType.Point3D],
+      label: ValueTypeMap[ValueType["Point3D"]],
       labelOptions?: LabelOptionsBase,
       emitComponentsAs?: ComponentEmitType
     ) => string;
     complexNumberLabel: (
-      label: ValueTypeMap[ValueType.Complex],
+      label: ValueTypeMap[ValueType["Complex"]],
       labelOptions?: LabelOptionsBase & {
         alwaysEmitImaginary?: boolean;
       },

@@ -36,96 +36,97 @@ interface ItemModelBase {
   rootViewNode: HTMLElement;
 }
 
-export enum ValueType {
-  Any = 0,
-  Number = 1,
-  Bool = 2,
-  Complex = 38,
-  ListOfComplex = 39,
-  Point = 3,
-  Point3D = 100,
-  Distribution = 4,
-  Action = 5,
-  ListOfAny = 6,
-  ListOfNumber = 7,
-  ListOfBool = 8,
-  ListOfPoint = 9,
-  ListOfPoint3D = 101,
-  ListOfDistribution = 10,
-  EmptyList = 11,
-  ErrorType = 12,
-  SeedType = 13,
-  RGBColor = 14,
-  ListOfColor = 15,
-  Polygon = 16,
-  ListOfPolygon = 17,
-  Segment = 18,
-  ListOfSegment = 19,
-  Circle = 20,
-  ListOfCircle = 21,
-  Arc = 22,
-  ListOfArc = 23,
-  Line = 24,
-  ListOfLine = 25,
-  Ray = 26,
-  ListOfRay = 27,
-  Vector = 34,
-  ListOfVector = 35,
-  Restriction = 36,
-  ListOfRestriction = 37,
-  AngleMarker = 28,
-  ListOfAngleMarker = 29,
-  DirectedAngleMarker = 30,
-  ListOfDirectedAngleMarker = 31,
-  Transformation = 32,
-  ListOfTransformation = 33,
-  Segment3D = 102,
-  ListOfSegment3D = 103,
-  Triangle3D = 104,
-  ListOfTriangle3D = 105,
-  Sphere3D = 106,
-  ListOfSphere3D = 107,
-  Vector3D = 108,
-  ListOfVector3D = 109,
-  Tone = 50,
-  ListOfTone = 51,
-  ConfidenceInterval = 60,
-  ListOfConfidenceInterval = 61,
-  OneSampleTInference = 62,
-  ListOfOneSampleTInference = 63,
-  TwoSampleTInference = 64,
-  ListOfTwoSampleTInference = 65,
-  RegressionTInference = 76,
-  ListOfRegressionTInference = 77,
-  OneSampleZInference = 66,
-  ListOfOneSampleZInference = 67,
-  TwoSampleZInference = 68,
-  ListOfTwoSampleZInference = 69,
-  OneProportionZInference = 70,
-  ListOfOneProportionZInference = 71,
-  TwoProportionZInference = 72,
-  ListOfTwoProportionZInference = 73,
-  ChiSquareGoodnessOfFit = 78,
-  ListOfChiSquareGoodnessOfFit = 79,
-  ChiSquareIndependence = 80,
-  ListOfChiSquareIndependence = 81,
-  ZSignificanceTest = 82,
-  ListOfZSignificanceTest = 83,
-  TSignificanceTest = 84,
-  ListOfTSignificanceTest = 85,
-  MapIntervalPoint = 200,
-  MapIntervalComplex = 208,
-  MapIntervalPoint3D = 201,
-  MapInterval2DPoint = 202,
-  MapInterval2DComplex = 209,
-  MapInterval2DPoint3D = 203,
-  ListOfMapIntervalPoint = 204,
-  ListOfMapIntervalComplex = 210,
-  ListOfMapIntervalPoint3D = 205,
-  ListOfMapInterval2DPoint = 206,
-  ListOfMapInterval2DComplex = 211,
-  ListOfMapInterval2DPoint3D = 207,
-}
+const ValueType = {
+  Any : 0,
+  Number : 1,
+  Bool : 2,
+  Complex : 38,
+  ListOfComplex : 39,
+  Point : 3,
+  Point3D : 100,
+  Distribution : 4,
+  Action : 5,
+  ListOfAny : 6,
+  ListOfNumber : 7,
+  ListOfBool : 8,
+  ListOfPoint : 9,
+  ListOfPoint3D : 101,
+  ListOfDistribution : 10,
+  EmptyList : 11,
+  ErrorType : 12,
+  SeedType : 13,
+  RGBColor : 14,
+  ListOfColor : 15,
+  Polygon : 16,
+  ListOfPolygon : 17,
+  Segment : 18,
+  ListOfSegment : 19,
+  Circle : 20,
+  ListOfCircle : 21,
+  Arc : 22,
+  ListOfArc : 23,
+  Line : 24,
+  ListOfLine : 25,
+  Ray : 26,
+  ListOfRay : 27,
+  Vector : 34,
+  ListOfVector : 35,
+  Restriction : 36,
+  ListOfRestriction : 37,
+  AngleMarker : 28,
+  ListOfAngleMarker : 29,
+  DirectedAngleMarker : 30,
+  ListOfDirectedAngleMarker : 31,
+  Transformation : 32,
+  ListOfTransformation : 33,
+  Segment3D : 102,
+  ListOfSegment3D : 103,
+  Triangle3D : 104,
+  ListOfTriangle3D : 105,
+  Sphere3D : 106,
+  ListOfSphere3D : 107,
+  Vector3D : 108,
+  ListOfVector3D : 109,
+  Tone : 50,
+  ListOfTone : 51,
+  ConfidenceInterval : 60,
+  ListOfConfidenceInterval : 61,
+  OneSampleTInference : 62,
+  ListOfOneSampleTInference : 63,
+  TwoSampleTInference : 64,
+  ListOfTwoSampleTInference : 65,
+  RegressionTInference : 76,
+  ListOfRegressionTInference : 77,
+  OneSampleZInference : 66,
+  ListOfOneSampleZInference : 67,
+  TwoSampleZInference : 68,
+  ListOfTwoSampleZInference : 69,
+  OneProportionZInference : 70,
+  ListOfOneProportionZInference : 71,
+  TwoProportionZInference : 72,
+  ListOfTwoProportionZInference : 73,
+  ChiSquareGoodnessOfFit : 78,
+  ListOfChiSquareGoodnessOfFit : 79,
+  ChiSquareIndependence : 80,
+  ListOfChiSquareIndependence : 81,
+  ZSignificanceTest : 82,
+  ListOfZSignificanceTest : 83,
+  TSignificanceTest : 84,
+  ListOfTSignificanceTest : 85,
+  MapIntervalPoint : 200,
+  MapIntervalComplex : 208,
+  MapIntervalPoint3D : 201,
+  MapInterval2DPoint : 202,
+  MapInterval2DComplex : 209,
+  MapInterval2DPoint3D : 203,
+  ListOfMapIntervalPoint : 204,
+  ListOfMapIntervalComplex : 210,
+  ListOfMapIntervalPoint3D : 205,
+  ListOfMapInterval2DPoint : 206,
+  ListOfMapInterval2DComplex : 211,
+  ListOfMapInterval2DPoint3D : 207,
+} as const satisfies Readonly<Record<string, number>>;;
+export type ValueType = (typeof ValueType);
 
 interface FormulaBase {
   exported_variables?: string[];
@@ -146,7 +147,7 @@ export interface ValueTypeMap {
   [ValueType.Number]: number;
   [ValueType.Bool]: boolean;
   [ValueType.Complex]: [real: number, imag: number];
-  [ValueType.ListOfComplex]: ValueTypeMap[ValueType.Complex][];
+  [ValueType.ListOfComplex]: ValueTypeMap[ValueType["Complex"]][];
   [ValueType.Point]: [x: number, y: number];
   [ValueType.Point3D]: [x: number, y: number, z: number];
   // [ValueType.Distribution]: unknown;
@@ -154,106 +155,106 @@ export interface ValueTypeMap {
     type: "Action";
     updateRules: Record<string, TypedConstantValue<ActionRHSValueType>>;
   };
-  [ValueType.ListOfAny]: ValueTypeMap[ValueType.Any][];
-  [ValueType.ListOfNumber]: ValueTypeMap[ValueType.Number][];
-  [ValueType.ListOfBool]: ValueTypeMap[ValueType.Bool][];
-  [ValueType.ListOfPoint]: ValueTypeMap[ValueType.Point][];
-  [ValueType.ListOfPoint3D]: ValueTypeMap[ValueType.Point3D][];
+  [ValueType.ListOfAny]: ValueTypeMap[ValueType["Any"]][];
+  [ValueType.ListOfNumber]: ValueTypeMap[ValueType["Number"]][];
+  [ValueType.ListOfBool]: ValueTypeMap[ValueType["Bool"]][];
+  [ValueType.ListOfPoint]: ValueTypeMap[ValueType["Point"]][];
+  [ValueType.ListOfPoint3D]: ValueTypeMap[ValueType["Point3D"]][];
   // [ValueType.ListOfDistribution]: ValueTypeMap[ValueType.Distribution][];
   [ValueType.EmptyList]: [];
   // [ValueType.ErrorType]: unknown;
   // [ValueType.SeedType]: unknown;
   [ValueType.RGBColor]: [r: number, g: number, b: number];
-  [ValueType.ListOfColor]: ValueTypeMap[ValueType.RGBColor][];
-  [ValueType.Polygon]: ValueTypeMap[ValueType.Point][];
-  [ValueType.ListOfPolygon]: ValueTypeMap[ValueType.Polygon][];
+  [ValueType.ListOfColor]: ValueTypeMap[ValueType["RGBColor"]][];
+  [ValueType.Polygon]: ValueTypeMap[ValueType["Point"]][];
+  [ValueType.ListOfPolygon]: ValueTypeMap[ValueType["Polygon"]][];
   [ValueType.Segment]: [
-    start: ValueTypeMap[ValueType.Point],
-    end: ValueTypeMap[ValueType.Point],
+    start: ValueTypeMap[ValueType["Point"]],
+    end: ValueTypeMap[ValueType["Point"]],
   ];
-  [ValueType.ListOfSegment]: ValueTypeMap[ValueType.Segment][];
-  [ValueType.Circle]: [center: ValueTypeMap[ValueType.Point], radius: number];
-  [ValueType.ListOfCircle]: ValueTypeMap[ValueType.Circle][];
+  [ValueType.ListOfSegment]: ValueTypeMap[ValueType["Segment"]][];
+  [ValueType.Circle]: [center: ValueTypeMap[ValueType["Point"]], radius: number];
+  [ValueType.ListOfCircle]: ValueTypeMap[ValueType["Circle"]][];
   [ValueType.Arc]: [
-    p0: ValueTypeMap[ValueType.Point],
-    p1: ValueTypeMap[ValueType.Point],
-    p2: ValueTypeMap[ValueType.Point],
+    p0: ValueTypeMap[ValueType["Point"]],
+    p1: ValueTypeMap[ValueType["Point"]],
+    p2: ValueTypeMap[ValueType["Point"]],
   ];
-  [ValueType.ListOfArc]: ValueTypeMap[ValueType.Arc][];
+  [ValueType.ListOfArc]: ValueTypeMap[ValueType["Arc"]][];
   [ValueType.Line]: [
-    p0: ValueTypeMap[ValueType.Point],
-    p1: ValueTypeMap[ValueType.Point],
+    p0: ValueTypeMap[ValueType["Point"]],
+    p1: ValueTypeMap[ValueType["Point"]],
   ];
-  [ValueType.ListOfLine]: ValueTypeMap[ValueType.Line][];
+  [ValueType.ListOfLine]: ValueTypeMap[ValueType["Line"]][];
   [ValueType.Ray]: [
-    origin: ValueTypeMap[ValueType.Point],
-    direction: ValueTypeMap[ValueType.Point],
+    origin: ValueTypeMap[ValueType["Point"]],
+    direction: ValueTypeMap[ValueType["Point"]],
   ];
-  [ValueType.ListOfRay]: ValueTypeMap[ValueType.Ray][];
+  [ValueType.ListOfRay]: ValueTypeMap[ValueType["Ray"]][];
   [ValueType.Vector]: [
-    vector: ValueTypeMap[ValueType.Point],
-    start: ValueTypeMap[ValueType.Point],
+    vector: ValueTypeMap[ValueType["Point"]],
+    start: ValueTypeMap[ValueType["Point"]],
   ];
-  [ValueType.ListOfVector]: ValueTypeMap[ValueType.Vector][];
+  [ValueType.ListOfVector]: ValueTypeMap[ValueType["Vector"]][];
   // [ValueType.Restriction]: unknown;
   // [ValueType.ListOfRestriction]: ValueTypeMap[ValueType.Restriction][];
   [ValueType.AngleMarker]: [
-    vertex: ValueTypeMap[ValueType.Point],
+    vertex: ValueTypeMap[ValueType["Point"]],
     startRad: number,
     sweepRad: number,
     trigAngleMultiplier: number,
   ];
-  [ValueType.ListOfAngleMarker]: ValueTypeMap[ValueType.AngleMarker][];
+  [ValueType.ListOfAngleMarker]: ValueTypeMap[ValueType["AngleMarker"]][];
   [ValueType.DirectedAngleMarker]: [
-    vertex: ValueTypeMap[ValueType.Point],
+    vertex: ValueTypeMap[ValueType["Point"]],
     startRad: number,
     sweepRad: number,
     trigAngleMultiplier: number,
   ];
-  [ValueType.ListOfDirectedAngleMarker]: ValueTypeMap[ValueType.DirectedAngleMarker][];
+  [ValueType.ListOfDirectedAngleMarker]: ValueTypeMap[ValueType["DirectedAngleMarker"]][];
   [ValueType.Transformation]: [
-    linear: ValueTypeMap[ValueType.Complex],
-    translate: ValueTypeMap[ValueType.Complex],
+    linear: ValueTypeMap[ValueType["Complex"]],
+    translate: ValueTypeMap[ValueType["Complex"]],
     conjugate: boolean,
   ];
-  [ValueType.ListOfTransformation]: ValueTypeMap[ValueType.Transformation][];
+  [ValueType.ListOfTransformation]: ValueTypeMap[ValueType["Transformation"]][];
   [ValueType.Segment3D]: [
-    start: ValueTypeMap[ValueType.Point3D],
-    end: ValueTypeMap[ValueType.Point3D],
+    start: ValueTypeMap[ValueType["Point3D"]],
+    end: ValueTypeMap[ValueType["Point3D"]],
   ];
-  [ValueType.ListOfSegment3D]: ValueTypeMap[ValueType.Segment3D][];
+  [ValueType.ListOfSegment3D]: ValueTypeMap[ValueType["Segment3D"]][];
   [ValueType.Triangle3D]: [
-    p0: ValueTypeMap[ValueType.Point3D],
-    p1: ValueTypeMap[ValueType.Point3D],
-    p2: ValueTypeMap[ValueType.Point3D],
+    p0: ValueTypeMap[ValueType["Point3D"]],
+    p1: ValueTypeMap[ValueType["Point3D"]],
+    p2: ValueTypeMap[ValueType["Point3D"]],
   ];
-  [ValueType.ListOfTriangle3D]: ValueTypeMap[ValueType.Triangle3D][];
+  [ValueType.ListOfTriangle3D]: ValueTypeMap[ValueType["Triangle3D"]][];
   [ValueType.Sphere3D]: [
-    center: ValueTypeMap[ValueType.Point3D],
+    center: ValueTypeMap[ValueType["Point3D"]],
     radius: number,
   ];
-  [ValueType.ListOfSphere3D]: ValueTypeMap[ValueType.Sphere3D][];
+  [ValueType.ListOfSphere3D]: ValueTypeMap[ValueType["Sphere3D"]][];
   [ValueType.Vector3D]: [
-    vector: ValueTypeMap[ValueType.Point3D],
-    start: ValueTypeMap[ValueType.Point3D],
+    vector: ValueTypeMap[ValueType["Point3D"]],
+    start: ValueTypeMap[ValueType["Point3D"]],
   ];
-  [ValueType.ListOfVector3D]: ValueTypeMap[ValueType.Vector3D][];
+  [ValueType.ListOfVector3D]: ValueTypeMap[ValueType["Vector3D"]][];
   [ValueType.Tone]: [frequency: number, gain: number];
-  [ValueType.ListOfTone]: ValueTypeMap[ValueType.Tone][];
+  [ValueType.ListOfTone]: ValueTypeMap[ValueType["Tone"]][];
   [ValueType.ConfidenceInterval]: [
     min: number,
     max: number,
     standardError: number,
     dof: number,
   ];
-  [ValueType.ListOfConfidenceInterval]: ValueTypeMap[ValueType.ConfidenceInterval][];
+  [ValueType.ListOfConfidenceInterval]: ValueTypeMap[ValueType["ConfidenceInterval"]][];
   [ValueType.OneSampleTInference]: [
     count: number,
     mean: number,
     stdev: number,
     dof: number,
   ];
-  [ValueType.ListOfOneSampleTInference]: ValueTypeMap[ValueType.OneSampleTInference][];
+  [ValueType.ListOfOneSampleTInference]: ValueTypeMap[ValueType["OneSampleTInference"]][];
   [ValueType.TwoSampleTInference]: [
     count1: number,
     mean1: number,
@@ -263,19 +264,19 @@ export interface ValueTypeMap {
     stdev2: number,
     dof: number,
   ];
-  [ValueType.ListOfTwoSampleTInference]: ValueTypeMap[ValueType.TwoSampleTInference][];
+  [ValueType.ListOfTwoSampleTInference]: ValueTypeMap[ValueType["TwoSampleTInference"]][];
   [ValueType.RegressionTInference]: [
     pointEstimate: number,
     standardError: number,
     dof: number,
   ];
-  [ValueType.ListOfRegressionTInference]: ValueTypeMap[ValueType.RegressionTInference][];
+  [ValueType.ListOfRegressionTInference]: ValueTypeMap[ValueType["RegressionTInference"]][];
   [ValueType.OneSampleZInference]: [
     count: number,
     mean: number,
     stdevp: number,
   ];
-  [ValueType.ListOfOneSampleZInference]: ValueTypeMap[ValueType.OneSampleZInference][];
+  [ValueType.ListOfOneSampleZInference]: ValueTypeMap[ValueType["OneSampleZInference"]][];
   [ValueType.TwoSampleZInference]: [
     count1: number,
     mean1: number,
@@ -284,16 +285,16 @@ export interface ValueTypeMap {
     mean2: number,
     stdevp2: number,
   ];
-  [ValueType.ListOfTwoSampleZInference]: ValueTypeMap[ValueType.TwoSampleZInference][];
+  [ValueType.ListOfTwoSampleZInference]: ValueTypeMap[ValueType["TwoSampleZInference"]][];
   [ValueType.OneProportionZInference]: [successes: number, count: number];
-  [ValueType.ListOfOneProportionZInference]: ValueTypeMap[ValueType.OneProportionZInference][];
+  [ValueType.ListOfOneProportionZInference]: ValueTypeMap[ValueType["OneProportionZInference"]][];
   [ValueType.TwoProportionZInference]: [
     successes1: number,
     count1: number,
     successes2: number,
     count2: number,
   ];
-  [ValueType.ListOfTwoProportionZInference]: ValueTypeMap[ValueType.TwoProportionZInference][];
+  [ValueType.ListOfTwoProportionZInference]: ValueTypeMap[ValueType["TwoProportionZInference"]][];
   [ValueType.ChiSquareGoodnessOfFit]: [
     p: number,
     score: number,
@@ -303,7 +304,7 @@ export interface ValueTypeMap {
     contributions: number[],
     total: number,
   ];
-  [ValueType.ListOfChiSquareGoodnessOfFit]: ValueTypeMap[ValueType.ChiSquareGoodnessOfFit][];
+  [ValueType.ListOfChiSquareGoodnessOfFit]: ValueTypeMap[ValueType["ChiSquareGoodnessOfFit"]][];
   [ValueType.ChiSquareIndependence]: [
     p: number,
     score: number,
@@ -317,7 +318,7 @@ export interface ValueTypeMap {
     columnTotals: number[],
     total: number,
   ];
-  [ValueType.ListOfChiSquareIndependence]: ValueTypeMap[ValueType.ChiSquareIndependence][];
+  [ValueType.ListOfChiSquareIndependence]: ValueTypeMap[ValueType["ChiSquareIndependence"]][];
   [ValueType.ZSignificanceTest]: [
     p: number,
     score: number,
@@ -325,7 +326,7 @@ export interface ValueTypeMap {
     pleft: number,
     pright: number,
   ];
-  [ValueType.ListOfZSignificanceTest]: ValueTypeMap[ValueType.ZSignificanceTest][];
+  [ValueType.ListOfZSignificanceTest]: ValueTypeMap[ValueType["ZSignificanceTest"]][];
   [ValueType.TSignificanceTest]: [
     p: number,
     score: number,
@@ -334,19 +335,19 @@ export interface ValueTypeMap {
     pright: number,
     dof: number,
   ];
-  [ValueType.ListOfTSignificanceTest]: ValueTypeMap[ValueType.TSignificanceTest][];
+  [ValueType.ListOfTSignificanceTest]: ValueTypeMap[ValueType["TSignificanceTest"]][];
   // [ValueType.MapIntervalPoint]: unknown;
   // [ValueType.MapIntervalComplex]: unknown;
   // [ValueType.MapIntervalPoint3D]: unknown;
   // [ValueType.MapInterval2DPoint]: unknown;
   // [ValueType.MapInterval2DComplex]: unknown;
   // [ValueType.MapInterval2DPoint3D]: unknown;
-  // [ValueType.ListOfMapIntervalPoint]: ValueTypeMap[ValueType.MapIntervalPoint][];
-  // [ValueType.ListOfMapIntervalComplex]: ValueTypeMap[ValueType.MapIntervalComplex][];
-  // [ValueType.ListOfMapIntervalPoint3D]: ValueTypeMap[ValueType.MapIntervalPoint3D][];
-  // [ValueType.ListOfMapInterval2DPoint]: ValueTypeMap[ValueType.MapInterval2DPoint][];
-  // [ValueType.ListOfMapInterval2DComplex]: ValueTypeMap[ValueType.MapInterval2DComplex][];
-  // [ValueType.ListOfMapInterval2DPoint3D]: ValueTypeMap[ValueType.MapInterval2DPoint3D][];
+  // [ValueType.ListOfMapIntervalPoint]: ValueTypeMap[ValueType["MapIntervalPoint"]][];
+  // [ValueType.ListOfMapIntervalComplex]: ValueTypeMap[ValueType["MapIntervalComplex"]][];
+  // [ValueType.ListOfMapIntervalPoint3D]: ValueTypeMap[ValueType["MapIntervalPoint3D"]][];
+  // [ValueType.ListOfMapInterval2DPoint]: ValueTypeMap[ValueType["MapInterval2DPoint"]][];
+  // [ValueType.ListOfMapInterval2DComplex]: ValueTypeMap[ValueType["MapInterval2DComplex"]][];
+  // [ValueType.ListOfMapInterval2DPoint3D]: ValueTypeMap[ValueType["MapInterval2DPoint3D"]][];
 }
 
 export type ConstantValueType = keyof ValueTypeMap;
@@ -360,23 +361,23 @@ export type TypedConstantValue<
   : never;
 
 export type ActionRHSValueType =
-  | ValueType.EmptyList
+  | ValueType["EmptyList"]
   | OrListType<
-      | ValueType.Number
-      | ValueType.Complex
-      | ValueType.Point
-      | ValueType.Point3D
-      | ValueType.RGBColor
-      | ValueType.Polygon
-      | ValueType.Segment
-      | ValueType.Line
-      | ValueType.Ray
-      | ValueType.Vector
-      | ValueType.Circle
-      | ValueType.Arc
-      | ValueType.AngleMarker
-      | ValueType.Tone
-      | ValueType.DirectedAngleMarker
+      | ValueType["Number"]
+      | ValueType["Complex"]
+      | ValueType["Point"]
+      | ValueType["Point3D"]
+      | ValueType["RGBColor"]
+      | ValueType["Polygon"]
+      | ValueType["Segment"]
+      | ValueType["Line"]
+      | ValueType["Ray"]
+      | ValueType["Vector"]
+      | ValueType["Circle"]
+      | ValueType["Arc"]
+      | ValueType["AngleMarker"]
+      | ValueType["Tone"]
+      | ValueType["DirectedAngleMarker"]
     >;
 
 type OrListType<T extends ListElementValueType> =
@@ -388,49 +389,49 @@ type ReverseMap<T extends Record<keyof T, PropertyKey>> = {
 };
 
 export interface ListElementTypeMap {
-  [ValueType.ListOfAny]: ValueType.Any;
-  [ValueType.EmptyList]: ValueType.Number;
-  [ValueType.ListOfNumber]: ValueType.Number;
-  [ValueType.ListOfBool]: ValueType.Bool;
-  [ValueType.ListOfComplex]: ValueType.Complex;
-  [ValueType.ListOfRestriction]: ValueType.Restriction;
-  [ValueType.ListOfPoint]: ValueType.Point;
-  [ValueType.ListOfPoint3D]: ValueType.Point3D;
-  [ValueType.ListOfDistribution]: ValueType.Distribution;
-  [ValueType.ListOfColor]: ValueType.RGBColor;
-  [ValueType.ListOfPolygon]: ValueType.Polygon;
-  [ValueType.ListOfSegment]: ValueType.Segment;
-  [ValueType.ListOfCircle]: ValueType.Circle;
-  [ValueType.ListOfArc]: ValueType.Arc;
-  [ValueType.ListOfLine]: ValueType.Line;
-  [ValueType.ListOfRay]: ValueType.Ray;
-  [ValueType.ListOfVector]: ValueType.Vector;
-  [ValueType.ListOfAngleMarker]: ValueType.AngleMarker;
-  [ValueType.ListOfDirectedAngleMarker]: ValueType.DirectedAngleMarker;
-  [ValueType.ListOfTransformation]: ValueType.Transformation;
-  [ValueType.ListOfSegment3D]: ValueType.Segment3D;
-  [ValueType.ListOfVector3D]: ValueType.Vector3D;
-  [ValueType.ListOfTriangle3D]: ValueType.Triangle3D;
-  [ValueType.ListOfSphere3D]: ValueType.Sphere3D;
-  [ValueType.ListOfTone]: ValueType.Tone;
-  [ValueType.ListOfConfidenceInterval]: ValueType.ConfidenceInterval;
-  [ValueType.ListOfOneSampleTInference]: ValueType.OneSampleTInference;
-  [ValueType.ListOfTwoSampleTInference]: ValueType.TwoSampleTInference;
-  [ValueType.ListOfRegressionTInference]: ValueType.RegressionTInference;
-  [ValueType.ListOfOneSampleZInference]: ValueType.OneSampleZInference;
-  [ValueType.ListOfTwoSampleZInference]: ValueType.TwoSampleZInference;
-  [ValueType.ListOfOneProportionZInference]: ValueType.OneProportionZInference;
-  [ValueType.ListOfTwoProportionZInference]: ValueType.TwoProportionZInference;
-  [ValueType.ListOfZSignificanceTest]: ValueType.ZSignificanceTest;
-  [ValueType.ListOfTSignificanceTest]: ValueType.TSignificanceTest;
-  [ValueType.ListOfChiSquareGoodnessOfFit]: ValueType.ChiSquareGoodnessOfFit;
-  [ValueType.ListOfChiSquareIndependence]: ValueType.ChiSquareIndependence;
-  [ValueType.ListOfMapIntervalPoint]: ValueType.MapIntervalPoint;
-  [ValueType.ListOfMapIntervalComplex]: ValueType.MapIntervalComplex;
-  [ValueType.ListOfMapIntervalPoint3D]: ValueType.MapIntervalPoint3D;
-  [ValueType.ListOfMapInterval2DPoint]: ValueType.MapInterval2DPoint;
-  [ValueType.ListOfMapInterval2DComplex]: ValueType.MapInterval2DComplex;
-  [ValueType.ListOfMapInterval2DPoint3D]: ValueType.MapInterval2DPoint3D;
+  [ValueType.ListOfAny]: ValueType["Any"];
+  [ValueType.EmptyList]: ValueType["Number"];
+  [ValueType.ListOfNumber]: ValueType["Number"];
+  [ValueType.ListOfBool]: ValueType["Bool"];
+  [ValueType.ListOfComplex]: ValueType["Complex"];
+  [ValueType.ListOfRestriction]: ValueType["Restriction"];
+  [ValueType.ListOfPoint]: ValueType["Point"];
+  [ValueType.ListOfPoint3D]: ValueType["Point3D"];
+  [ValueType.ListOfDistribution]: ValueType["Distribution"];
+  [ValueType.ListOfColor]: ValueType["RGBColor"];
+  [ValueType.ListOfPolygon]: ValueType["Polygon"];
+  [ValueType.ListOfSegment]: ValueType["Segment"];
+  [ValueType.ListOfCircle]: ValueType["Circle"];
+  [ValueType.ListOfArc]: ValueType["Arc"];
+  [ValueType.ListOfLine]: ValueType["Line"];
+  [ValueType.ListOfRay]: ValueType["Ray"];
+  [ValueType.ListOfVector]: ValueType["Vector"];
+  [ValueType.ListOfAngleMarker]: ValueType["AngleMarker"];
+  [ValueType.ListOfDirectedAngleMarker]: ValueType["DirectedAngleMarker"];
+  [ValueType.ListOfTransformation]: ValueType["Transformation"];
+  [ValueType.ListOfSegment3D]: ValueType["Segment3D"];
+  [ValueType.ListOfVector3D]: ValueType["Vector3D"];
+  [ValueType.ListOfTriangle3D]: ValueType["Triangle3D"];
+  [ValueType.ListOfSphere3D]: ValueType["Sphere3D"];
+  [ValueType.ListOfTone]: ValueType["Tone"];
+  [ValueType.ListOfConfidenceInterval]: ValueType["ConfidenceInterval"];
+  [ValueType.ListOfOneSampleTInference]: ValueType["OneSampleTInference"];
+  [ValueType.ListOfTwoSampleTInference]: ValueType["TwoSampleTInference"];
+  [ValueType.ListOfRegressionTInference]: ValueType["RegressionTInference"];
+  [ValueType.ListOfOneSampleZInference]: ValueType["OneSampleZInference"];
+  [ValueType.ListOfTwoSampleZInference]: ValueType["TwoSampleZInference"];
+  [ValueType.ListOfOneProportionZInference]: ValueType["OneProportionZInference"];
+  [ValueType.ListOfTwoProportionZInference]: ValueType["TwoProportionZInference"];
+  [ValueType.ListOfZSignificanceTest]: ValueType["ZSignificanceTest"];
+  [ValueType.ListOfTSignificanceTest]: ValueType["TSignificanceTest"];
+  [ValueType.ListOfChiSquareGoodnessOfFit]: ValueType["ChiSquareGoodnessOfFit"];
+  [ValueType.ListOfChiSquareIndependence]: ValueType["ChiSquareIndependence"];
+  [ValueType.ListOfMapIntervalPoint]: ValueType["MapIntervalPoint"];
+  [ValueType.ListOfMapIntervalComplex]: ValueType["MapIntervalComplex"];
+  [ValueType.ListOfMapIntervalPoint3D]: ValueType["MapIntervalPoint3D"];
+  [ValueType.ListOfMapInterval2DPoint]: ValueType["MapInterval2DPoint"];
+  [ValueType.ListOfMapInterval2DComplex]: ValueType["MapInterval2DComplex"];
+  [ValueType.ListOfMapInterval2DPoint3D]: ValueType["MapInterval2DPoint3D"];
 }
 
 export type ListValueType = keyof ListElementTypeMap;
