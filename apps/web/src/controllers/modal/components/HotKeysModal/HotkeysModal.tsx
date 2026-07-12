@@ -78,7 +78,7 @@ export class HotkeysModal extends Modal<{
             {[
               this.HotKeysSection(
                 this.currentShortcuts.commonsymbols,
-                "shared-calculator-heading-keyboard-shortcuts-symbols"
+                "shared-calculator-heading-keyboard-shortcuts-common-symbols"
               ),
               this.HotKeysSection(this.currentShortcuts.audiotrace),
               this.HotKeysSection(this.currentShortcuts.slidertrace),

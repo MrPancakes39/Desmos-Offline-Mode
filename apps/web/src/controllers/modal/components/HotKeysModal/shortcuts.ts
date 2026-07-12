@@ -425,7 +425,7 @@ function getCalcShortcuts(options: { isGeometry: boolean }): GraphingShortcuts {
       i18nSectionKey: "shared-calculator-heading-keyboard-shortcuts-interactive-points",
       shortcuts: [
         {
-          i18nKey: "shared-calculator-text-keyboard-shortcut-focus-first-interactive-point",
+          i18nKey: "shared-calculator-text-keyboard-shortcut-focus-graph-paper",
           standard: "<key>CTRL</key> + <key>ALT</key> + <key>P</key>",
           apple: "<key>CTRL</key> + <key>COMMAND</key> + <key>P</key>",
         },
