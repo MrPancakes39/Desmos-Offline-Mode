@@ -11,7 +11,7 @@ const POPOVER_TRIGGER_SELECTORS = {
 } as const satisfies Record<HeaderPopoverMenu, string>;
 
 export type HeaderPopoverMenu = (typeof VALID_HEADER_MENUS)[number];
-export type HeaderMenuProp = {
+export interface HeaderMenuProp {
   current: () => HeaderPopoverMenu | "closed";
   open: (menu: HeaderPopoverMenu) => void;
   close: () => void;

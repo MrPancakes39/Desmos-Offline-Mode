@@ -17,7 +17,8 @@ class SafeStorage {
     if (item === null) {
       return defaultValue;
     }
-    return JSON.parse(item);
+    // oxlint-disable-next-line typescript/no-unnecessary-type-assertion, typescript/no-unsafe-type-assertion
+    return JSON.parse(item) as unknown as LocalItems[TSelected];
   }
 
   setItem<TSelected extends keyof LocalItems>(key: TSelected, value: LocalItems[TSelected]): void {

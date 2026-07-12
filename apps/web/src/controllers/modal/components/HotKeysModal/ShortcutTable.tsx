@@ -41,8 +41,10 @@ export class ShortcutTable extends Component<{
                   {(col: "heading" | shortcutOS) => (
                     <td didMount={(e: HTMLElement) => this.populateContent(e, col, shortcut)}>
                       <If predicate={() => "latex" in shortcut && col === "heading"}>
+                        {/* oxlint-disable typescript/no-unsafe-return */}
                         {/* @ts-expect-error If enter here it means that the shortcut has a latex property */}
                         {() => <DStaticMathquillView latex={() => shortcut.latex} config={{}} />}
+                        {/* oxlint-enable typescript/no-unsafe-return */}
                       </If>
                     </td>
                   )}
@@ -75,6 +77,6 @@ export class ShortcutTable extends Component<{
 
 const getShortcutString = (shortcut: Shortcut, col: "heading" | shortcutOS) => {
   if (col !== "mac") return shortcut.standard;
-  if ("apple" in shortcut && shortcut.apple !== undefined) return shortcut.apple;
+  if ("apple" in shortcut) return shortcut.apple;
   return shortcut.standard;
 };

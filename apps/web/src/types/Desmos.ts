@@ -54,7 +54,7 @@ export interface LabelOptionsBase {
 
 type ComponentEmitType = "decimalString" | "latex" | (string & {});
 
-type FragileType = {
+interface FragileType {
   DCGView: DCGViewModule;
   PromptSliderView: unknown;
   Checkbox: typeof CheckboxComponent;

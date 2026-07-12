@@ -11,7 +11,7 @@ const initSettings = {
 
 const CALC_TYPES = ["graphing", "geometry", "3d"] as const;
 
-type MountedCalculator = {
+interface MountedCalculator {
   type: (typeof CALC_TYPES)[number];
   calc: Calc;
   container: HTMLDivElement;

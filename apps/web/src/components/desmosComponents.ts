@@ -116,26 +116,33 @@ export interface MathQuillField {
 
 // TODO-mq-compat-when-single: reduce these
 export function isAutoOperatorName(mq: MathQuillField, ident: string) {
-  if (mq.__controller) {
-    return !!mq.__controller.options.autoOperatorNames[ident];
+  const tmp = mq.__controller as typeof mq.__controller | undefined;
+  if (tmp != null) {
+    const autoOperatorName = tmp.options.autoOperatorNames[ident];
+    return autoOperatorName != null && autoOperatorName !== "";
   } else {
-    return mq.controller!.getConfig().autoOperatorNames.has(ident);
+    if (mq.controller == null) throw new Error("mq.controller is undefined");
+    return mq.controller.getConfig().autoOperatorNames.has(ident);
   }
 }
 
 export function isAutoCommand(mq: MathQuillField, ident: string) {
-  if (mq.__controller) {
-    return !!mq.__controller.options.autoCommands[ident];
+  const tmp = mq.__controller as typeof mq.__controller | undefined;
+  if (tmp != null) {
+    const autoCommand = tmp.options.autoCommands[ident];
+    return autoCommand != null && autoCommand !== 0;
   } else {
-    return mq.controller!.getConfig().autoCommands.has(ident);
+    if (mq.controller == null) throw new Error("mq.controller is undefined");
+    return mq.controller.getConfig().autoCommands.has(ident);
   }
 }
 
 /** Assuming there is a nonempty selection, return the direction. */
 export function selectionDirection(mq: MathQuillField): 1 | -1 {
-  if (mq.__controller) {
-    const nodeAfterHead = mq.__controller.cursor[1]?._el;
-    if (nodeAfterHead?.parentElement?.classList.contains("dcg-mq-selection")) {
+  const tmp = mq.__controller as typeof mq.__controller | undefined;
+  if (tmp != null) {
+    const nodeAfterHead = tmp.cursor[1]?._el;
+    if (nodeAfterHead?.parentElement?.classList.contains("dcg-mq-selection") ?? false) {
       // The node after the head is inside the selection, so
       // the head is on the left of the selection.
       return -1;

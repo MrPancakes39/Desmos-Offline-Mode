@@ -253,7 +253,7 @@ export interface Grapher3d {
 export type Scale = "linear" | "logarithmic";
 
 interface CalcPrivate {
-  withHistoryReplacement: (fn: () => void) => any;
+  withHistoryReplacement: (fn: () => void) => unknown;
   focusedMathQuill:
     | {
         mq: MathQuillField;
@@ -290,7 +290,7 @@ interface CalcPrivate {
     // The item models returned are actually much more detailed
     getSelectedItem: () => ItemModel | undefined;
     getFocusLocation: () => FocusLocation | undefined;
-    getItemModel: (id: any) => ItemModel | undefined;
+    getItemModel: (id: unknown) => ItemModel | undefined;
     getAllSelectedItems: () => ItemModel[];
     getItemModelByIndex: (index: number) => ItemModel | undefined;
     getAllItemModels: () => ItemModel[];

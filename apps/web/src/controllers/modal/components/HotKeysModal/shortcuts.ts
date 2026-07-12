@@ -11,12 +11,12 @@ export type Shortcut =
       standard: string;
     };
 
-export type Hotkeys = {
+export interface Hotkeys {
   i18nSectionKey: string;
   shortcuts: Shortcut[];
 };
 
-export type GraphingShortcuts = {
+export interface GraphingShortcuts {
   commonsymbols: Hotkeys;
   tables: Hotkeys;
   sliders: Hotkeys;
@@ -29,7 +29,7 @@ export type GraphingShortcuts = {
   mathquill: Hotkeys;
 };
 
-export type GeoShortcuts = GraphingShortcuts & {
+export interface GeoShortcuts extends GraphingShortcuts {
   toolSelection: Hotkeys;
   graphNavigation: Hotkeys;
   expressionEdit: Hotkeys;
@@ -179,6 +179,7 @@ function getMathQuillShortcuts(options: { decimalToFraction: boolean }): Hotkeys
   return tmp;
 }
 
+// oxlint-disable-next-line eslint/max-lines-per-function
 function getCalcShortcuts(options: { isGeometry: boolean }): GraphingShortcuts {
   return {
     commonsymbols: getCommonSymbolsShortcuts(options),
@@ -618,6 +619,7 @@ function getCommonSymbolsShortcuts(options: { isGeometry: boolean }): Hotkeys {
   return tmp;
 }
 
+// oxlint-disable-next-line eslint/max-lines-per-function
 function getCommonActionsShortcuts(options: {
   notes: boolean;
   folders: boolean;

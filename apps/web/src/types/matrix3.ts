@@ -7,6 +7,7 @@ export interface Matrix3 {
   /** Row-major 9 elements. */
   elements: number[];
   clone: () => Matrix3;
+  // oxlint-disable-next-line eslint/max-params
   set: (
     n11: number,
     n12: number,
@@ -29,6 +30,7 @@ export function approx3su(a: Matrix3, b: Matrix3) {
   const B = b.elements;
 
   for (let i = 0; i < 9; i++) {
+    // oxlint-disable-next-line typescript/no-non-null-assertion
     if (Math.abs(A[i]! - B[i]!) > 1e-10) return false;
   }
 
@@ -36,6 +38,7 @@ export function approx3su(a: Matrix3, b: Matrix3) {
 }
 
 /** We don't have access to the Matrix3 constructor directly. This should suffice. */
+// oxlint-disable-next-line eslint/max-params
 export function matrix3(
   grapher3d: Grapher3d,
   n11: number,
@@ -102,8 +105,10 @@ export function getOrientation(grapher3d: Grapher3d): Matrix3 {
 export function eulerFromOrientation(m: Matrix3) {
   return {
     // Column-major, so this is atan2(sz, cz)
+    // oxlint-disable-next-line typescript/no-non-null-assertion
     zTip: Math.atan2(-m.elements[6]!, m.elements[8]!),
     // Column-major, so this is atan2(sxy, cxy)
+    // oxlint-disable-next-line typescript/no-non-null-assertion
     xyRot: atan2positive(m.elements[4]!, -m.elements[1]!),
   };
 }

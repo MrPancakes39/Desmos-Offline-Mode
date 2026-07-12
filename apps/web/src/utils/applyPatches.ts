@@ -14,24 +14,24 @@ type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">
 type SanitizedExpressionItem = Omit<ExpressionModel, "controller" | "index" | "renderShell" | "isHiddenFromUI" | "rootViewNode"> & {
   playing?: boolean;
 };
-type SanitizedTableItem = {
+interface SanitizedTableItem {
   id: string;
   type: "table";
   columns: TableModel["columns"];
 };
-type SanitizedImageItem = {
+interface SanitizedImageItem {
   id: string;
   type: "image";
   hidden: boolean | undefined;
   secret: boolean | undefined;
 };
-type SanitizedFolderItem = {
+interface SanitizedFolderItem {
   id: string;
   type: "folder";
   hidden: boolean | undefined;
   secret: boolean | undefined;
 };
-type SanitizedTextItem = {
+interface SanitizedTextItem {
   id: string;
   type: "text";
   secret: boolean | undefined;
@@ -154,19 +154,19 @@ const sanitizeItem = function (item: ItemModel) {
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keys are filtered by this property list
         if (prop in modal) tmp[prop as keySanitized] = modal[prop] as never;
       });
-      if ("parametricDomain" in modal && modal.parametricDomain !== undefined) {
+      if ("parametricDomain" in modal) {
         tmp.parametricDomain = {
           min: modal.parametricDomain.min,
           max: modal.parametricDomain.max,
         };
       }
-      if ("polarDomain" in modal && modal.polarDomain !== undefined) {
+      if ("polarDomain" in modal) {
         tmp.polarDomain = {
           min: modal.polarDomain.min,
           max: modal.polarDomain.max,
         };
       }
-      if ("domain" in modal && modal.domain !== undefined) {
+      if ("domain" in modal) {
         tmp.domain = {
           min: modal.domain.min,
           max: modal.domain.max,

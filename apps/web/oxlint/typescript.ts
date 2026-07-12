@@ -115,7 +115,7 @@ export const typescriptRules = {
   ],
   "typescript/consistent-type-definitions": [
     "error",
-    "type"
+    "interface"
   ],
   "typescript/dot-notation": [
     "error",
