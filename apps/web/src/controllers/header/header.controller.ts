@@ -18,6 +18,8 @@ export type HeaderMenuProp = {
 };
 
 export class HeaderController implements TransparentController {
+  readonly dsom: DesmosOfflineMode
+
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   #currentMenu: HeaderPopoverMenu | "closed";
@@ -25,7 +27,8 @@ export class HeaderController implements TransparentController {
   popoverMenu: HTMLElement | undefined;
   popoverTrigger: HTMLElement | undefined;
 
-  constructor(readonly dsom: DesmosOfflineMode) {
+  constructor(dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
     this.#currentMenu = "closed";
     this.listener = this.handleTap.bind(this);
   }

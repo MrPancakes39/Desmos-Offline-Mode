@@ -6,13 +6,16 @@ import { type ModalType, validModals } from "./components/modal.component";
 import { ModalContainer } from "./modal-container.component";
 
 export class ModalController implements TransparentController {
+  readonly dsom: DesmosOfflineMode
+
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   currentType: ModalType;
   listener: (ev: KeyboardEvent) => void;
   tabbable: HTMLElement[] | null;
 
-  constructor(readonly dsom: DesmosOfflineMode) {
+  constructor(dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
     this.currentType = "none";
     this.listener = this.handleKeyDown.bind(this);
     this.tabbable = null;

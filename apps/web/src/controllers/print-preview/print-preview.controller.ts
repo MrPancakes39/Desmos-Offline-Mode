@@ -5,11 +5,15 @@ import { select } from "~/utils";
 import { PPreviewContainer } from "./print-preview.component";
 
 export default class PrintPreviewController implements TransparentController {
+  readonly dsom: DesmosOfflineMode
+
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
   ppreviewContent: HTMLDivElement | undefined;
 
-  constructor(readonly dsom: DesmosOfflineMode) {}
+  constructor(dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
+  }
 
   init() {
     const ppreviewContainer = select<HTMLDivElement>("#print-preview-container");

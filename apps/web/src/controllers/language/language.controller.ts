@@ -9,13 +9,16 @@ type FormatFunction = (key: string, args?: Record<string, FluentVariable> | null
 export type SUPPORTED_LANG_TYPE = (typeof SUPPORTED_LANGS)[number];
 
 export class LanguageController implements TransparentController {
+  readonly dsom: DesmosOfflineMode;
   readonly Desmos: typeof window.Desmos;
+
   #currentLang: SUPPORTED_LANG_TYPE = "en";
   desmosEnglishFormat!: FormatFunction;
   desmosCurrentFormat: FormatFunction = () => "";
   cachedBundles = new Map<Exclude<SUPPORTED_LANG_TYPE, "en" | "xx-XX">, FluentBundle>();
 
-  constructor(readonly dsom: DesmosOfflineMode) {
+  constructor(dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
     this.Desmos = window.Desmos;
   }
 

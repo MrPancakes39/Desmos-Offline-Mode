@@ -5,6 +5,8 @@ import { select } from "~/utils";
 import { SideBarContainer } from "./sidebar.component";
 
 export class SideBarController implements TransparentController {
+  readonly dsom: DesmosOfflineMode;
+
   unsub: (() => void) | undefined;
   #removeExtras: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;
@@ -13,7 +15,8 @@ export class SideBarController implements TransparentController {
   #appnameItem: HTMLElement | undefined;
   shouldShow: boolean;
 
-  constructor(readonly dsom: DesmosOfflineMode) {
+  constructor(dsom: DesmosOfflineMode) {
+    this.dsom = dsom;
     this.shouldShow = false;
   }
 
