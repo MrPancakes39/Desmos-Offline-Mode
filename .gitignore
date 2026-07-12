@@ -112,3 +112,6 @@ next-env.d.ts
 # Desmos from Website
 **/src/desmos
 **/public/desmos
+
+# AI agent worktrees
+.claude/worktrees/
