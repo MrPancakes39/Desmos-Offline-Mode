@@ -118,99 +118,99 @@ const sanitizeItem = function (item: ItemModel) {
   });
 
   switch (item.type) {
-    case "expression":
-      return (function (modal) {
-        const tmp: SanitizedExpressionItem = {
-          id: modal.id,
-          type: modal.type ?? "expression",
+    case "expression": {
+      const modal = item;
+      const tmp: SanitizedExpressionItem = {
+        id: modal.id,
+        type: modal.type ?? "expression",
+      };
+      type keyModal = keyof typeof modal;
+      type keySanitized = keyof SanitizedExpressionItem;
+      const properties: keyModal[] = [
+        "latex",
+        "color",
+        "lineStyle",
+        "lineWidth",
+        "lineOpacity",
+        "pointStyle",
+        "pointSize",
+        "pointOpacity",
+        "points",
+        "lines",
+        "fill",
+        "fillOpacity",
+        "hidden",
+        "secret",
+        "dragMode",
+        "label",
+        "showLabel",
+        "labelSize",
+        "labelOrientation",
+        "interactiveLabel",
+        "readonly",
+      ];
+      properties.forEach((prop) => {
+        // TODO: Fix???
+        // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keys are filtered by this property list
+        if (prop in modal) tmp[prop as keySanitized] = modal[prop] as never;
+      });
+      if ("parametricDomain" in modal && modal.parametricDomain !== undefined) {
+        tmp.parametricDomain = {
+          min: modal.parametricDomain.min,
+          max: modal.parametricDomain.max,
         };
-        type keyModal = keyof typeof modal;
-        type keySanitized = keyof SanitizedExpressionItem;
-        const properties: keyModal[] = [
-          "latex",
-          "color",
-          "lineStyle",
-          "lineWidth",
-          "lineOpacity",
-          "pointStyle",
-          "pointSize",
-          "pointOpacity",
-          "points",
-          "lines",
-          "fill",
-          "fillOpacity",
-          "hidden",
-          "secret",
-          "dragMode",
-          "label",
-          "showLabel",
-          "labelSize",
-          "labelOrientation",
-          "interactiveLabel",
-          "readonly",
-        ];
-        properties.forEach((prop) => {
-          // TODO: Fix???
-          // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- Keys are filtered by this property list
-          if (prop in modal) tmp[prop as keySanitized] = modal[prop] as never;
-        });
-        if ("parametricDomain" in modal && modal.parametricDomain !== undefined) {
-          tmp.parametricDomain = {
-            min: modal.parametricDomain.min,
-            max: modal.parametricDomain.max,
-          };
-        }
-        if ("polarDomain" in modal && modal.polarDomain !== undefined) {
-          tmp.polarDomain = {
-            min: modal.polarDomain.min,
-            max: modal.polarDomain.max,
-          };
-        }
-        if ("domain" in modal && modal.domain !== undefined) {
-          tmp.domain = {
-            min: modal.domain.min,
-            max: modal.domain.max,
-          };
-        }
-        if (modal.slider !== undefined) {
-          tmp.sliderBounds = {
-            min: modal.slider.hardMin ? modal.slider.min : "",
-            max: modal.slider.hardMax ? modal.slider.max : "",
-            step: modal.slider.step,
-          };
-          tmp.playing = modal.slider.isPlaying;
-        }
-        return tmp;
-      })(item);
-    case "table":
-      return (function (modal) {
-        const tmp: SanitizedTableItem = {
-          id: modal.id,
-          type: modal.type,
-          columns: modal.columns.map(tableColumn),
+      }
+      if ("polarDomain" in modal && modal.polarDomain !== undefined) {
+        tmp.polarDomain = {
+          min: modal.polarDomain.min,
+          max: modal.polarDomain.max,
         };
-        return tmp;
-      })(item);
+      }
+      if ("domain" in modal && modal.domain !== undefined) {
+        tmp.domain = {
+          min: modal.domain.min,
+          max: modal.domain.max,
+        };
+      }
+      if (modal.slider !== undefined) {
+        tmp.sliderBounds = {
+          min: modal.slider.hardMin ? modal.slider.min : "",
+          max: modal.slider.hardMax ? modal.slider.max : "",
+          step: modal.slider.step,
+        };
+        tmp.playing = modal.slider.isPlaying;
+      }
+      return tmp;
+    };
+    case "table": {
+      const modal = item;
+      const tmp: SanitizedTableItem = {
+        id: modal.id,
+        type: modal.type,
+        columns: modal.columns.map(tableColumn),
+      };
+      return tmp;
+    };
     case "folder":
-    case "image":
-      return (function (modal) {
-        const tmp: SanitizedImageItem | SanitizedFolderItem = {
-          id: modal.id,
-          type: modal.type,
-          hidden: modal.hidden,
-          secret: modal.secret,
-        };
-        return tmp;
-      })(item);
-    case "text":
-      return (function (modal) {
-        const tmp: SanitizedTextItem = {
-          id: modal.id,
-          type: modal.type,
-          secret: modal.secret,
-        };
-        return tmp;
-      })(item);
+    case "image": {
+      const modal = item;
+      const tmp: SanitizedImageItem | SanitizedFolderItem = {
+        id: modal.id,
+        type: modal.type,
+        hidden: modal.hidden,
+        secret: modal.secret,
+      };
+      return tmp;
+    };
+    case "text": {
+      const modal = item;
+      const tmp: SanitizedTextItem = {
+        id: modal.id,
+        type: modal.type,
+        secret: modal.secret,
+      };
+      return tmp;
+    };
     default:
       throw new Error(`Unknown item type: ${item.type}`);
   }
