@@ -1,5 +1,6 @@
 import {
   ClassComponent,
+  Component,
   type ComponentChild,
   type ComponentTemplate,
   createElementWrapped,
