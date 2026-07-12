@@ -18,7 +18,8 @@ interface windowConfig extends Window {
 }
 
 declare const window: windowConfig;
-export default window;
+const browserWindow = globalThis.window as windowConfig  & typeof globalThis;
+export default browserWindow;
 
 // Re-exporting Desmos object
 export const Desmos = window.Desmos;
