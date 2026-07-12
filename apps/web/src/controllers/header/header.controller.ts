@@ -7,7 +7,7 @@ import { Header } from "./header.component";
 const VALID_HEADER_MENUS = ["help", "lang"] as const;
 const POPOVER_TRIGGER_SELECTORS = {
   help: ".dcg-icon-question-sign",
-  lang: ".dcg-icon-world",
+  lang: ".dcg-icon-language",
 } as const satisfies Record<HeaderPopoverMenu, string>;
 
 export type HeaderPopoverMenu = (typeof VALID_HEADER_MENUS)[number];

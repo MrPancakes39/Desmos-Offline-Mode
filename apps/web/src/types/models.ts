@@ -3,7 +3,6 @@
  * This file includes type definition for internal graph state models.
  * These have more information than the graph state related to getState and setState.
  */
-/* oxlint-disable eslint/max-lines */
 import type { ClassComponent } from "~/globals/DCGView";
 
 import type { CalcController } from "./Calc";

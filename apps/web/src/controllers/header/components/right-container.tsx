@@ -4,7 +4,7 @@ import { Component, DCGView, jsx } from "~/globals/DCGView";
 import type { DesmosOfflineMode } from "~/types/DSOM";
 import { safeStorage } from "~/utils";
 
-import type { HeaderMenuProp, HeaderPopoverMenu } from "../header.controller";
+import type { HeaderMenuProp } from "../header.controller";
 
 export class RightContainer extends Component<{
   dsom: DesmosOfflineMode;
