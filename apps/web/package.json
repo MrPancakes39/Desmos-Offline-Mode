@@ -9,8 +9,8 @@
     "preview": "vite preview",
     "lint": "oxlint --report-unused-disable-directives .",
     "lint:fix": "oxlint --fix --report-unused-disable-directives .",
-    "format": "oxfmt 'src/**/*.{css,less,ts,tsx}'",
-    "format:check": "oxfmt --check 'src/**/*.{css,less,ts,tsx}'",
+    "format": "oxfmt --check 'src/**/*.{css,less,ts,tsx}'",
+    "format:fix": "oxfmt 'src/**/*.{css,less,ts,tsx}'",
     "typecheck": "tsc --project ./tsconfig.json",
     "fetch_desmos_api": "node ../../packages/fetch_desmos_res/fetch_desmos.mjs"
   },
