@@ -1,12 +1,10 @@
-import { For, Switch, Toggle, Tooltip } from "~/components";
+import { DropdownPopoverWithAnchorShim, For, Toggle } from "~/components";
 import { LANG_DISPLAY_NAMES, type LANG_MAP } from "~/controllers/language/language.controller";
-import { Component, jsx } from "~/globals/DCGView";
+import { Component, DCGView, jsx } from "~/globals/DCGView";
 import type { DesmosOfflineMode } from "~/types/DSOM";
 import { safeStorage } from "~/utils";
 
 import type { HeaderMenuProp, HeaderPopoverMenu } from "../header.controller";
-
-type PopoverProps = () => void;
 
 export class RightContainer extends Component<{
   dsom: DesmosOfflineMode;
@@ -14,69 +12,63 @@ export class RightContainer extends Component<{
 }> {
   dsom!: DesmosOfflineMode;
   menu!: HeaderMenuProp;
-  toggleMenu!: (menu: HeaderPopoverMenu) => void;
-
-  popoverProps = {
-    help: () => HelpMenu(this.dsom),
-    lang: () => LanguageMenu(this.dsom),
-  } as const satisfies Record<HeaderPopoverMenu, PopoverProps>;
 
   override init() {
     this.dsom = this.props.dsom();
     this.menu = this.props.menu();
-
-    this.toggleMenu = (menu: HeaderPopoverMenu) => {
-      if (this.menu.current() === menu) {
-        this.menu.close();
-      } else {
-        this.menu.open(menu);
-      }
-    };
   }
 
   template() {
     return (
       <div class="right-container">
         {/* Language Menu (Ctrl + Alt/Cmd + L) */}
-        <Tooltip tooltip={() => this.dsom.format("account-shell-label-language")}>
-          <div class="center-div">
-            <span
-              role="button"
-              tabindex="0"
-              aria-label={() => this.dsom.format("account-shell-label-language")}
-              class="dcg-icon-language desom-icon-inline"
-              onTap={() => this.toggleMenu("lang")}
-            ></span>
-          </div>
-        </Tooltip>
+        <div class="center-div">
+          <DropdownPopoverWithAnchorShim
+            orientation={DCGView.const("bottom-left")}
+            tooltip={() => this.dsom.format("account-shell-label-language")}
+            anchor={() => (
+              <span
+                role="button"
+                tabindex="0"
+                aria-label={() => this.dsom.format("account-shell-label-language")}
+                class="dcg-icon-language desom-icon-inline"
+              />
+            )}
+            popoverBody={() => (
+              <div class="desom-popover-container menu-lang">
+                <div class="desom-popover-interior dcg-language-menu">{LanguageMenu(this.dsom)}</div>
+              </div>
+            )}
+            controlled={() => ({
+              isOpen: this.menu.current() === "lang",
+              setDropdownOpen: (isOpen) => (isOpen ? this.menu.open("lang") : this.menu.close()),
+            })}
+          />
+        </div>
         {/* Help Menu (Ctrl + Alt/Cmd + H) */}
-        <Tooltip tooltip={() => this.dsom.format("account-shell-label-help")}>
-          <div class="center-div">
-            <span
-              role="button"
-              tabindex="0"
-              aria-label={() => this.dsom.format("account-shell-label-help")}
-              class="dcg-icon-question-sign desom-icon-inline"
-              onTap={() => this.toggleMenu("help")}
-            ></span>
-          </div>
-        </Tooltip>
-        {/* Popover Menu */}
-        <Switch key={() => this.menu.current()}>
-          {(menu: ReturnType<typeof this.menu.current>) => {
-            switch (menu) {
-              case "closed":
-                return null;
-              default:
-                return (
-                  <div class={`desom-popover-container menu-${menu} dcg-popover dcg-bottom`}>
-                    <div class="dcg-popover-interior">{this.popoverProps[menu]()}</div>
-                    <span class="dcg-arrow"></span>
-                  </div>
-                );
-            }
-          }}
-        </Switch>
+        <div class="center-div">
+          <DropdownPopoverWithAnchorShim
+            orientation={DCGView.const("bottom-left")}
+            tooltip={() => this.dsom.format("account-shell-label-help")}
+            anchor={() => (
+              <span
+                role="button"
+                tabindex="0"
+                aria-label={() => this.dsom.format("account-shell-label-help")}
+                class="dcg-icon-question-sign desom-icon-inline"
+              />
+            )}
+            popoverBody={() => (
+              <div class="desom-popover-container menu-help">
+                <div class="desom-popover-interior dcg-language-menu">{HelpMenu(this.dsom)}</div>
+              </div>
+            )}
+            controlled={() => ({
+              isOpen: this.menu.current() === "help",
+              setDropdownOpen: (isOpen) => (isOpen ? this.menu.open("help") : this.menu.close()),
+            })}
+          />
+        </div>
       </div>
     );
   }
@@ -132,7 +124,7 @@ function LanguageMenu(dsom: DesmosOfflineMode) {
                   if (saveLangPrefs.toggleState) {
                     safeStorage.setItem("saveLangPrefs", { lang, toggleState: true });
                   }
-                  dsom.headerController.closeMenu();
+                  // dsom.headerController.closeMenu();
                 }}
               >
                 {displayName}
