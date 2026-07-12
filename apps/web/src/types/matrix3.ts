@@ -29,7 +29,7 @@ export function approx3su(a: Matrix3, b: Matrix3) {
   const B = b.elements;
 
   for (let i = 0; i < 9; i++) {
-    if (Math.abs(A[i] - B[i]) > 1e-10) return false;
+    if (Math.abs(A[i]! - B[i]!) > 1e-10) return false;
   }
 
   return true;
@@ -102,9 +102,9 @@ export function getOrientation(grapher3d: Grapher3d): Matrix3 {
 export function eulerFromOrientation(m: Matrix3) {
   return {
     // Column-major, so this is atan2(sz, cz)
-    zTip: Math.atan2(-m.elements[6], m.elements[8]),
+    zTip: Math.atan2(-m.elements[6]!, m.elements[8]!),
     // Column-major, so this is atan2(sxy, cxy)
-    xyRot: atan2positive(m.elements[4], -m.elements[1]),
+    xyRot: atan2positive(m.elements[4]!, -m.elements[1]!),
   };
 }
 
