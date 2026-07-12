@@ -30,7 +30,7 @@ export class SideBarContainer extends Component<{
             <span class="dcg-add-blank">
               <i class="dcg-icon-plus" aria-hidden="true"></i>
             </span>
-            <span class="new-graph-title">{() => this.dsom.format("account-shell-text-mygraphs-new-blank-graph")}</span>
+            <span class="new-graph-title">{() => this.dsom.format("account-shell-button-mygraphs-new-graph")}</span>
           </div>
           {/* <div>Placeholder</div> */}
           <div class="side-bar-item" tabindex="0" role="menuitem">
@@ -39,7 +39,7 @@ export class SideBarContainer extends Component<{
           </div>
           <div class="side-bar-item" tabindex="0" role="menuitem">
             <span class="icon desom-icons-save"></span>
-            <span class="label">{() => this.dsom.format("account-shell-button-mygraphs-save")}</span>
+            <span class="label">{() => this.dsom.format("account-shell-button-save")}</span>
           </div>
           <div class="side-bar-item" tabindex="0" role="menuitem">
             <span class="icon dcg-icon-share"></span>
