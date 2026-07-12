@@ -44,7 +44,7 @@ export class RightContainer extends Component<{
               role="button"
               tabindex="0"
               aria-label={() => this.dsom.format("account-shell-label-language")}
-              class="dcg-icon-world desom-icon-inline"
+              class="dcg-icon-language desom-icon-inline"
               onTap={() => this.toggleMenu("lang")}
             ></span>
           </div>
