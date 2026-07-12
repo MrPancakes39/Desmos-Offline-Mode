@@ -514,6 +514,24 @@ export interface ExpressionModel extends BasicSetExpression, NonfolderItemModelB
   clickableInfo?: BaseClickable;
   shouldGraph?: boolean;
   formula?: ExpressionFormula;
+  // TODO: Check the properties below if exist
+  readonly?: boolean;
+  interactiveLabel?: boolean;
+  domain?: {
+    min: string | undefined;
+    max: string | undefined;
+  };
+  slider?: {
+    animationPeriod: number;
+    hardMax: boolean;
+    hardMin: boolean;
+    isPlaying: boolean;
+    loopMode: string;
+    max: string;
+    min: string;
+    playDirection: number;
+    step: string;
+  };
 }
 
 interface TableColumn extends BasicSetExpression {
@@ -544,6 +562,7 @@ export interface ImageModel extends NonfolderItemModelBase {
     hoveredImage?: string;
     depressedImage?: string;
   };
+  hidden?: boolean
 }
 
 export interface FolderModel extends ItemModelBase {
@@ -552,6 +571,7 @@ export interface FolderModel extends ItemModelBase {
   title?: string;
   secret?: boolean;
   error?: unknown;
+  hidden?: boolean; // TODO: Check if this property exists
 }
 
 export type ItemModel =

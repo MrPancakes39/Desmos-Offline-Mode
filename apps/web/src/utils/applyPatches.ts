@@ -11,7 +11,7 @@ export type SelectedItem =
 
 type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
 
-type SanitizedExpressionItem = Omit<ExpressionModel, "controller" | "index"> & {
+type SanitizedExpressionItem = Omit<ExpressionModel, "controller" | "index" | "renderShell" | "isHiddenFromUI" | "rootViewNode"> & {
   playing?: boolean;
 };
 type SanitizedTableItem = {
@@ -102,19 +102,19 @@ const sanitizeItem = function (item: ItemModel) {
   type TableColumn = TableModel["columns"] extends Array<infer T> ? T : never;
   const tableColumn = (column: TableColumn) => ({
     id: column.id,
-    latex: column.latex,
-    color: column.color,
-    hidden: column.hidden,
-    pointStyle: column.pointStyle,
-    pointSize: column.pointSize,
-    pointOpacity: column.pointOpacity,
-    lineStyle: column.lineStyle,
-    lineWidth: column.lineWidth,
-    lineOpacity: column.lineOpacity,
-    points: column.points,
-    lines: column.lines,
-    dragMode: column.dragMode,
-    values: column.values?.slice(),
+    latex: column.latex ?? "",
+    color: column.color ?? "#000000",
+    hidden: column.hidden ?? false,
+    pointStyle: column.pointStyle ?? "POINT",
+    pointSize: column.pointSize ?? 1,
+    pointOpacity: column.pointOpacity ?? 1,
+    lineStyle: column.lineStyle ?? "SOLID",
+    lineWidth: column.lineWidth ?? 1,
+    lineOpacity: column.lineOpacity ?? 1,
+    points: column.points ?? false,
+    lines: column.lines ?? false,
+    dragMode: column.dragMode ?? "AUTO",
+    values: column.values?.slice() ?? [],
   });
 
   switch (item.type) {
@@ -122,7 +122,7 @@ const sanitizeItem = function (item: ItemModel) {
       return (function (modal) {
         const tmp: SanitizedExpressionItem = {
           id: modal.id,
-          type: modal.type,
+          type: modal.type ?? "expression",
         };
         type keyModal = keyof typeof modal;
         type keySanitized = keyof SanitizedExpressionItem;
