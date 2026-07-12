@@ -23,6 +23,7 @@
     /* Bundler Mode */
     "useDefineForClassFields": true,
     "lib": ["ES2021", "DOM", "DOM.Iterable"],
+    "types": ["desmos", "jquery", "node", "underscore"],
     "module": "ESNext",
     "noEmit": true,
     "moduleResolution": "Bundler",
@@ -34,11 +35,6 @@
     "jsx": "react",
     "jsxFactory": "jsx",
 
-    /* Output Options */
-    "composite": true,
-    "declaration": true,
-    "sourceMap": false,
-
     // This property will prevent issues related to the file casing
     // and how the files are referenced in the code in different OSes
     // (e.g.: Windows and Linux)
@@ -47,7 +43,7 @@
     /* Path Aliasing */
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
   },
   "include": ["src", "vite.config.ts"]
 }
