@@ -73,8 +73,16 @@ export interface MathQuillConfig {
   sumStartsWithNEquals?: boolean;
   leftRightIntoCmdGoes?: string;
   supSubsRequireOperand?: boolean;
-  restrictMismatchedBrackets?: boolean;
+  restrictMismatchedBrackets?: boolean | "none";
   typingPercentWritesPercentOf?: boolean;
+}
+
+export interface MqSelection {
+  latex: string;
+  startIndex: number;
+  endIndex: number;
+  headIndex?: number;
+  anchorIndex?: number;
 }
 
 export interface MathQuillField {
@@ -84,13 +92,66 @@ export interface MathQuillField {
   config: (input: MathQuillConfig) => MathQuillField;
   focus: () => void;
   blur: () => void;
+  selection: (() => MqSelection) & ((selection: MqSelection) => MathQuillField);
+  /** Returns the `dcg-math-field` */
+  el: () => HTMLElement;
+  domNodeToSpan: (el: Element) => MqSelection | undefined;
   __controller: {
     options: MathQuillFieldOptions;
     cursor: MQCursor;
     container: HTMLElement;
   };
-  __options: MathQuillFieldOptions;
+  controller?: {
+    getConfig: () => {
+      autoOperatorNames: {
+        has: (s: string) => boolean;
+      };
+      autoCommands: {
+        has: (s: string) => boolean;
+      };
+    };
+  };
 }
+
+// TODO-mq-compat-when-single: reduce these
+export function isAutoOperatorName(mq: MathQuillField, ident: string) {
+  if (mq.__controller) {
+    return !!mq.__controller.options.autoOperatorNames[ident];
+  } else {
+    return mq.controller!.getConfig().autoOperatorNames.has(ident);
+  }
+}
+
+export function isAutoCommand(mq: MathQuillField, ident: string) {
+  if (mq.__controller) {
+    return !!mq.__controller.options.autoCommands[ident];
+  } else {
+    return mq.controller!.getConfig().autoCommands.has(ident);
+  }
+}
+
+/** Assuming there is a nonempty selection, return the direction. */
+export function selectionDirection(mq: MathQuillField): 1 | -1 {
+  if (mq.__controller) {
+    const nodeAfterHead = mq.__controller.cursor[1]?._el;
+    if (nodeAfterHead?.parentElement?.classList.contains("dcg-mq-selection")) {
+      // The node after the head is inside the selection, so
+      // the head is on the left of the selection.
+      return -1;
+    } else {
+      // Else the head is on the right of the selection.
+      return 1;
+    }
+  } else {
+    const selection = mq.selection();
+    if (selection.headIndex === selection.startIndex) {
+      return -1;
+    } else {
+      return 1;
+    }
+  }
+}
+
 
 export abstract class MathQuillViewComponent extends ClassComponent<{
   latex: string;
@@ -154,7 +215,7 @@ export function Match<Disc extends { type: string }>(
 
 export abstract class DStaticMathquillViewComponent extends ClassComponent<{
   latex: string;
-  config: unknown;
+  config: MathQuillConfig;
 }> {}
 
 export const DStaticMathquillView = Fragile.StaticMathquillView;
@@ -173,7 +234,7 @@ export abstract class ExpressionViewComponent extends ClassComponent<
   }
 > {}
 
-export abstract class IconViewComponent extends ClassComponent<{
+export abstract class ImageIconViewComponent extends ClassComponent<{
   model: ItemModel;
   controller: CalcController;
 }> {}
@@ -182,3 +243,49 @@ interface ModelAndController {
   model: ExpressionModel;
   controller: CalcController;
 }
+
+// <ExpressionIconView ... >
+export abstract class ExpressionIconViewComponent extends Component<ModelAndController> {}
+
+interface ExpressionFooterViewProps extends ModelAndController {
+  isFirstRender: boolean;
+}
+
+// <If predicate={this.shouldShowFooter}>
+//   {() => <div class={this.getFooterClass()}> ...
+export abstract class ExpressionFooterViewComponent extends Component<ExpressionFooterViewProps> {}
+
+export const {
+  ImageIconView,
+  ExpressionIconView,
+  ExpressionFooterView,
+  DropdownPopoverWithAnchorShim,
+} = Fragile;
+
+export abstract class EvaluationContainerComponent extends ClassComponent<{
+  controller: CalcController;
+  id: () => string;
+}> {
+  abstract controller: CalcController;
+  // abstract cachedEvaluationRHS: EvaluationRHS;
+  // abstract getEvaluationRHS(): EvaluationRHS;
+}
+
+interface DropdownPopoverProps {
+  anchor: () => ComponentChild;
+  popoverBody: () => ComponentChild;
+  tooltip?: () => string;
+  tooltipGravity?: () => "n" | "s" | "e" | "w";
+  orientation: () =>
+    | "left"
+    | "right"
+    | "bottom-left"
+    | "bottom-right"
+    | "top-left";
+  controlled?: () => {
+    isOpen: boolean;
+    setDropdownOpen: (isOpen: boolean) => void;
+  };
+}
+
+export abstract class DropdownPopoverComponent extends Component<DropdownPopoverProps> {}

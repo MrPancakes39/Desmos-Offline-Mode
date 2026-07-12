@@ -1,17 +1,36 @@
 // Original File: https://github.com/DesModder/DesModder/blob/main/src/globals/Calc.ts
-import type { GraphState } from "@desmodder/graph-state";
+import type { GraphState, ItemState } from "@desmodder/graph-state";
 import type { FluentVariable } from "@fluent/bundle";
 
-import type { MathQuillField } from "~/components";
+import type { MathQuillConfig, MathQuillField } from "~/components";
 
+import type { Matrix3 } from "./matrix3";
 import type { ItemModel } from "./models";
+
 
 // Keeps the type of string of absorbing literals in unions.
 type any_string = string & NonNullable<unknown>;
+type Product = "graphing" | "geometry-calculator" | "graphing-3d";
+
+export type FocusLocation =
+  | { type: "expression"; id: string }
+  | { type: "dsm-focus"; plugin: "video-creator"; id: string }
+  | { type: "dsm-focus"; plugin: "find-and-replace"; id: "replace-bar" }
+  | { type: "search-expressions" }
+  | {
+      /**
+       * Special type to prevent exhaustive switches on `location.type`
+       * while still permitting logic like
+       * `location.type === 'expression' && location.id === id`
+       * which would not be allowed by `{type: "string"}`.
+       */
+      type: `dummy-dont-match-${string}`;
+    };
 
 export type DispatchedEvent =
   | {
       type:
+        | "close-item-settings-menu"
         | "close-graph-settings"
         | "open-expression-search"
         | "close-expression-search"
@@ -20,7 +39,6 @@ export type DispatchedEvent =
         | "toggle-lock-viewport"
         | "grapher/drag-end"
         | "set-axis-limit-latex"
-        | "commit-user-requested-viewport"
         | "zoom"
         | "set-graph-settings"
         | "resize-exp-list"
@@ -35,7 +53,17 @@ export type DispatchedEvent =
         | "commit-geo-objects"
         | "upward-delete-selected-expression"
         | "downward-delete-selected-expression"
-        | "ui/container-resized";
+        | "update-expression-search-str"
+        | "ui/container-resized"
+        | "toggle-complex-mode"
+        | "new-expression"
+        | "new-expression-at-end"
+        | "set-lock-rotation"
+        | "toggle-disable-lighting";
+    }
+  | {
+      type: "commit-user-requested-viewport";
+      viewport: Viewport;
     }
   | {
       type: "keypad/set-minimized";
@@ -69,8 +97,8 @@ export type DispatchedEvent =
       dsmFromTextModeSelection?: boolean;
     }
   | {
-      type: "set-focus-location";
-      location: { type: "expression"; id: string } | { type: string };
+      type: "set-focus-location" | "blur-focus-location";
+      location: FocusLocation;
     }
   | {
       type: "on-evaluator-changes";
@@ -106,6 +134,25 @@ export type DispatchedEvent =
         prop: "folderId" | any_string; // TODO: Pull Request??
       };
     }
+  | { type: "new-images"; files: File[] | FileList; id?: string }
+  | {
+      type: "image-upload-success";
+      token: keyof CalcController["__pendingImageUploads"];
+      url: string;
+      width: `${number}`;
+      height: `${number}`;
+      name: string;
+      id?: string;
+    }
+  | {
+      type: "image-upload-error";
+      token: keyof CalcController["__pendingImageUploads"];
+      error: true;
+    }
+  | {
+      type: "toast/show";
+      toast: Toast;
+    }
   | { type: "set-folder-collapsed"; id: string; isCollapsed: boolean }
   | { type: "set-item-colorLatex"; id: string; colorLatex: string }
   | { type: "set-note-text"; id: string; text: string };
@@ -137,8 +184,6 @@ interface EvaluatorChange {
    * updateCoordinate = change latex; updateSlider = handle elsewhere
    */
   move_strategy?: { type: "updateCoordinate" | "updateSlider" }[];
-  /** (Expressions, images, (ticker)?) New action to be applied on the next click. Ignore */
-  action_value?: unknown;
   /** (Regression expressions) Regression metadata */
   regression?: unknown;
   /** (Tables) column changes from dragging points */
@@ -167,14 +212,6 @@ export interface TimingData {
   updateIntersections: number;
 }
 
-export interface TopLevelComponents {
-  headerController: {
-    graphsController: {
-      getCurrentGraphTitle: () => string | undefined;
-    };
-  };
-}
-
 export interface Toast {
   message: string;
   undoCallback?: () => void;
@@ -183,9 +220,40 @@ export interface Toast {
   hideAfter?: number;
 }
 
-type Product = "graphing" | "geometry-calculator" | "graphing-3d";
+export interface Viewport {
+  xmin: number;
+  xmax: number;
+  ymin: number;
+  ymax: number;
+}
+
+type ViewportClass = Viewport & { __isViewportClass: unknown };
+
+export interface Grapher3d {
+  controls: {
+    worldRotation3D: Matrix3;
+    axis3D: readonly [number, number, number];
+    speed3D: number;
+    lastRotateTime: number;
+    setWorldRotation: (rotation: Matrix3) => void;
+    onTapStart: () => void;
+    onTapMove: () => void;
+    onTapUp: () => void;
+    onMouseWheel: () => void;
+  };
+  viewportController: {
+    animateToOrientation: (m: Matrix3) => void;
+  };
+  transition: {
+    duration: number;
+  };
+  redrawAllLayers: () => void;
+}
+
+export type Scale = "linear" | "logarithmic";
 
 interface CalcPrivate {
+  withHistoryReplacement: (fn: () => void) => any;
   focusedMathQuill:
     | {
         mq: MathQuillField;
@@ -196,46 +264,49 @@ interface CalcPrivate {
   controller: {
     rootElt: HTMLElement;
     isNarrow: () => boolean;
-    // _removeExpressionSynchronously(model: ItemModel): void;
     handleDispatchedAction: (evt: DispatchedEvent) => void;
     _toplevelReplaceItemAt: (index: number, model: ItemModel, shouldFocus: boolean) => void;
-    createItemModel: (modelTemplate: unknown) => ItemModel;
-    getPillboxBackgroundColor: () => string;
+    _hasUnsavedChanges: boolean;
+    createItemModel: (modelTemplate: ItemState) => ItemModel;
     isGraphSettingsOpen: () => boolean;
     graphSettings: {
       config: {
-        // only includes products desmodder is enabled for
         product: Product;
         settingsMenu: boolean;
+        invertedColors: boolean;
       };
+      squareAxes: boolean;
+      setProperty: (k: "squareAxes", v: boolean) => void;
     };
     dispatch: (e: DispatchedEvent) => void;
     getExpressionSearchStr: () => string;
     dispatcher: {
+      /** Make sure to save the result to a variable, and unregister
+       * it in afterDisable. */
       register: (func: (e: DispatchedEvent) => void) => string;
       unregister: (id: string) => void;
     };
     getTickerPlaying?: () => boolean;
     // The item models returned are actually much more detailed
     getSelectedItem: () => ItemModel | undefined;
-    getItemModel: (id: unknown) => ItemModel | undefined;
+    getFocusLocation: () => FocusLocation | undefined;
+    getItemModel: (id: any) => ItemModel | undefined;
     getAllSelectedItems: () => ItemModel[];
     getItemModelByIndex: (index: number) => ItemModel | undefined;
     getAllItemModels: () => ItemModel[];
     stopAllSliders: () => void;
     isKeypadOpen: () => boolean;
-    getKeypadHeight: () => number;
-    isDegreeMode: () => boolean;
+    getDegreeMode: () => boolean;
     getExpressionSearchOpen: () => boolean;
     generateId: () => string;
     // returns a subscript that occurs nowhere else in the graph
-    generateTableXSubscript: () => number;
     updateViews: () => void;
     updateTheComputedWorld: () => void;
     commitUndoRedoSynchronously: (e: { type: string }) => void;
     evaluator: {
       workerPoolConnection: {
         killWorker: () => void;
+        sendMessage: (payload: unknown) => void;
       };
       notifyWhenSynced: (cb: () => void) => void;
     };
@@ -250,38 +321,59 @@ interface CalcPrivate {
       __itemIdToModel: Record<string, ItemModel>;
       drawOrder: string[];
       colorIdx: number; // TODO: Make a pull request to add colorIdx??
+      drawLayers: { layer: number; drawOrder: string[]; drawSet: string[] }[];
     };
     _addItemToEndFromAPI: (item: ItemModel) => void;
-    _showToast: (toast: Toast) => void;
+    showToast: (toast: Toast) => void;
+    removeListOfItems: (ids: string[]) => {
+      // Might only return a subset of the models corresponding to `ids`
+      // if some of the `ids` correspond to readonly expressions.
+      deletedItems: ItemModel[];
+      readonlyItemsNotDeleted: number;
+    };
     getViewState: () => {
-      viewport: {
-        xmin: number;
-        ymin: number;
-        xmax: number;
-        ymax: number;
-      };
+      viewport: Viewport;
+      xAxisScale: Scale;
+      yAxisScale: Scale;
     };
     /** Mark UI tick required to convert render shells to full item lines */
     markTickRequiredNextFrame: () => void;
     getPlayingSliders: () => { latex: string }[];
     _tickSliders: (nowTimestamp: number) => void;
-    computeMajorLayout: () => { grapher: { width: number } };
-    isGeometry: () => boolean;
     geometryGettingStartedMessageState: string;
-    isGeoUIActive: () => boolean;
     isNarrowGeometryHeader: () => boolean;
     expressionSearchOpen: boolean;
     /** Returns a function to call to unsubscribe */
     subscribeToChanges: (cb: () => void) => () => void;
     getBackgroundColor: () => string;
     isInEditListMode: () => boolean;
-    getMathquillConfig: (e: { additionalOperators?: string[] }) => {
-      autoOperatorNames: string;
-      autoCommands: string;
-    };
+    getMathquillConfig: (e: {
+      additionalOperators?: string[];
+    }) => MathQuillConfig;
     is3dProduct: () => boolean;
-    // TODO: Pull Request??
-    s: (key: string, options?: Record<string, FluentVariable> | null) => string;
+    grapher3d?: Grapher3d;
+    getGrapher: () => {
+      // Same API as the `Calc.asyncScreenshot` method, but this doesn't
+      // create and wait for a shared calculator, so this is
+      // actually a synchronous screenshot but with the extra
+      // permitted options from the `asyncScreenshot` API.
+      asyncScreenshot: Desmos.Calculator["asyncScreenshot"];
+      // 2d only?
+      viewportController: {
+        setEvaluatedViewport: (vp: ViewportClass) => void;
+      };
+    };
+    __nextItemId: number;
+    __pendingImageUploads: Record<`${number}`, true>;
+    isUploadingImages: () => boolean;
+    areImagesEnabled: () => boolean;
+    scrollSelectedItemIntoView: () => void;
+    s: (identifier: string, placeables?: Record<string, FluentVariable> | null) => string;
+    runAfterDispatch: (cb: () => void) => void;
+    getEvaluatedDefaultViewport: () => {
+      constructor: { fromObject: (vp: Viewport) => ViewportClass };
+    };
+    destroy: () => void;
   };
   _calc: {
     globalHotkeys: TopLevelComponents;
@@ -318,5 +410,10 @@ interface CalcPrivate {
   ) => void;
 }
 
-export type Calc = CalcPrivate & Desmos.Calculator;
+interface CalcDummy {
+  /** Set to true if a DSM instance is connected. */
+  _dsmConnected?: boolean;
+}
+
+export type Calc = CalcDummy & CalcPrivate & Desmos.Calculator;
 export type CalcController = Calc["controller"];
