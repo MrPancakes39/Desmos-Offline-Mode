@@ -115,7 +115,9 @@ function LanguageMenu(dsom: DesmosOfflineMode) {
       </div>
       <ul class="dcg-unstyled-list dcg-languages-list dcg-popover-content" role="menu">
         <For each={() => [...LANG_DISPLAY_NAMES.entries()]} key={(e: LANG_MAP) => e[0]}>
-          {([lang, displayName]: LANG_MAP) => {
+          {(getLangRecord: () => LANG_MAP) => {
+            const [lang, displayName] = getLangRecord();
+
             let className = "dcg-listitem dcg-language-option";
             if (lang === dsom.currentLanguage()) className += " dcg-selected";
 

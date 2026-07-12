@@ -34,12 +34,15 @@ export class ShortcutTable extends Component<{
           </tr>
         </thead>
         <For each={() => this.shortcutList} key={(s) => ("latex" in s ? s.latex : s.i18nKey)}>
-          {(shortcut: Shortcut) => (
+          {(getShortcut: () => Shortcut) => (
             <tbody>
               <tr>
                 <For each={() => this.getCols(this.props.os())} key={(col) => col}>
-                  {(col: "heading" | shortcutOS) => (
-                    <td didMount={(e: HTMLElement) => this.populateContent(e, col, shortcut)}>
+                  {(getCol: () => "heading" | shortcutOS) => {
+                    const col = getCol();
+                    const shortcut = getShortcut();
+
+                    return <td didMount={(e: HTMLElement) => this.populateContent(e, col, shortcut)}>
                       <If predicate={() => "latex" in shortcut && col === "heading"}>
                         {/* oxlint-disable typescript/no-unsafe-return */}
                         {/* @ts-expect-error If enter here it means that the shortcut has a latex property */}
@@ -47,7 +50,7 @@ export class ShortcutTable extends Component<{
                         {/* oxlint-enable typescript/no-unsafe-return */}
                       </If>
                     </td>
-                  )}
+                  }}
                 </For>
               </tr>
             </tbody>
