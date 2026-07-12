@@ -3,10 +3,12 @@ import { defineConfig } from "oxlint";
 export default defineConfig({
   plugins: ["jsx-a11y", "unicorn"],
   categories: {
-    correctness: "off",
+    correctness: "error",
+    perf: "warn",
   },
   options: {
     typeAware: true,
+    typeCheck: true,
     maxWarnings: 0,
   },
   env: {
@@ -15,6 +17,7 @@ export default defineConfig({
   ignorePatterns: ["dist", "fetch_desmos_res", "public/desmos", "oxlint.config.ts"],
   rules: {
     "jsx-a11y/alt-text": "error",
+    "jsx-a11y/anchor-ambiguous-text": "error",
     "jsx-a11y/anchor-has-content": "error",
     "jsx-a11y/anchor-is-valid": "error",
     "jsx-a11y/aria-activedescendant-has-tabindex": "error",
@@ -24,6 +27,7 @@ export default defineConfig({
     "jsx-a11y/aria-unsupported-elements": "error",
     "jsx-a11y/autocomplete-valid": "error",
     "jsx-a11y/click-events-have-key-events": "error",
+    "jsx-a11y/control-has-associated-label": "error",
     "jsx-a11y/heading-has-content": "error",
     "jsx-a11y/html-has-lang": "error",
     "jsx-a11y/iframe-has-title": "error",
@@ -38,6 +42,7 @@ export default defineConfig({
     "jsx-a11y/media-has-caption": "error",
     "jsx-a11y/mouse-events-have-key-events": "error",
     "jsx-a11y/no-access-key": "error",
+    "jsx-a11y/no-aria-hidden-on-focusable": "error",
     "jsx-a11y/no-autofocus": "error",
     "jsx-a11y/no-distracting-elements": "error",
     "jsx-a11y/no-interactive-element-to-noninteractive-role": [
@@ -85,10 +90,14 @@ export default defineConfig({
         handlers: ["onClick", "onMouseDown", "onMouseUp", "onKeyPress", "onKeyDown", "onKeyUp"],
       },
     ],
+    "jsx-a11y/prefer-tag-over-role": "off",
     "jsx-a11y/role-has-required-aria-props": "error",
     "jsx-a11y/role-supports-aria-props": "error",
     "jsx-a11y/scope": "error",
     "jsx-a11y/tabindex-no-positive": "error",
+    "unicorn/no-invalid-fetch-options": "error",
+    "unicorn/no-invalid-remove-event-listener": "error",
+    "unicorn/require-post-message-target-origin": "error",
   },
   overrides: [
     {
@@ -271,7 +280,9 @@ export default defineConfig({
             allowDestructuring: true,
           },
         ],
+        "typescript/no-unnecessary-condition": ["error"],
         "typescript/no-unnecessary-type-assertion": ["error"],
+        "typescript/no-unnecessary-type-conversion": ["error"],
         "typescript/no-unnecessary-type-constraint": ["error"],
         "typescript/no-unsafe-argument": ["error"],
         "typescript/no-unsafe-assignment": ["error"],
@@ -280,7 +291,7 @@ export default defineConfig({
         "typescript/no-unsafe-enum-comparison": ["error"],
         "typescript/no-unsafe-function-type": ["error"],
         "typescript/no-unsafe-member-access": ["error"],
-        "typescript/no-unsafe-return": "off",
+        "typescript/no-unsafe-return": ["error"],
         "typescript/no-unsafe-unary-minus": ["error"],
         "typescript/no-wrapper-object-types": ["error"],
         "typescript/only-throw-error": [
@@ -370,6 +381,7 @@ export default defineConfig({
             ignoreMixedLogicalExpressions: false,
           },
         ],
+        "typescript/prefer-optional-chain": ["error"],
         "typescript/prefer-regexp-exec": ["error"],
         "typescript/prefer-string-starts-ends-with": [
           "error",
@@ -393,18 +405,11 @@ export default defineConfig({
             checkForEach: false,
           },
         ],
-        "arrow-body-style": [
-          "error",
-          "as-needed",
-          {
-            requireReturnForObjectLiteral: false,
-          },
-        ],
         complexity: [
           "error",
           {
             variant: "modified",
-            max: 10,
+            max: 15,
           },
         ],
         "default-case-last": ["error"],
@@ -427,13 +432,21 @@ export default defineConfig({
         "max-depth": [
           "error",
           {
-            max: 5,
+            max: 4,
           },
         ],
         "max-lines": [
           "error",
           {
-            max: 450,
+            max: 500,
+            skipBlankLines: true,
+            skipComments: true,
+          },
+        ],
+        "max-lines-per-function": [
+          "error",
+          {
+            max: 120,
             skipBlankLines: true,
             skipComments: true,
           },
@@ -441,7 +454,7 @@ export default defineConfig({
         "max-nested-callbacks": [
           "error",
           {
-            max: 3,
+            max: 4,
           },
         ],
         "new-cap": [
@@ -509,6 +522,7 @@ export default defineConfig({
         "promise/avoid-new": "off",
         "promise/param-names": ["error"],
         "import/first": ["error"],
+        "import/no-cycle": ["error"],
         "import/no-absolute-path": [
           "error",
           {
@@ -519,32 +533,24 @@ export default defineConfig({
         ],
         "import/no-duplicates": ["error"],
         "import/no-named-default": ["error"],
+        "import/no-self-import": ["error"],
         "import/no-webpack-loader-syntax": ["error"],
         "class-methods-use-this": "off",
         "init-declarations": ["error", "always"],
         "max-params": [
           "error",
           {
-            max: 4,
+            max: 5,
           },
         ],
         "no-loop-func": ["error"],
         "no-magic-numbers": "off",
-        "no-use-before-define": [
-          "error",
-          {
-            functions: false,
-            classes: false,
-            enums: false,
-            variables: false,
-            typedefs: false,
-          },
-        ],
         "no-useless-constructor": ["error"],
         "node/handle-callback-err": ["error", "^(err|error)$"],
         "node/no-exports-assign": ["error"],
         "node/no-new-require": ["error"],
         "node/no-path-concat": ["error"],
+        "typescript/consistent-return": ["error"],
         "typescript/consistent-type-exports": [
           "error",
           {
@@ -649,6 +655,19 @@ export default defineConfig({
       env: {
         es2020: true,
         browser: true,
+      },
+    },
+    {
+      files: ["src/controllers/modal/components/HotKeysModal/shortcuts.ts"],
+      rules: {
+        "max-lines-per-function": [
+          "error",
+          {
+            max: 400,
+            skipBlankLines: true,
+            skipComments: true,
+          },
+        ],
       },
     },
   ],
