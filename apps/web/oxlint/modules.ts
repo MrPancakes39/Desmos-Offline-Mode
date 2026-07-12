@@ -1,7 +1,6 @@
 import type { OxlintConfig } from "oxlint";
 
 export const modulesRules = {
-  "promise/avoid-new": "off",
   "promise/param-names": ["error"],
   "import/first": ["error"],
   "import/no-cycle": ["error"],

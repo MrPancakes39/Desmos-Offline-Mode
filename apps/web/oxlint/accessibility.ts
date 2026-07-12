@@ -52,6 +52,4 @@ export const accessibilityRules = {
       handlers: ["onClick", "onMouseDown", "onMouseUp", "onKeyPress", "onKeyDown", "onKeyUp"],
     },
   ],
-  // DCGView uses ARIA roles to model controls without native DOM elements.
-  "jsx-a11y/prefer-tag-over-role": "off",
 } satisfies NonNullable<OxlintConfig["rules"]>;

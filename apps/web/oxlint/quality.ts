@@ -1,7 +1,6 @@
 import type { OxlintConfig } from "oxlint";
 
 export const qualityRules = {
-  "getter-return": "off",
   "no-case-declarations": ["error"],
   "no-constant-condition": [
     "error",
@@ -17,7 +16,6 @@ export const qualityRules = {
   ],
   "no-fallthrough": ["error"],
   "no-prototype-builtins": ["error"],
-  "no-redeclare": "off",
   "no-regex-spaces": ["error"],
   "no-self-assign": [
     "error",
@@ -25,7 +23,6 @@ export const qualityRules = {
       props: true,
     },
   ],
-  "no-setter-return": "off",
   "no-unused-vars": [
     "warn",
     {
@@ -57,7 +54,6 @@ export const qualityRules = {
   "prefer-rest-params": "error",
   "prefer-spread": "error",
   "no-array-constructor": ["error"],
-  "no-implied-eval": "off",
   "no-unused-expressions": [
     "error",
     {
@@ -67,9 +63,8 @@ export const qualityRules = {
       enforceForJSX: false,
     },
   ],
-  "no-throw-literal": "off",
-  "prefer-promise-reject-errors": "off",
-  "require-await": "off",
+  "no-throw-literal": "error",
+  "prefer-promise-reject-errors": "error",
   "no-empty-function": [
     "error",
     {
@@ -130,6 +125,10 @@ export const qualityRules = {
       skipComments: true,
     },
   ],
+  "max-lines-per-function": ["error", { max: 120,
+    skipBlankLines: true,
+    skipComments: true,
+   }],
   "max-nested-callbacks": [
     "error",
     {
@@ -194,7 +193,6 @@ export const qualityRules = {
   "symbol-description": ["error"],
   "unicode-bom": ["error", "never"],
   yoda: ["error", "never"],
-  "class-methods-use-this": "off",
   "init-declarations": ["error", "always"],
   "max-params": [
     "error",
@@ -203,6 +201,5 @@ export const qualityRules = {
     },
   ],
   "no-loop-func": ["error"],
-  "no-magic-numbers": "off",
   "no-useless-constructor": ["error"],
 } satisfies NonNullable<OxlintConfig["rules"]>;

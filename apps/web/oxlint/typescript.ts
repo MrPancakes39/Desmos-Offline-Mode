@@ -113,7 +113,10 @@ export const typescriptRules = {
       objectLiteralTypeAssertions: "never",
     },
   ],
-  "typescript/consistent-type-definitions": "off",
+  "typescript/consistent-type-definitions": [
+    "error",
+    "type"
+  ],
   "typescript/dot-notation": [
     "error",
     {
