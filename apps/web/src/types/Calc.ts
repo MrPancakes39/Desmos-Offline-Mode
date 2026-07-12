@@ -376,7 +376,6 @@ interface CalcPrivate {
     destroy: () => void;
   };
   _calc: {
-    globalHotkeys: TopLevelComponents;
     // TODO: Pull Request??
     controller: CalcController;
     getState: () => GraphState;
