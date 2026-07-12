@@ -9,6 +9,7 @@
 .dcg-calculator-api-container .dcg-sliding-interior {
   background-color: #fff;
   transition: @side-bar-transition;
+  height: 100%;
 
   &.open-side-bar {
     transform: translate(@side-bar-width);
@@ -76,6 +77,7 @@
   }
 
   .side-bar-content {
+    z-index: -1;
     width: @side-bar-width;
     background: #000;
     position: absolute;
