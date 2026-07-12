@@ -92,14 +92,11 @@ interface FragileType {
   currentLanguage: () => string;
   joinShaderFunctions: (shaderFunctionsList: ShaderFunctions[]) => string;
   glslHeader: string;
-};
+}
 
 interface Mathtools {
   Label: {
-    truncatedLatexLabel: (
-      label: ValueTypeMap[ValueType["Number"]],
-      labelOptions?: LabelOptionsBase
-    ) => string;
+    truncatedLatexLabel: (label: ValueTypeMap[ValueType["Number"]], labelOptions?: LabelOptionsBase) => string;
     pointLabel: (
       label: ValueTypeMap[ValueType["Point"]],
       labelOptions?: LabelOptionsBase,
@@ -150,7 +147,6 @@ interface MathquillConfig {
     newStats?: boolean;
   }) => string;
 }
-
 
 interface MathQuillApi {
   latex: () => string;

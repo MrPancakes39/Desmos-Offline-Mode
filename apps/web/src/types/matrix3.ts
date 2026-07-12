@@ -51,9 +51,7 @@ export function matrix3(
   n32: number,
   n33: number
 ): Matrix3 {
-  return grapher3d.controls.worldRotation3D
-    .clone()
-    .set(n11, n12, n13, n21, n22, n23, n31, n32, n33);
+  return grapher3d.controls.worldRotation3D.clone().set(n11, n12, n13, n21, n22, n23, n31, n32, n33);
 }
 
 type Num3 = [number, number, number];
@@ -74,11 +72,7 @@ export function setOrientation(grapher3d: Grapher3d, m: Matrix3) {
  *   - zTip: angle (radians) to tip the cube forwards
  *   - xyRot: angle (radians) to rotate the cube's x towards y
  */
-export function orientationFromEuler(
-  grapher3d: Grapher3d,
-  zTip: number,
-  xyRot: number
-): Matrix3 {
+export function orientationFromEuler(grapher3d: Grapher3d, zTip: number, xyRot: number): Matrix3 {
   const zTipMat = matrix3Rows(
     grapher3d,
     [Math.cos(zTip), 0, -Math.sin(zTip)],

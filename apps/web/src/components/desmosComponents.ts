@@ -160,7 +160,6 @@ export function selectionDirection(mq: MathQuillField): 1 | -1 {
   }
 }
 
-
 export abstract class MathQuillViewComponent extends ClassComponent<{
   latex: string;
   capExpressionSize: number | false;
@@ -263,12 +262,7 @@ interface ExpressionFooterViewProps extends ModelAndController {
 //   {() => <div class={this.getFooterClass()}> ...
 export abstract class ExpressionFooterViewComponent extends Component<ExpressionFooterViewProps> {}
 
-export const {
-  ImageIconView,
-  ExpressionIconView,
-  ExpressionFooterView,
-  DropdownPopoverWithAnchorShim,
-} = Fragile;
+export const { ImageIconView, ExpressionIconView, ExpressionFooterView, DropdownPopoverWithAnchorShim } = Fragile;
 
 export abstract class EvaluationContainerComponent extends ClassComponent<{
   controller: CalcController;
@@ -284,12 +278,7 @@ interface DropdownPopoverProps {
   popoverBody: () => ComponentChild;
   tooltip?: () => string;
   tooltipGravity?: () => "n" | "s" | "e" | "w";
-  orientation: () =>
-    | "left"
-    | "right"
-    | "bottom-left"
-    | "bottom-right"
-    | "top-left";
+  orientation: () => "left" | "right" | "bottom-left" | "bottom-right" | "top-left";
   controlled?: () => {
     isOpen: boolean;
     setDropdownOpen: (isOpen: boolean) => void;

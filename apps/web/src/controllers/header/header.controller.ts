@@ -15,10 +15,10 @@ export interface HeaderMenuProp {
   current: () => HeaderPopoverMenu | "closed";
   open: (menu: HeaderPopoverMenu) => void;
   close: () => void;
-};
+}
 
 export class HeaderController implements TransparentController {
-  readonly dsom: DesmosOfflineMode
+  readonly dsom: DesmosOfflineMode;
 
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;

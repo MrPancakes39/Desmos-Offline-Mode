@@ -15,7 +15,7 @@ interface MountedCalculator {
   type: (typeof CALC_TYPES)[number];
   calc: Calc;
   container: HTMLDivElement;
-};
+}
 
 export class SwitcherController implements TransparentController {
   calculators: MountedCalculator[] = [];

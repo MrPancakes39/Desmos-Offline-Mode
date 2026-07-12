@@ -19,7 +19,7 @@ interface windowConfig extends Window {
 
 declare const window: windowConfig;
 // oxlint-disable-next-line typescript/no-unsafe-type-assertion
-const browserWindow = globalThis.window as windowConfig  & typeof globalThis;
+const browserWindow = globalThis.window as windowConfig & typeof globalThis;
 export default browserWindow;
 
 // Re-exporting Desmos object

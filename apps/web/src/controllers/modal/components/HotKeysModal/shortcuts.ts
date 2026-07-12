@@ -14,7 +14,7 @@ export type Shortcut =
 export interface Hotkeys {
   i18nSectionKey: string;
   shortcuts: Shortcut[];
-};
+}
 
 export interface GraphingShortcuts {
   commonsymbols: Hotkeys;
@@ -27,14 +27,14 @@ export interface GraphingShortcuts {
   desmoscomonly: Hotkeys;
   braille: Hotkeys;
   mathquill: Hotkeys;
-};
+}
 
 export interface GeoShortcuts extends GraphingShortcuts {
   toolSelection: Hotkeys;
   graphNavigation: Hotkeys;
   expressionEdit: Hotkeys;
   tokenNavigator: Hotkeys;
-};
+}
 
 const brailleShortcuts: Hotkeys = {
   i18nSectionKey: "shared-calculator-heading-keyboard-shortcuts-braille",

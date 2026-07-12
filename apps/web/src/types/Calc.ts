@@ -7,7 +7,6 @@ import type { MathQuillConfig, MathQuillField } from "~/components";
 import type { Matrix3 } from "./matrix3";
 import type { ItemModel } from "./models";
 
-
 // Keeps the type of string of absorbing literals in unions.
 type any_string = string & NonNullable<unknown>;
 type Product = "graphing" | "geometry-calculator" | "graphing-3d";
@@ -347,9 +346,7 @@ interface CalcPrivate {
     subscribeToChanges: (cb: () => void) => () => void;
     getBackgroundColor: () => string;
     isInEditListMode: () => boolean;
-    getMathquillConfig: (e: {
-      additionalOperators?: string[];
-    }) => MathQuillConfig;
+    getMathquillConfig: (e: { additionalOperators?: string[] }) => MathQuillConfig;
     is3dProduct: () => boolean;
     grapher3d?: Grapher3d;
     getGrapher: () => {

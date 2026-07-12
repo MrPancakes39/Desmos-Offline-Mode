@@ -6,7 +6,7 @@ import { type ModalType, validModals } from "./components/modal.component";
 import { ModalContainer } from "./modal-container.component";
 
 export class ModalController implements TransparentController {
-  readonly dsom: DesmosOfflineMode
+  readonly dsom: DesmosOfflineMode;
 
   unsub: (() => void) | undefined;
   divContainer: HTMLDivElement | undefined;

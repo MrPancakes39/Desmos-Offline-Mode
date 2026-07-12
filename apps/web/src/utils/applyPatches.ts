@@ -11,31 +11,34 @@ export type SelectedItem =
 
 type ExpressionItem = Omit<SanitizedExpressionItem, "fill" | "lines" | "points">;
 
-type SanitizedExpressionItem = Omit<ExpressionModel, "controller" | "index" | "renderShell" | "isHiddenFromUI" | "rootViewNode"> & {
+type SanitizedExpressionItem = Omit<
+  ExpressionModel,
+  "controller" | "index" | "renderShell" | "isHiddenFromUI" | "rootViewNode"
+> & {
   playing?: boolean;
 };
 interface SanitizedTableItem {
   id: string;
   type: "table";
   columns: TableModel["columns"];
-};
+}
 interface SanitizedImageItem {
   id: string;
   type: "image";
   hidden: boolean | undefined;
   secret: boolean | undefined;
-};
+}
 interface SanitizedFolderItem {
   id: string;
   type: "folder";
   hidden: boolean | undefined;
   secret: boolean | undefined;
-};
+}
 interface SanitizedTextItem {
   id: string;
   type: "text";
   secret: boolean | undefined;
-};
+}
 
 export function applyPatches(Calc: Calc) {
   const colorRotation = [
@@ -181,7 +184,7 @@ const sanitizeItem = function (item: ItemModel) {
         tmp.playing = modal.slider.isPlaying;
       }
       return tmp;
-    };
+    }
     case "table": {
       const modal = item;
       const tmp: SanitizedTableItem = {
@@ -190,7 +193,7 @@ const sanitizeItem = function (item: ItemModel) {
         columns: modal.columns.map(tableColumn),
       };
       return tmp;
-    };
+    }
     case "folder":
     case "image": {
       const modal = item;
@@ -201,7 +204,7 @@ const sanitizeItem = function (item: ItemModel) {
         secret: modal.secret,
       };
       return tmp;
-    };
+    }
     case "text": {
       const modal = item;
       const tmp: SanitizedTextItem = {
@@ -210,7 +213,7 @@ const sanitizeItem = function (item: ItemModel) {
         secret: modal.secret,
       };
       return tmp;
-    };
+    }
     default:
       throw new Error(`Unknown item type: ${item.type}`);
   }

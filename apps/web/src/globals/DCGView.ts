@@ -111,7 +111,7 @@ declare global {
   // oxlint-disable-next-line typescript/no-namespace -- For JSX
   namespace JSX {
     // Defines JSX result output type
-    interface Element extends ComponentTemplate { }
+    interface Element extends ComponentTemplate {}
     interface IntrinsicAttributes {
       class?: string | Record<string, boolean>;
     }
